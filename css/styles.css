@@ -81,15 +81,32 @@ body {
   margin-left: 5%;
 }
 
+.nav-item-sel {
+  display: inline-block;
+  margin-left: 5%;
+  background-color: #e0223c;
+}
+
 .nav-link {
   text-decoration: none;
   color: #fff;
   transition: color 0.3s;
 }
 
+.nav-link-sel {
+  text-decoration: none;
+  background-color: #5b22e0;
+  color: #fff;
+  transition: color 0.5s;
+	border-radius: 60px;
+}
+
 .nav-link:hover {
   color: #bdc3c7; /* Gris claro */
 }
+
+
+
 
 /* Estilos para el pie de página */
 .footer {
@@ -143,4 +160,93 @@ body {
     flex-grow: 1;
     padding: 20px;
 	text-align: center; /* Centrar el texto */
+}
+
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:focus {
+  outline: none;
+}
+
+
+/* Agregamos estilos para el elemento select */
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  appearance: none; /* Esto elimina los estilos nativos del sistema operativo */
+  cursor: pointer;
+}
+
+/* Agregamos estilos para cuando el usuario interactúa con el select */
+select:hover {
+  border-color: #007bff;
+}
+
+select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+
+/* Estilos para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+/* Estilos para las celdas de encabezado */
+th {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Estilos para las celdas de datos */
+td {
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* Estilos alternativos para las filas */
+tr:nth-child(even) {
+  background-color: #f2f2f2;
 }

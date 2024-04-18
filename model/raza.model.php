@@ -137,7 +137,7 @@ class RazaModel {
 						Codigo_Mundo = ?,
 						Nombre = ?,
 						Tipo= ?
-                    WHERE Codigo = ?";
+                    WHERE Codigo = ? AND Codigo_Mundo = ?";
  
             $this->pdo->prepare($sql)
                  ->execute(
@@ -146,7 +146,8 @@ class RazaModel {
 					$data->__GET('Codigo_Mundo'), 
 					$data->__GET('Nombre'), 
 					$data->__GET('Tipo'), 
-                    $codigo_viejo
+                    $codigo_viejo,
+                    $data->__GET('Codigo_Mundo'), 
                     )
                 );
         } catch (Exception $e) 

@@ -1,3 +1,4 @@
+<br/>
 <?php
 if(session_status() == PHP_SESSION_ACTIVE)
 {
@@ -12,12 +13,14 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 		$_SESSION['CodMundo']=$_GET["Cod"];
 		$_SESSION['NomMundo']=$_GET["Nom"];
 	}
+	echo $_SESSION['NomMundo'];
 	?>
-		
-			
-			<li><a href="./controller/raza.controller.php">Crear Raza</a></li>
-			<li><a href="./controller/dados.controller.php">Crear Dados</a></li>
-			<li><a href="./controller/atributos.controller.php">Crear Atributos</a></li>
+<br/>
+<br/>
+
+			<li><a href="index.php?model=raza&type=form">Crear Raza</a></li>
+			<li><a href="index.php?model=dados&type=form">Crear Dados</a></li>
+			<li><a href="index.php?model=atributos&type=form">Crear Atributos</a></li>
 			<li><a href="./controller/caracteristicas.controller.php">Crear Caracteristicas</a></li>
 			<li><a href="./controller/tipomonstruo.controller.php">Crear Tipo Monstruo</a></li>
 			<li><a href="./controller/clase.controller.php">Crear Clase</a></li>

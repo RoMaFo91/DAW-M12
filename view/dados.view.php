@@ -1,88 +1,71 @@
 <?php
-session_start();
-// require_once('./../classes.php');
+if (isset($_SESSION['login_correct'])) {
 
-if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
+    if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
+        if (isset($_REQUEST['action'])) {
+            if ($_REQUEST['model'] == 'dados') {
+                switch ($_REQUEST['action']) {
+                    case 'actualizar':
+                        $alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
+                        $alm->__SET('Codigo',              $_REQUEST['Codigo']);
+                        $alm->__SET('ValMin',          $_REQUEST['ValMin']);
+                        $alm->__SET('ValMax',          $_REQUEST['ValMax']);
 
-    if (isset($_REQUEST['action'])) {
-        switch ($_REQUEST['action']) {
-            case 'actualizar':
-                $alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
-                $alm->__SET('Codigo',              $_REQUEST['Codigo']);
-                $alm->__SET('ValMin',          $_REQUEST['ValMin']);
-                $alm->__SET('ValMax',          $_REQUEST['ValMax']);
+                        $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
+                        header('Location: index.php?model=dados&type=form');
+                        break;
 
-                $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
-                header('Location: dados.controller.php');
-                break;
+                    case 'registrar':
+                        $alm->__SET('Codigo_Mundo',          $_SESSION['CodMundo']);
+                        $alm->__SET('Codigo',          $_REQUEST['Codigo']);
+                        $alm->__SET('ValMin',          $_REQUEST['ValMin']);
+                        $alm->__SET('ValMax',          $_REQUEST['ValMax']);
 
-            case 'registrar':
-                $alm->__SET('Codigo_Mundo',          $_SESSION['CodMundo']);
-                $alm->__SET('Codigo',          $_REQUEST['Codigo']);
-                $alm->__SET('ValMin',          $_REQUEST['ValMin']);
-                $alm->__SET('ValMax',          $_REQUEST['ValMax']);
+                        $model->Registrar($alm);
+                        header('Location: index.php?model=dados&type=form');
+                        break;
 
-                $model->Registrar($alm);
-                header('Location: dados.controller.php');
-                break;
-
-            case 'eliminar':
-                $model->Eliminar($_REQUEST['Codigo'], $_SESSION['CodMundo']);
-                header('Location: dados.controller.php');
-                break;
-            case 'editar':
-                $alm = $model->Obtener($_REQUEST['Codigo'], $_SESSION['CodMundo']);
-                $alm->__SET('Estado', 'actualizar');
-                break;
+                    case 'eliminar':
+                        $model->Eliminar($_REQUEST['Codigo'], $_SESSION['CodMundo']);
+                        header('Location: index.php?model=dados&type=form');
+                        break;
+                    case 'editar':
+                        $alm = $model->Obtener($_REQUEST['Codigo'], $_SESSION['CodMundo']);
+                        $alm->__SET('Estado', 'actualizar');
+                        break;
+                }
+            }
         }
-    }
 
 ?>
-
-    <!DOCTYPE html>
-    <html lang="es">
-
-    <head>
-        <title>Mantenimiento Dados</title>
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-    </head>
-
-    <body style="padding:15px;">
-
-
         <div class="pure-g">
 
             <div class="pure-u-1-12">
                 <h3>Dados </h3>
                 </br>
-                </br>
-                <a href="./../lista.php">Volver</a>
-                </br>
-                </br>
-                <a href="dados.controller.php">Nuevo</a>
-                </br>
 
-                <form action="?action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
+                <form action="../index.php?model=dados&type=form&action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
+                    <!-- <form action="?action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;"> -->
                     <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
                     <input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
 
 
-                    <table style="width:500px;">
 
 
-                        <tr>
 
-                            <?php
-                            if ($alm->Estado == 'actualizar') {
-                            ?>
-                                <th style="display:none;">Viejo Codigo</th>
-                                <td><input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" /></td>
 
-                        </tr>
+
+                    <?php
+                    if ($alm->Estado == 'actualizar') {
+                    ?>
+
+                        <input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+
+
 
                     <?php
 
-                            }
+                    }
                     ?>
 
 
@@ -110,45 +93,42 @@ if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
 </tr>
  -->
 
-                    <tr>
 
-                    <tr>
-                        <th style="text-align:left;">Codigo</th>
+                    Codigo
 
 
-                        <td><input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" <?php if ($alm->Estado == 'actualizar') {
-                                                                                                        echo 'readonly';
-                                                                                                    } ?>  /></td>
-
-                    </tr>
+                    <input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" <?php if ($alm->Estado == 'actualizar') {
+                                                                                                                            echo 'readonly';
+                                                                                                                        } ?> />
 
 
-                    <tr>
-
-                        <th style="text-align:left;">ValMin</th>
 
 
-                        <td><input type="text" name="ValMin" value="<?php echo $alm->__GET('ValMin'); ?>" style="width:100%;" /></td>
-
-                    </tr>
-                    <tr>
-
-                        <th style="text-align:left;">ValMax</th>
 
 
-                        <td><input type="text" name="ValMax" value="<?php echo $alm->__GET('ValMax'); ?>" style="width:100%;" /></td>
+                    ValMin
 
-                    </tr>
 
-                    <tr>
+                    <input type="text" name="ValMin" value="<?php echo $alm->__GET('ValMin'); ?>" style="width:100%;" />
 
-                        <td colspan="2">
-                            <button type="submit" class="pure-button pure-button-primary">Guardar</button>
-                        </td>
 
-                    </tr>
 
-                    </table>
+                    ValMax
+
+
+                    <input type="text" name="ValMax" value="<?php echo $alm->__GET('ValMax'); ?>" style="width:100%;" />
+
+
+
+
+
+
+                    <button type="submit" class="pure-button pure-button-primary">Guardar</button>
+
+
+
+
+
 
                 </form>
 
@@ -157,24 +137,12 @@ if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
                 <table class="pure-table pure-table-horizontal">
 
                     <thead>
-
                         <tr>
-                            <!-- <th style="text-align:left;">Codigo Mundo</th> -->
-                            <th style="text-align:left;">Codigo</th>
-
-                            <th style="text-align:left;">ValMin</th>
-                            <th style="text-align:left;">ValMax</th>
-                            <th style="text-align:left;">Imagen</th>
-
-
-                            <th style="text-align:left;">Registro</th>
-
-
-                            <th></th>
-
-
-                            <th></th>
-
+                            <th>Codigo</th>
+                            <th>ValMin</th>
+                            <th>ValMax</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
 
                     </thead>
@@ -190,12 +158,12 @@ if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
                             <td><?php echo $r->__GET('ValMax'); ?></td>
 
                             <td>
-                                <a href="?action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>">Editar</a>
+                                <a href="?model=dados&type=form&action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/actualizar.png" alt="Actualizar" style="width:15%"></a>
                             </td>
 
 
                             <td>
-                                <a href="?action=eliminar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>">Eliminar</a>
+                                <a href="?model=dados&type=form&action=eliminar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/eliminar.png" alt="Eliminar" style="width:15%"></a>
                             </td>
 
                         </tr>
@@ -209,10 +177,7 @@ if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
 
         </div>
 
-
-    </body>
-
-    </html>
 <?php
+    }
 }
 ?>

@@ -65,14 +65,6 @@ if(isset($_REQUEST['action']))
  
 ?>
  
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        <title>Mantenimiento Estado</title>
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-    </head>
-    <body style="padding:15px;">
- 
  
 <div class="pure-g">
  
@@ -246,10 +238,7 @@ if(isset($_REQUEST['action']))
             </div>
  
         </div>
- 
 
-    </body>
-</html>
 <?php
 }
 ?>

@@ -144,7 +144,7 @@ class AtributosModel {
 						Codigo_Mundo = ?,
 						Nombre = ?,
 						Descripcion = ?
-                    WHERE Codigo = ?";
+                    WHERE Codigo = ? AND Codigo_Mundo = ?";
  
             $this->pdo->prepare($sql)
                  ->execute(
@@ -153,7 +153,8 @@ class AtributosModel {
 					$data->__GET('Codigo_Mundo'), 
 					$data->__GET('Nombre'), 
 					$data->__GET('Descripcion'), 
-                    $codigo_viejo
+                    $codigo_viejo,
+                    $data->__GET('Codigo_Mundo')
                     )
                 );
         } catch (Exception $e) 

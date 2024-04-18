@@ -1,8 +1,8 @@
 <?php
 //Llamada al modelo
-require($_SERVER['DOCUMENT_ROOT']."/classes.php");
+// require($_SERVER['DOCUMENT_ROOT']."/classes.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/estado.model.php");
-require($_SERVER['DOCUMENT_ROOT']."/model/mundo.model.php");
+// require($_SERVER['DOCUMENT_ROOT']."/model/mundo.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/atributos.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/estadoatributos.model.php");
 $alm = new Estado(); 

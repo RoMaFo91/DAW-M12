@@ -6,7 +6,6 @@ class Conf_BD {
  private $Server;
  
  public function __CONSTRUCT() { 
- //'mysql:host=localhost;dbname=id3949160_rfg_v1', 'id3949160_rfg_v1','roger'
 	$this->UserBD ='project' ;
 	$this->PassBD ='1234' ;
 	$this->BD ='project_v1' ;

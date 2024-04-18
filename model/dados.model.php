@@ -143,7 +143,7 @@ class DadosModel {
 						Codigo_Mundo = ?,
 						ValMin = ?,
 						ValMax = ?
-                    WHERE Codigo = ?";
+                    WHERE Codigo = ? AND Codigo_Mundo = ?";
  
             $this->pdo->prepare($sql)
                  ->execute(
@@ -152,7 +152,8 @@ class DadosModel {
 					$data->__GET('Codigo_Mundo'), 
 					$data->__GET('ValMin'),
 					$data->__GET('ValMax'), 
-                    $codigo_viejo
+                    $codigo_viejo,
+                    $data->__GET('Codigo_Mundo')
                     )
                 );
         } catch (Exception $e) 

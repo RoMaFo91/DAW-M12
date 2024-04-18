@@ -1,164 +1,91 @@
 <?php
-session_start();
-require_once('./../classes.php');
+if (isset($_SESSION['login_correct'])) {
 
-if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
+    if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
+        if (isset($_REQUEST['action'])) {
+            if ($_REQUEST['model'] == 'raza') {
+                switch ($_REQUEST['action']) {
+                    case 'actualizar':
+                        $alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
+                        $alm->__SET('Codigo',              $_REQUEST['Codigo']);
+                        $alm->__SET('Nombre',          $_REQUEST['Nombre']);
+                        $alm->__SET('Tipo',          $_REQUEST['Tipo']);
+                        $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
+                        header('Location: index.php?model=raza&type=form');
+                        break;
 
-    if (isset($_REQUEST['action'])) {
-        switch ($_REQUEST['action']) {
-            case 'actualizar':
-                $alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
-                $alm->__SET('Codigo',              $_REQUEST['Codigo']);
-                $alm->__SET('Nombre',          $_REQUEST['Nombre']);
-                $alm->__SET('Tipo',          $_REQUEST['Tipo']);
+                    case 'registrar':
+                        $alm->__SET('Codigo_Mundo',          $_SESSION['CodMundo']);
+                        $alm->__SET('Codigo',          $_REQUEST['Codigo']);
+                        $alm->__SET('Nombre',          $_REQUEST['Nombre']);
+                        $alm->__SET('Tipo',          $_REQUEST['Tipo']);
 
-                $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
-                header('Location: raza.controller.php');
-                break;
+                        $model->Registrar($alm);
+                        header('Location: index.php?model=raza&type=form');
+                        break;
 
-            case 'registrar':
-                $alm->__SET('Codigo_Mundo',          $_SESSION['CodMundo']);
-                $alm->__SET('Codigo',          $_REQUEST['Codigo']);
-                $alm->__SET('Nombre',          $_REQUEST['Nombre']);
-                $alm->__SET('Tipo',          $_REQUEST['Tipo']);
-
-                $model->Registrar($alm);
-                header('Location: raza.controller.php');
-                break;
-
-            case 'eliminar':
-                $model->Eliminar($_REQUEST['Codigo'], $_SESSION['CodMundo']);
-                header('Location: raza.controller.php');
-                break;
-            case 'editar':
-                $alm = $model->Obtener($_REQUEST['Codigo'], $_SESSION['CodMundo']);
-                $alm->__SET('Estado', 'actualizar');
-                break;
+                    case 'eliminar':
+                        $model->Eliminar($_REQUEST['Codigo'], $_SESSION['CodMundo']);
+                        header('Location: index.php?model=raza&type=form');
+                        break;
+                    case 'editar':
+                        $alm = $model->Obtener($_REQUEST['Codigo'], $_SESSION['CodMundo']);
+                        $alm->__SET('Estado', 'actualizar');
+                        break;
+                }
+            }
         }
-    }
 
 ?>
-
-    <!DOCTYPE html>
-    <html lang="es">
-
-    <head>
-        <title>Mantenimiento Raza</title>
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-    </head>
-
-    <body style="padding:15px;">
 
 
         <div class="pure-g">
 
             <div class="pure-u-1-12">
                 <h3>Raza </h3>
-                </br>
-                </br>
-                <a href="./../lista.php">Volver</a>
-                </br>
-                </br>
-                <a href="raza.controller.php">Nuevo</a>
-                </br>
+                <br/>
 
-                <form action="?action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
+                <form action="../index.php?model=raza&type=form&action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
                     <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
                     <input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
 
 
-                    <table style="width:500px;">
-
-
-                        <tr>
-
-                            <?php
-                            if ($alm->Estado == 'actualizar') {
-                            ?>
-                                <th style="display:none;">Viejo Codigo</th>
-                                <td><input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" /></td>
-
-                        </tr>
 
                     <?php
-
-                            }
+                    if ($alm->Estado == 'actualizar') {
                     ?>
+   
+                            <input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
 
 
-                    <!--
- <tr>
-	<th style="text-align:left;">Codigo Mundo</th>
-	<td>
-		<select type="text" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" style="width:100%;" />
-			<?php
-            foreach ($model_mundo->Listar() as $r) :
-            ?>	<option 
-				<?php
-                if ($alm->__GET('Codigo_Mundo') == $r->Codigo) {
-                    echo ' selected';
-                }
-                ?>				
-				value="<?php echo $r->Codigo; ?>"><?php echo $r->Nombre; ?></option> <?php
-                                                                                    endforeach;
-                                                                                        ?>
-			
-		</select>
 
-	</td>
- 
-</tr>
- -->
+                        <?php
 
-                    <tr>
-
-                    <tr>
-                        <th style="text-align:left;">Codigo</th>
+                    }
+                        ?>
+                        Codigo
+                        <input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+                        Nombre
+                        <input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
+                        Tipo
+                        <select type="text" name="Tipo" style="width:100%;" />
+                        <option <?php if ($alm->__GET('Tipo') == 'B') {
+                                    echo 'selected';
+                                } ?> value="B">Bueno</option>
+                        <option <?php if ($alm->__GET('Tipo') == 'N') {
+                                    echo 'selected';
+                                } ?> value="N">Nuetral</option>
+                        <option <?php if ($alm->__GET('Tipo') == 'M') {
+                                    echo 'selected';
+                                } ?> value="M">Malo</option>
+                        </select>
+                        <br /><br />
+                        <button type="submit" class="pure-button pure-button-primary">Guardar</button>
 
 
-                        <td><input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" /></td>
-
-                    </tr>
 
 
-                    <tr>
 
-                        <th style="text-align:left;">Nombre</th>
-
-
-                        <td><input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" /></td>
-
-                    </tr>
-
-                    <tr>
-
-                        <th style="text-align:left;">Tipo</th>
-
-
-                        <td>
-                            <select type="text" name="Tipo" style="width:100%;" />
-                            <option <?php if ($alm->__GET('Tipo') == 'B') {
-                                        echo 'selected';
-                                    } ?> value="B">Bueno</option>
-                            <option <?php if ($alm->__GET('Tipo') == 'N') {
-                                        echo 'selected';
-                                    } ?> value="N">Nuetral</option>
-                            <option <?php if ($alm->__GET('Tipo') == 'M') {
-                                        echo 'selected';
-                                    } ?> value="M">Malo</option>
-                            </select>
-                        </td>
-
-                    </tr>
-                    <tr>
-
-                        <td colspan="2">
-                            <button type="submit" class="pure-button pure-button-primary">Guardar</button>
-                        </td>
-
-                    </tr>
-
-                    </table>
 
                 </form>
 
@@ -170,23 +97,11 @@ if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
 
                         <tr>
                             <!-- <th style="text-align:left;">Codigo Mundo</th>-->
-                            <th style="text-align:left;">Codigo</th>
-
-                            <th style="text-align:left;">Nombre</th>
-
-                            <th style="text-align:left;">Tipo</th>
-
-                            <th style="text-align:left;">Imagen</th>
-
-
-                            <th style="text-align:left;">Registro</th>
-
-
-                            <th></th>
-
-
-                            <th></th>
-
+                            <th >Codigo</th>
+                            <th >Nombre</th>
+                            <th >Tipo</th>
+                            <th >Editar</th>
+                            <th >Eliminar</th>
                         </tr>
 
                     </thead>
@@ -195,19 +110,16 @@ if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
 
                         <tr>
                             <!-- <td><?php echo $r->__GET('Codigo_Mundo'); ?></td>-->
-
                             <td><?php echo $r->__GET('Codigo'); ?></td>
 
                             <td><?php echo $r->__GET('Nombre'); ?></td>
 
                             <td><?php echo $r->__GET('Tipo'); ?></td>
                             <td>
-                                <a href="?action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>">Editar</a>
+                                <a href="?model=raza&type=form&action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/actualizar.png" alt="Actualizar" style="width:15%"></a>
                             </td>
-
-
                             <td>
-                                <a href="?action=eliminar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>">Eliminar</a>
+                                <a href="?model=raza&type=form&action=eliminar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/eliminar.png" alt="Eliminar" style="width:15%"></a>
                             </td>
 
                         </tr>
@@ -221,10 +133,7 @@ if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
 
         </div>
 
-
-    </body>
-
-    </html>
 <?php
+    }
 }
 ?>

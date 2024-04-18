@@ -50,16 +50,6 @@ if(isset($_REQUEST['action']))
  
 ?>
  
-<!DOCTYPE html>
-<script type="text/javascript" src="/jquery.min.js"></script>
-<html lang="es">
-    <head>
-        <title>Mantenimiento Traduccion</title>
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-    </head>
-    <body style="padding:15px;">
- 
- 
 <div class="pure-g">
  
 <div class="pure-u-1-12">
@@ -235,10 +225,7 @@ if(isset($_REQUEST['action']))
             </div>
  
         </div>
- 
 
-    </body>
-</html>
 <?php
 }
 ?>
