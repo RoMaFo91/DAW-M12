@@ -1,7 +1,5 @@
 <?php
-if (session_status() == PHP_SESSION_ACTIVE)
-// require_once('./../classes.php');
-{
+if (isset($_SESSION['login_correct'])) {
     if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
 
         if (isset($_REQUEST['action'])) {
@@ -13,7 +11,7 @@ if (session_status() == PHP_SESSION_ACTIVE)
                         $alm->__SET('Descripcion',        $_REQUEST['Descripcion']);
 
                         $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
-                        header('Location: mundo.controller.php');
+                        header('Location: index.php?model=mundo&type=form');
                         break;
 
                     case 'registrar':
@@ -22,12 +20,12 @@ if (session_status() == PHP_SESSION_ACTIVE)
                         $alm->__SET('Descripcion',        $_REQUEST['Descripcion']);
 
                         $model->Registrar($alm);
-                        header('Location: mundo.controller.php');
+                        header('Location: index.php?model=mundo&type=form');
                         break;
 
                     case 'eliminar':
                         $model->Eliminar($_REQUEST['Codigo']);
-                        header('Location: mundo.controller.php');
+                        header('Location: index.php?model=mundo&type=form');
                         break;
                     case 'editar':
                         $alm = $model->Obtener($_REQUEST['Codigo']);
@@ -46,51 +44,23 @@ if (session_status() == PHP_SESSION_ACTIVE)
                     <h3>Mundo </h3>
                     </br>
                     </br>
-                    <a href="./../index.php">Volver</a>
-                    </br>
-                    </br>
-                    <a href="mundo.controller.php">Nuevo</a>
-                    </br>
-                    <form action="?action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
+
+                    <form action="../index.php?model=mundo&type=form&action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
                         <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
-                        <table style="width:500px;">
-                            <tr>
+                       
                                 <?php
                                 if ($alm->Estado == 'actualizar') {
                                 ?>
-                                    <th style="display:none;">Viejo Codigo</th>
-                                    <td><input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" /></td>
-                            </tr>
-                            <tr>
+
+                                    <input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+                         
                             <?php
                                 }
                             ?>
-                            <th style="text-align:left;">Codigo</th>
-                            <td><input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" /></td>
-                            </tr>
-                            <tr>
-                                <th style="text-align:left;">Nombre</th>
-                                <td><input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" /></td>
-                            </tr>
-                            <tr>
-
-                                <th style="text-align:left;">Descripcion</th>
-
-
-                                <td><textarea rows="10" id="Descripcion" name="Descripcion" style="width:100%;" /><?php echo $alm->__GET('Descripcion'); ?></textarea></td>
-
-                            </tr>
-
-
-                            <tr>
-
-                                <td colspan="2">
+                            Codigo<input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+                            Nombre<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
+                            Descripcion<textarea rows="10" id="Descripcion" name="Descripcion" style="width:100%;" /><?php echo $alm->__GET('Descripcion'); ?></textarea>
                                     <button type="submit" class="pure-button pure-button-primary">Guardar</button>
-                                </td>
-
-                            </tr>
-
-                        </table>
 
                     </form>
                 <?php
@@ -104,51 +74,26 @@ if (session_status() == PHP_SESSION_ACTIVE)
                         <thead>
 
                             <tr>
-                                <th style="text-align:left;">Codigo</th>
-
-                                <th style="text-align:left;">Nombre</th>
-
-
-                                <th style="text-align:left;">Descripcion</th>
-
-
-                                <th style="text-align:left;">Imagen</th>
-
-
-                                <th style="text-align:left;">Registro</th>
-                                <th>Entrar</th>
-
-
-                                <th></th>
-
-
-                                <th></th>
-
+                                <th >Codigo</th>
+                                <th >Nombre</th>
+                                <th >Descripcion</th>
+                                <th >Editar</th>
+                                <th >Eliminar</th>
                             </tr>
-
                         </thead>
 
                         <?php foreach ($model->Listar() as $r) : ?>
 
                             <tr>
                                 <td><?php echo $r->__GET('Codigo'); ?></td>
-
                                 <td><?php echo $r->__GET('Nombre'); ?></td>
-
-
                                 <td><?php echo $r->__GET('Descripcion'); ?></td>
-
-
-
                                 <td>
-                                    <a href="?action=editar&Codigo=<?php echo $r->Codigo; ?>">Editar</a>
+                                    <a href="?model=mundo&type=form&action=editar&Codigo=<?php echo $r->Codigo; ?>"><img src="/icon/actualizar.png" alt="Actualizar" style="width:15%"></a>
                                 </td>
-
-
                                 <td>
-                                    <a href="?action=eliminar&Codigo=<?php echo $r->Codigo; ?>">Eliminar</a>
+                                    <a href="?model=mundo&type=form&action=eliminar&Codigo=<?php echo $r->Codigo; ?>"><img src="/icon/eliminar.png" alt="Eliminar" style="width:15%"></a>
                                 </td>
-                                <td><a href="../lista.php?Cod=<?php echo $r->__GET('Codigo'); ?>&Nom=<?php echo $r->__GET('Nombre'); ?>"><?php echo $r->__GET('Codigo'); ?> - <?php echo $r->__GET('Nombre'); ?></a></td>
                             </tr>
 
                         <?php endforeach; ?>

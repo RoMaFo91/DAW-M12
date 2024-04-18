@@ -81,12 +81,6 @@ body {
   margin-left: 5%;
 }
 
-.nav-item-sel {
-  display: inline-block;
-  margin-left: 5%;
-  background-color: #e0223c;
-}
-
 .nav-link {
   text-decoration: none;
   color: #fff;
@@ -95,10 +89,10 @@ body {
 
 .nav-link-sel {
   text-decoration: none;
-  background-color: #5b22e0;
+  background-color: #a3c4f5;
   color: #fff;
   transition: color 0.5s;
-	border-radius: 60px;
+	border-radius: 10px;
 }
 
 .nav-link:hover {

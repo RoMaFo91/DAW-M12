@@ -13,11 +13,7 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 		$_SESSION['CodMundo']=$_GET["Cod"];
 		$_SESSION['NomMundo']=$_GET["Nom"];
 	}
-	echo $_SESSION['NomMundo'];
 	?>
-<br/>
-<br/>
-
 			<li><a href="index.php?model=raza&type=form">Crear Raza</a></li>
 			<li><a href="index.php?model=dados&type=form">Crear Dados</a></li>
 			<li><a href="index.php?model=atributos&type=form">Crear Atributos</a></li>

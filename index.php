@@ -16,13 +16,11 @@ if (session_status() == PHP_SESSION_NONE) {
 require_once('classes.php');
 
 if (isset($_GET["Desc"])) {
-	session_start();
 	$_SESSION['user'] = NULL;
 	$_SESSION['pass'] = NULL;
 	$_SESSION['login_correct']=NULL;
 }
 if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
-	session_start();
 	$_SESSION['user'] = $_REQUEST['user'];
 	$_SESSION['pass'] = $_REQUEST['pass'];
 	if (ComprobarSession($_REQUEST['user'], $_REQUEST['pass'])) {
@@ -96,21 +94,12 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 				?>
 
 					<form action="index.php" method="post">
-						<table style="width:500px;">
-							<tr>
-								<th style="text-align:left;">User</th>
-								<td><input type="text" name="user" style="width:100%;" /></td>
-							</tr>
-							<tr>
-								<th style="text-align:left;">Password</th>
-								<td><input type="password" name="pass" style="width:100%;" /></td>
-							</tr>
-							<tr>
-								<td colspan="2">
+
+								User<input type="text" name="user" style="width:100%;" />
+							Password<input type="password" name="pass" style="width:100%;" />
+							<br/><br/>
 									<button type="submit" class="pure-button pure-button-primary">Entrar</button>
-								</td>
-							</tr>
-						</table>
+
 					</form>
 				<?php
 				}
