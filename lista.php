@@ -14,18 +14,18 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 		$_SESSION['NomMundo']=$_GET["Nom"];
 	}
 	?>
-			<li><a href="index.php?model=raza&type=form">Crear Raza</a></li>
-			<li><a href="index.php?model=dados&type=form">Crear Dados</a></li>
-			<li><a href="index.php?model=atributos&type=form">Crear Atributos</a></li>
-			<li><a href="./controller/caracteristicas.controller.php">Crear Caracteristicas</a></li>
-			<li><a href="./controller/tipomonstruo.controller.php">Crear Tipo Monstruo</a></li>
-			<li><a href="./controller/clase.controller.php">Crear Clase</a></li>
-			<li><a href="./controller/subclase.controller.php">Crear Subclase</a></li>
-			<li><a href="./controller/nivel.controller.php">Crear Nivel</a></li>
-			<li><a href="./controller/monstruo.controller.php">Crear Monstruo</a></li>
-			<li><a href="./controller/estado.controller.php">Crear Estado</a></li>
-			<li><a href="./controller/habilidades.controller.php">Crear Habilidades</a></li>
-			<li><a href="./controller/traduccion.controller.php">Crear Traduccion (mantenimiento)</a></li>			  
+			<li><a href="index.php?model=raza&type=form">Gestión Raza</a></li>
+			<li><a href="index.php?model=dados&type=form">Gestión Dados</a></li>
+			<li><a href="index.php?model=atributos&type=form">Gestión Atributos</a></li>
+			<li><a href="index.php?model=caracteristicas&type=form">Gestión Caracteristicas</a></li>
+			<li><a href="index.php?model=tipomonstruo&type=form">Gestión Tipo Monstruo</a></li>
+			<li><a href="index.php?model=clase&type=form">Gestión Clase</a></li>
+			<li><a href="index.php?model=subclase&type=form">Gestión Subclase</a></li>
+			<li><a href="index.php?model=nivel&type=form">Gestión Nivel</a></li>
+			<li><a href="index.php?model=monstruo&type=form">Gestión Monstruo</a></li>
+			<li><a href="index.php?model=estado&type=form">Gestión Estado</a></li>
+			<li><a href="index.php?model=habilidades&type=form">Gestión Habilidades</a></li>
+			<li><a href="index.php?model=traduccion&type=form">Gestión Traduccion (mantenimiento)</a></li>			  
 		<?php
 }
 else

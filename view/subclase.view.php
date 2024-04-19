@@ -1,14 +1,9 @@
 <?php 
-session_start();
-require_once('./../classes.php');
- 
+if (isset($_SESSION['login_correct'])) {
 if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 {
-
-
-
-
 if(isset($_REQUEST['action'])) 
+if ($_REQUEST['model'] == 'subclase') {
 { switch($_REQUEST['action']) { 
 		case 'actualizar': 
 			$alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
@@ -18,7 +13,7 @@ if(isset($_REQUEST['action']))
 			$alm->__SET('Codigo_Clase_Mundo',          $_SESSION['CodMundo']);
  
             $model->Actualizar($alm, $_REQUEST['Codigo_viejo'],$_REQUEST['Codigo_viejo_mundo']);
-            header('Location: subclase.controller.php');
+            header('Location: index.php?model=subclase&type=form');
             break;
  
         case 'registrar':
@@ -29,18 +24,19 @@ if(isset($_REQUEST['action']))
 			$alm->__SET('Codigo_Clase_Mundo',          $_SESSION['CodMundo']);
  
             $model->Registrar($alm);
-            header('Location: subclase.controller.php');
+            header('Location: index.php?model=subclase&type=form');
             break;
  
         case 'eliminar':
             $model->Eliminar($_REQUEST['Codigo'],$_SESSION['CodMundo']);
-            header('Location: subclase.controller.php');
+            header('Location: index.php?model=subclase&type=form');
             break;
         case 'editar':
             $alm = $model->Obtener($_REQUEST['Codigo'],$_SESSION['CodMundo']);
 			$alm->__SET('Estado','actualizar');
             break;
     }
+}
 }
  
 ?>
@@ -52,69 +48,27 @@ if(isset($_REQUEST['action']))
     <h3>SubClase        </h3>     
 	 </br>
  </br>
-                  <a href="./../lista.php">Volver</a>
-				  </br>
-				  </br>
-				  	<a href="subclase.controller.php">Nuevo</a>
-					</br>
  
-<form action="?action=<?php echo $alm->Estado =='actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
+<form action="../index.php?model=subclase&type=form&action=<?php echo $alm->Estado =='actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
                     <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
 					<input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
                      
  
-<table style="width:500px;">
- 
- 
- <tr>
- 
+
 	 <?php
 	 if ($alm->Estado=='actualizar')
 	 {
 	 ?>
-	 <th style="display:none;">Viejo Codigo</th>
-	<td><input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" /></td>
+
+<input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+<input type="hidden" name="Codigo_viejo_mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" style="width:100%;" />
 	
-	<th style="display:none;">Viejo Codigo Mundo</th>
-	<td><input type="hidden" name="Codigo_viejo_mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" style="width:100%;" /></td>
-	 
-</tr>
  
 <?php
  
 }
  ?>
- 
-
- <!--
- <tr>
-	<th style="text-align:left;">Codigo Mundo</th>
-	<td>
-		<div class="SubClaseCodigo_Mundo">
-		<select type="text" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" style="width:100%;" />
-			<?php
-				foreach($model_mundo->Listar() as $r): 
-				?>	<option 
-				<?php 
-						if ($alm->__GET('Codigo_Mundo')==$r->Codigo)
-						{
-							echo ' selected';
-						}
-					?>
-				value="<?php echo $r->Codigo; ?>"><?php echo $r->Nombre; ?></option> <?php
-				endforeach; 
-			?>
-			
-		</select>
-		</div>
-
-	</td>
- 
-</tr>
--->
- <tr>
-	<th style="text-align:left;">Codigo Clase</th>
-	<td>
+ Codigo Clase
 		<div  class="SubClaseCodigo_Clase">
 		<select name="Codigo_Clase">
 				<?php
@@ -149,30 +103,12 @@ if(isset($_REQUEST['action']))
 				});
 			</script>
 		</div>
-	</td>
- 
-</tr>
- 
- 
-<tr>
- 
- <tr>
-	<th style="text-align:left;">Codigo</th>
-	<td><input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" /></td>
-</tr>
-<tr>
-	<th style="text-align:left;">Nombre</th>
-	<td><input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" /></td>
-</tr>
-<tr>
- 
-<td colspan="2">
-                                <button type="submit" class="pure-button pure-button-primary">Guardar</button>
-                            </td>
- 
-                        </tr>
- 
-                    </table>
+	Codigo
+	<input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+Nombre
+	<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
+
+                                <br/><br/><button type="submit" class="pure-button pure-button-primary">Guardar</button>
  
                 </form>
  
@@ -183,31 +119,29 @@ if(isset($_REQUEST['action']))
 <thead>
  
 <tr>
-<!--	<th style="text-align:left;">Codigo Mundo</th>-->
-	<th style="text-align:left;">Codigo Clase</th>
-	<th style="text-align:left;">Codigo</th>
-	<th style="text-align:left;">Nombre</th> 
-	<th style="text-align:left;">Imagen</th>
-	<th style="text-align:left;">Registro</th>
-	<th></th>
-	<th></th>
+<!--	<th >Codigo Mundo</th>-->
+	<th >Codigo Clase</th>
+	<th >Codigo</th>
+	<th >Nombre</th> 
+	<th >Editar</th>
+	<th >Eliminar</th>
+
 </tr>
 </thead>
  
                     <?php foreach($model->Listar($_SESSION['CodMundo']) as $r): ?>
  
 <tr>
-<!--<td><?php echo $r->__GET('Codigo_Mundo'); ?></td>-->
-<td><?php echo $r->__GET('Codigo_Clase'); ?></td>
+<td><?php echo $r->__GET('obj_Codigo_Clase')->name(); ?></td>
 <td><?php echo $r->__GET('Codigo'); ?></td>
 <td><?php echo $r->__GET('Nombre'); ?></td>
 <td>
-                                <a href="?action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>">Editar</a>
+                                <a href="?model=subclase&type=form&action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/actualizar.png" alt="Actualizar" style="width:15%"></a>
                             </td>
  
  
 <td>
-                                <a href="?action=eliminar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>">Eliminar</a>
+                                <a href="?model=subclase&type=form&action=eliminar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/eliminar.png" alt="Eliminar" style="width:15%"></a>
                             </td>
  
                         </tr>
@@ -222,5 +156,6 @@ if(isset($_REQUEST['action']))
         </div>
 
 <?php
+}
 }
 ?>

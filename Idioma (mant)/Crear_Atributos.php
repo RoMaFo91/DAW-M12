@@ -89,7 +89,7 @@ if(isset($_REQUEST['action']))
 
  <!--
  <tr>
-	<th style="text-align:left;">Codigo Mundo</th>
+	<th >Codigo Mundo</th>
 	<td>
 		<select type="text" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" style="width:100%;" />
 			<?php
@@ -115,7 +115,7 @@ if(isset($_REQUEST['action']))
 <tr>
  
  <tr>
-<th style="text-align:left;">Codigo</th>
+<th >Codigo</th>
  
  
 <td><input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" /></td>
@@ -125,7 +125,7 @@ if(isset($_REQUEST['action']))
  
 <tr>
  
-<th style="text-align:left;">Nombre</th>
+<th >Nombre</th>
  
  
 <td><input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" /></td>
@@ -134,7 +134,7 @@ if(isset($_REQUEST['action']))
 						
  <tr>
  
-<th style="text-align:left;">Descripcion</th>
+<th >Descripcion</th>
  
  
 <td><textarea rows="10" id="Descripcion" name="Descripcion" style="width:100%;" /><?php echo $alm->__GET('Descripcion'); ?></textarea></td>
@@ -160,17 +160,17 @@ if(isset($_REQUEST['action']))
 <thead>
  
 <tr>
- <th style="text-align:left;">Codigo Mundo</th>
- <th style="text-align:left;">Codigo</th>
+ <th >Codigo Mundo</th>
+ <th >Codigo</th>
  
-<th style="text-align:left;">Nombre</th> 
+<th >Nombre</th> 
 
-<th style="text-align:left;">Descripcion</th> 
+<th >Descripcion</th> 
  
-<th style="text-align:left;">Imagen</th>
+<th >Imagen</th>
  
  
-<th style="text-align:left;">Registro</th>
+<th >Registro</th>
  
  
 <th></th>

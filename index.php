@@ -23,6 +23,8 @@ if (isset($_GET["Desc"])) {
 if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 	$_SESSION['user'] = $_REQUEST['user'];
 	$_SESSION['pass'] = $_REQUEST['pass'];
+	$_SESSION['CodMundo']='';
+	
 	if (ComprobarSession($_REQUEST['user'], $_REQUEST['pass'])) {
 		$_SESSION['login_correct'] = True;
 		// header('Location: index.php');
@@ -39,7 +41,7 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 	<header class="header">
 		<div class="container_head">
 			<div class="logo">
-				<img src="logo.png" alt="Logo" class="logo-img">
+				<img src="icon/logo.jpg" alt="Logo" class="logo-img" style="width:40%">
 			</div>
 			<h1>Gestor de mundos</h1>
 			<p>Mundos disponibles :</p>
@@ -56,9 +58,15 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 					?>
 				</ul>
 			</nav>
+			<?php
+			if (isset($_SESSION['login_correct'])) {
+				?>
 			<div class="login">
 				<a href="index.php?Desc=desc" class="login-link">Cerrar sesión</a>
 			</div>
+			<?php
+			}
+			?>
 		</div>
 	</header>
 
@@ -79,7 +87,13 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 			</div>
 			<div class="contenido">
 				<!-- Contenido principal -->
-				<h1>Bienvenido al mundo : <?php echo $_SESSION['NomMundo'] ?> </h1> 
+				<?php
+				if (isset($_SESSION['NomMundo']))
+				{ ?><h1>Bienvenido al mundo : <?php
+					echo $_SESSION['NomMundo'];
+				}
+				
+				 ?> </h1> 
 				<div class="container">
 				<?php
 

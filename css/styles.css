@@ -179,7 +179,7 @@ button {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: #77b5f7;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -228,7 +228,7 @@ table {
 
 /* Estilos para las celdas de encabezado */
 th {
-  background-color: #007bff;
+  background-color: #77b5f7;
   color: #fff;
   padding: 10px;
   text-align: center;

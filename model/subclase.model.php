@@ -11,6 +11,12 @@ class SubClase {
     private $Codigo_Clase_Mundo;
     private $Estado;
     
+    public function name()
+    {
+        return $this->Nombre;
+    }
+
+
     public function __GET($k){ return $this->$k; }
        public function __SET($k, $v){ return $this->$k = $v; }
    }
@@ -47,6 +53,7 @@ class SubClaseModel {
                 $alm->__SET('Codigo', $r->Codigo);
 				$alm->__SET('Nombre', $r->Nombre);
 				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
+                $alm->__SET('obj_Codigo_Clase', (new ClaseModel())->Obtener($r->Codigo_Clase,$r->Codigo_Clase_Mundo));
 				$alm->__SET('Codigo_Clase', $r->Codigo_Clase);
 				$alm->__SET('Codigo_Clase_Mundo', $r->Codigo_Clase_Mundo);
  
@@ -80,6 +87,7 @@ class SubClaseModel {
                 $alm->__SET('Codigo', $r->Codigo);
 				$alm->__SET('Nombre', $r->Nombre);
 				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
+                $alm->__SET('obj_Codigo_Clase', (new ClaseModel())->Obtener($r->Codigo_Clase,$r->Codigo_Clase_Mundo));
 				$alm->__SET('Codigo_Clase', $r->Codigo_Clase);
 				$alm->__SET('Codigo_Clase_Mundo', $r->Codigo_Clase_Mundo);
  
@@ -109,8 +117,9 @@ class SubClaseModel {
  
             $alm->__SET('Codigo', $r->Codigo);
 			$alm->__SET('Nombre', $r->Nombre);
-			$alm->__SET('Codigo_Clase', $r->Codigo_Clase);
-			$alm->__SET('Codigo_Clase_Mundo', $r->Codigo_Clase_Mundo);
+            $alm->__SET('obj_Codigo_Clase', (new ClaseModel())->Obtener($r->Codigo_Clase,$r->Codigo_Clase_Mundo));
+            $alm->__SET('Codigo_Clase', $r->Codigo_Clase);
+            $alm->__SET('Codigo_Clase_Mundo', $r->Codigo_Clase_Mundo);
 			$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
  
  

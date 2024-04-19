@@ -1,6 +1,5 @@
 <?php
 if (isset($_SESSION['login_correct'])) {
-
     if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
         if (isset($_REQUEST['action'])) {
             if ($_REQUEST['model'] == 'raza') {
@@ -96,7 +95,7 @@ if (isset($_SESSION['login_correct'])) {
                     <thead>
 
                         <tr>
-                            <!-- <th style="text-align:left;">Codigo Mundo</th>-->
+                            <!-- <th >Codigo Mundo</th>-->
                             <th >Codigo</th>
                             <th >Nombre</th>
                             <th >Tipo</th>

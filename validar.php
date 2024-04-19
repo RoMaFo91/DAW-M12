@@ -21,10 +21,16 @@ function ComprobarSession($Cod,$Pass)
             $r = $stm->fetch(PDO::FETCH_OBJ);				
 				$Codigo=$r->Codigo;
 				$Password=$r->Passwrod;
+				$Cod_mundo=$r->Codigo_Mundo;
 		
 		//session_start();
 			if ($Cod == $Codigo && (crypt($Pass,$salt)==$Password))
 			{
+				if($_SESSION['CodMundo']=='')
+				{
+					$_SESSION['CodMundo']=$Cod_mundo;
+				}
+				
 				return true;
 			}
 			else

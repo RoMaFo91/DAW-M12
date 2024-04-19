@@ -71,7 +71,7 @@ if (isset($_SESSION['login_correct'])) {
 
                     <!--
  <tr>
-	<th style="text-align:left;">Codigo Mundo</th>
+	<th >Codigo Mundo</th>
 	<td>
 		<select type="text" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" style="width:100%;" />
 			<?php

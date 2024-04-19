@@ -1,8 +1,6 @@
 <?php
 //Llamada al modelo
-// require($_SERVER['DOCUMENT_ROOT']."/classes.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/habilidades.model.php");
-// require($_SERVER['DOCUMENT_ROOT']."/model/mundo.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/nivel.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/subclase.model.php");
 $alm = new Habilidades(); 

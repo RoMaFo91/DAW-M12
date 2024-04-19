@@ -6,7 +6,13 @@ class Estado {
     private $Codigo_Mundo;
     private $Codigo;
     private $Nombre;
+    private $Descripcion;
     private $Estado;
+
+    public function name()
+    {
+        return $this->Nombre;
+    }
     
     public function __GET($k){ return $this->$k; }
        public function __SET($k, $v){ return $this->$k = $v; }
@@ -43,6 +49,7 @@ class EstadoModel {
  
                 $alm->__SET('Codigo', $r->Codigo);
 				$alm->__SET('Nombre', $r->Nombre);
+                $alm->__SET('Descripcion', $r->Descripcion);
 				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
  
                 $result[] = $alm;
@@ -107,7 +114,7 @@ class EstadoModel {
             $alm->__SET('Codigo', $r->Codigo);
 			$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
 			$alm->__SET('Nombre', $r->Nombre);
- 
+            $alm->__SET('Descripcion', $r->Descripcion);
  
             return $alm;
         } catch (Exception $e) 
@@ -137,8 +144,9 @@ class EstadoModel {
             $sql = "UPDATE Estado SET 
 						Codigo			= ?,
 						Codigo_Mundo = ?,
-						Nombre = ?
-                    WHERE Codigo = ?";
+						Nombre = ?,
+                        Descripcion = ?
+                    WHERE Codigo = ? AND Codigo_Mundo = ?";
  
             $this->pdo->prepare($sql)
                  ->execute(
@@ -146,7 +154,9 @@ class EstadoModel {
 					$data->__GET('Codigo'), 
 					$data->__GET('Codigo_Mundo'), 
 					$data->__GET('Nombre'), 
-                    $codigo_viejo
+                    $data->__GET('Descripcion'), 
+                    $codigo_viejo,
+                    $data->__GET('Codigo_Mundo')
                     )
                 );
         } catch (Exception $e) 
@@ -159,8 +169,8 @@ class EstadoModel {
     {
         try
         {
-        $sql = "INSERT INTO Estado (Codigo_Mundo,Codigo,Nombre) 
-                VALUES (?,?, ?)";
+        $sql = "INSERT INTO Estado (Codigo_Mundo,Codigo,Nombre,Descripcion) 
+                VALUES (?,?, ?,?)";
  
         $this->pdo->prepare($sql)
              ->execute(
@@ -168,6 +178,7 @@ class EstadoModel {
 				$data->__GET('Codigo_Mundo'), 
 				$data->__GET('Codigo'), 
 				$data->__GET('Nombre'),
+                $data->__GET('Descripcion'),
                 )
             );
         } catch (Exception $e) 

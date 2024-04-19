@@ -1,10 +1,9 @@
 <?php 
-session_start();
-require_once('./../classes.php');
- 
+if (isset($_SESSION['login_correct'])) {
 if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 {
 if(isset($_REQUEST['action'])) 
+if ($_REQUEST['model'] == 'nivel') {
 { switch($_REQUEST['action']) { 
 		case 'actualizar': 
 			$alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
@@ -13,7 +12,7 @@ if(isset($_REQUEST['action']))
 			$alm->__SET('Exp_fin',          $_REQUEST['Exp_fin']);
 			 
             $model->Actualizar($alm, $_REQUEST['Codigo_viejo'],$_REQUEST['Codigo_viejo_mundo']);
-            header('Location: nivel.controller.php');
+            header('Location: index.php?model=nivel&type=form');
             break;
  
         case 'registrar':
@@ -23,12 +22,12 @@ if(isset($_REQUEST['action']))
 			$alm->__SET('Exp_fin',          $_REQUEST['Exp_fin']);
 			
             $model->Registrar($alm);
-            header('Location: nivel.controller.php');
+            header('Location: index.php?model=nivel&type=form');
             break;
  
         case 'eliminar':
             $model->Eliminar($_REQUEST['Codigo'],$_SESSION['CodMundo']);
-            header('Location: nivel.controller.php');
+            header('Location: index.php?model=nivel&type=form');
             break;
         case 'editar':
             $alm = $model->Obtener($_REQUEST['Codigo'],$_SESSION['CodMundo']);
@@ -36,7 +35,7 @@ if(isset($_REQUEST['action']))
             break;
     }
 }
- 
+}
 ?>
  
  
@@ -46,101 +45,31 @@ if(isset($_REQUEST['action']))
     <h3>Nivel       </h3>     
 	 </br>
  </br>
-                  <a href="./../lista.php">Volver</a>
-				  </br>
-				  </br>
-				  	<a href="nivel.controller.php">Nuevo</a>
-					</br>
  
-<form action="?action=<?php echo $alm->Estado =='actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
+<form action="../index.php?model=nivel&type=form&action=<?php echo $alm->Estado =='actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
                     <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
 					<input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
                      
- 
-<table style="width:500px;">
- 
- 
- <tr>
  
 	 <?php
 	 if ($alm->Estado=='actualizar')
 	 {
 	 ?>
-	 <th style="display:none;">Viejo Codigo</th>
-	<td><input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" /></td>
+	<input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
 	 
-</tr>
- 
+
 <?php
  
 }
  ?>
  
 
- <!--
- <tr>
-	<th style="text-align:left;">Codigo Mundo</th>
-	<td>
-		<select type="text" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" style="width:100%;" />
-			<?php
-				foreach($model_mundo->Listar() as $r): 
-				?>	<option 
-				<?php 
-						if ($alm->__GET('Codigo_Mundo')==$r->Codigo)
-						{
-							echo ' selected';
-						}
-					?>				
-				value="<?php echo $r->Codigo; ?>"><?php echo $r->Nombre; ?></option> <?php
-				endforeach; 
-			?>
-			
-		</select>
-
-	</td>
+Codigo<input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+Experciencia Inicial<input type="text" name="Exp_ini" value="<?php echo $alm->__GET('Exp_ini'); ?>" style="width:100%;" />
+Experciencia final<input type="text" name="Exp_fin" value="<?php echo $alm->__GET('Exp_fin'); ?>" style="width:100%;" />
  
-</tr>
- -->
- 
-<tr>
- 
- <tr>
-<th style="text-align:left;">Codigo</th>
- 
- 
-<td><input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" /></td>
- 
-                        </tr>
- 
- 
-<tr>
- 
-<th style="text-align:left;">Experciencia Inicial</th>
- 
- 
-<td><input type="text" name="Exp_ini" value="<?php echo $alm->__GET('Exp_ini'); ?>" style="width:100%;" /></td>
- 
-                        </tr>
-						
-<tr>
- 
-<th style="text-align:left;">Experciencia final</th>
- 
- 
-<td><input type="text" name="Exp_fin" value="<?php echo $alm->__GET('Exp_fin'); ?>" style="width:100%;" /></td>
- 
-                        </tr>
- 
- 
-<tr>
- 
-<td colspan="2">
-                                <button type="submit" class="pure-button pure-button-primary">Guardar</button>
-                            </td>
- 
-                        </tr>
- 
-                    </table>
+                                <br/><br/><button type="submit" class="pure-button pure-button-primary">Guardar</button>
+                          
  
                 </form>
  
@@ -151,22 +80,17 @@ if(isset($_REQUEST['action']))
 <thead>
  
 <tr>
- <!--<th style="text-align:left;">Codigo Mundo</th>-->
- <th style="text-align:left;">Codigo</th>
+ <!--<th >Codigo Mundo</th>-->
+ <th >Codigo</th>
  
-<th style="text-align:left;">Exp ini</th> 
-<th style="text-align:left;">Exp fin</th> 
+<th >Exp ini</th> 
+<th >Exp fin</th> 
  
-<th style="text-align:left;">Imagen</th>
- 
- 
-<th style="text-align:left;">Registro</th>
+<th >Editar</th>
  
  
-<th></th>
+<th >Eliminar</th>
  
- 
-<th></th>
  
                         </tr>
  
@@ -184,12 +108,12 @@ if(isset($_REQUEST['action']))
  
  
 <td>
-                                <a href="?action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>">Editar</a>
+                                <a href="?model=nivel&type=form&action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/actualizar.png" alt="Actualizar" style="width:15%"></a>
                             </td>
  
  
 <td>
-                                <a href="?action=eliminar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>">Eliminar</a>
+                                <a href="?model=nivel&type=form&action=eliminar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/eliminar.png" alt="Eliminar" style="width:15%"></a>
                             </td>
  
                         </tr>
@@ -204,5 +128,6 @@ if(isset($_REQUEST['action']))
         </div>
 
 <?php
+}
 }
 ?>

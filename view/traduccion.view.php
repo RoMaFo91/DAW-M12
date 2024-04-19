@@ -104,7 +104,7 @@ if(isset($_REQUEST['action']))
 
  
  <tr>
-	<th style="text-align:left;">Codigo Tabla</th>
+	<th >Codigo Tabla</th>
 	<td>
 		<div class="DivTabla">
 		<select type="text" name="Tabla" value="<?php echo $alm->__GET('Tabla'); ?>" style="width:100%;" />
@@ -129,7 +129,7 @@ if(isset($_REQUEST['action']))
 
 
  <tr>
-	<th style="text-align:left;">Codigo Campo</th>
+	<th >Codigo Campo</th>
 	<td>
 		<div class="DivCampo">
 			<select type="text" name="Campo" value="<?php echo $alm->__GET('Campo'); ?>" style="width:100%;" />
@@ -181,13 +181,13 @@ if(isset($_REQUEST['action']))
 <thead>
  
 <tr>
- <th style="text-align:left;">Codigo Tabla</th>
- <th style="text-align:left;">Codigo Campo</th>
+ <th >Codigo Tabla</th>
+ <th >Codigo Campo</th>
  
-<th style="text-align:left;">Imagen</th>
+<th >Imagen</th>
  
  
-<th style="text-align:left;">Registro</th>
+<th >Registro</th>
  
  
 <th></th>

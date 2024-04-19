@@ -9,6 +9,11 @@ class Caracteristicas {
     private $Nombre;
     private $Descripcion;
     private $Estado;
+
+    public function name()
+    {
+        return $this->Nombre;
+    }
     
     public function __GET($k){ return $this->$k; }
        public function __SET($k, $v){ return $this->$k = $v; }
@@ -139,13 +144,13 @@ class CaracteristicasModel {
     {
         try
         {
+
             $sql = "UPDATE Caracteristicas SET 
 						Codigo			= ?,
 						Codigo_Mundo = ?,
 						Nombre = ?,
-                        Descripcion = ?,
-                    WHERE Codigo = ?";
- 
+                        Descripcion = ?
+                    WHERE Codigo = ? AND Codigo_Mundo = ?";
             $this->pdo->prepare($sql)
                  ->execute(
                 array(
@@ -153,7 +158,8 @@ class CaracteristicasModel {
 					$data->__GET('Codigo_Mundo'), 
 					$data->__GET('Nombre'), 
                     $data->__GET('Descripcion'),
-                    $codigo_viejo
+                    $codigo_viejo,
+                    $data->__GET('Codigo_Mundo')
                     )
                 );
         } catch (Exception $e) 

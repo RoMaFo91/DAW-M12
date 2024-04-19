@@ -10,6 +10,11 @@ class Raza {
     private $Tipo;
     private $Estado;
     
+    public function name()
+    {
+        return $this->Nombre;
+    }
+
     public function __GET($k){ return $this->$k; }
        public function __SET($k, $v){ return $this->$k = $v; }
    }

@@ -8,8 +8,15 @@ class Habilidades {
     private $Nombre;
     private $Codigo_SubClase;
     private $Codigo_Nivel;
+    private $obj_Codigo_SubClase;
+    private $obj_Codigo_Nivel;
     private $Estado;
     
+    public function name()
+    {
+        return $this->Nombre;
+    }
+
     public function __GET($k){ return $this->$k; }
        public function __SET($k, $v){ return $this->$k = $v; }
    }
@@ -48,11 +55,16 @@ class HabilidadesModel {
 				$alm->__SET('Nombre', $r->Nombre);
 				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
 				
-				$alm->__SET('Codigo_SubClase_Mundo', $r->Codigo_Mundo);
-				$alm->__SET('Codigo_SubClase', $r->Codigo_SubClase);
-				
-				$alm->__SET('Codigo_Nivel_Mundo', $r->Codigo_Mundo);
-				$alm->__SET('Codigo_Nivel', $r->Codigo_Nivel);
+                
+                $alm->__SET('Codigo_SubClase_Mundo', $r->Codigo_Mundo);
+                $alm->__SET('Codigo_SubClase', $r->Codigo_SubClase);
+                $alm->__SET('obj_Codigo_SubClase', (new SubClaseModel())->Obtener($r->Codigo_SubClase,$r->Codigo_Mundo));
+                    
+                $alm->__SET('Codigo_Nivel_Mundo', $r->Codigo_Mundo);
+                $alm->__SET('Codigo_Nivel', $r->Codigo_Nivel);
+                $alm->__SET('obj_Codigo_Nivel', (new NivelModel())->Obtener($r->Codigo_Nivel,$r->Codigo_Mundo));
+                    
+				              
 				
                 $result[] = $alm;
             }
@@ -89,12 +101,15 @@ class HabilidadesModel {
 				$alm->__SET('Nombre', $r->Nombre);
 				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
 				
-				$alm->__SET('Codigo_SubClase_Mundo', $r->Codigo_Mundo);
-				$alm->__SET('Codigo_SubClase', $r->Codigo_SubClase);
-				
-				$alm->__SET('Codigo_Nivel_Mundo', $r->Codigo_Mundo);
-				$alm->__SET('Codigo_Nivel', $r->Codigo_Nivel);
-				
+                $alm->__SET('Codigo_SubClase_Mundo', $r->Codigo_Mundo);
+                $alm->__SET('Codigo_SubClase', $r->Codigo_SubClase);
+                $alm->__SET('obj_Codigo_SubClase', (new SubClaseModel())->Obtener($r->Codigo_SubClase,$r->Codigo_Mundo));
+                    
+                $alm->__SET('Codigo_Nivel_Mundo', $r->Codigo_Mundo);
+                $alm->__SET('Codigo_Nivel', $r->Codigo_Nivel);
+                $alm->__SET('obj_Codigo_Nivel', (new NivelModel())->Obtener($r->Codigo_Nivel,$r->Codigo_Mundo));
+                    
+
                 $result[] = $alm;
             }
  
@@ -125,10 +140,12 @@ class HabilidadesModel {
 			
 			$alm->__SET('Codigo_SubClase_Mundo', $r->Codigo_Mundo);
 			$alm->__SET('Codigo_SubClase', $r->Codigo_SubClase);
+            $alm->__SET('obj_Codigo_SubClase', (new SubClaseModel())->Obtener($r->Codigo_SubClase,$r->Codigo_Mundo));
 				
 			$alm->__SET('Codigo_Nivel_Mundo', $r->Codigo_Mundo);
 			$alm->__SET('Codigo_Nivel', $r->Codigo_Nivel);
- 
+            $alm->__SET('obj_Codigo_Nivel', (new NivelModel())->Obtener($r->Codigo_Nivel,$r->Codigo_Mundo));
+				 
             return $alm;
         } catch (Exception $e) 
         {

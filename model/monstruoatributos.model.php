@@ -9,7 +9,8 @@ class Monstruo_Atributos {
     private $Codigo_Atributo;
     private $Valor;
     private $Estado;
-    
+
+
     public function __GET($k){ return $this->$k; }
        public function __SET($k, $v){ return $this->$k = $v; }
    }
