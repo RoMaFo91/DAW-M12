@@ -10,7 +10,7 @@ if ($_REQUEST['model'] == 'clase') {
 			$alm->__SET('Codigo',              $_REQUEST['Codigo']);
             $alm->__SET('Nombre',          $_REQUEST['Nombre']);
  
-            $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
+            $model->Actualizar($alm, $_REQUEST['Codigo']);
             header('Location: index.php?model=clase&type=form');
             break;
  
@@ -49,47 +49,10 @@ if ($_REQUEST['model'] == 'clase') {
 					<input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
                      
  
-	 <?php
-	 if ($alm->Estado=='actualizar')
-	 {
-	 ?>
-
-	<input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
  
-<?php
- 
-}
- ?>
- 
-
- <!--
- <tr>
-	<th >Codigo Mundo</th>
-	<td>
-		<select type="text" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" style="width:100%;" />
-			<?php
-				foreach($model_mundo->Listar() as $r): 
-				?>	<option 
-				<?php 
-						if ($alm->__GET('Codigo_Mundo')==$r->Codigo)
-						{
-							echo ' selected';
-						}
-					?>				
-				value="<?php echo $r->Codigo; ?>"><?php echo $r->Nombre; ?></option> <?php
-				endforeach; 
-			?>
-			
-		</select>
-
-	</td>
- 
-</tr>
- -->
- 
-Codigo<input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+<input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
 Nombre<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
-                              <button type="submit" class="pure-button pure-button-primary">Guardar</button>
+<br/><br/><button type="submit" class="pure-button pure-button-primary">Guardar</button>
                             
  
                 </form>
@@ -101,9 +64,6 @@ Nombre<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); 
 <thead>
  
 <tr>
-<!-- <th >Codigo Mundo</th> -->
- <th >Codigo</th>
- 
 <th >Nombre</th> 
  
 <th >Editar</th>
@@ -124,10 +84,7 @@ Nombre<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); 
                     <?php foreach($model->Listar($_SESSION['CodMundo']) as $r): ?>
  
 <tr>
- <!--<td><?php echo $r->__GET('Codigo_Mundo'); ?></td> -->
- 
- <td><?php echo $r->__GET('Codigo'); ?></td>
- 
+
 <td><?php echo $r->__GET('Nombre'); ?></td>
  
  

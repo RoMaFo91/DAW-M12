@@ -11,7 +11,7 @@ if ($_REQUEST['model'] == 'tipomonstruo') {
 			$alm->__SET('Codigo',              $_REQUEST['Codigo']);
             $alm->__SET('Descripcion',          $_REQUEST['Descripcion']);
  
-            $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
+            $model->Actualizar($alm, $_REQUEST['Codigo']);
             header('Location: index.php?model=tipomonstruo&type=form');
             break;
  
@@ -49,23 +49,12 @@ if ($_REQUEST['model'] == 'tipomonstruo') {
                     <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
 					<input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
                      
-	 <?php
-	 if ($alm->Estado=='actualizar')
-	 {
-	 ?>
-
-	<input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
 	
-<?php
- 
-}
- ?>
- 
 
-Codigo<input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+<input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
 Descripcion<input type="text" name="Descripcion" value="<?php echo $alm->__GET('Descripcion'); ?>" style="width:100%;" />
-<button type="submit" class="pure-button pure-button-primary">Guardar</button>
-                           
+<br/>       <br/>  <button type="submit" class="pure-button pure-button-primary">Guardar</button>
+                    
                 </form>
  
  
@@ -75,8 +64,6 @@ Descripcion<input type="text" name="Descripcion" value="<?php echo $alm->__GET('
 <thead>
  
 <tr>
- <th >Codigo</th>
- 
 <th >Descripcion</th> 
  
 <th >Editar</th>
@@ -92,9 +79,7 @@ Descripcion<input type="text" name="Descripcion" value="<?php echo $alm->__GET('
                     <?php foreach($model->Listar($_SESSION['CodMundo']) as $r): ?>
  
 <tr>
- 
- <td><?php echo $r->__GET('Codigo'); ?></td>
- 
+  
 <td><?php echo $r->__GET('Descripcion'); ?></td>
  
  

@@ -100,7 +100,7 @@ if ($_REQUEST['model'] == 'estado') {
  
 }
  ?>
-Codigo<input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+<input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
 Nombre<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
 Descripción<input type="text" name="Descripcion" value="<?php echo $alm->__GET('Descripcion'); ?>" style="width:100%;" />
 						
@@ -142,8 +142,6 @@ Descripción<input type="text" name="Descripcion" value="<?php echo $alm->__GET(
 <thead>
  
 <tr>
- <th >Codigo</th>
- 
 <th >Nombre</th> 
 <th >Descripción</th> 
  
@@ -160,10 +158,6 @@ Descripción<input type="text" name="Descripcion" value="<?php echo $alm->__GET(
                     <?php foreach($model->Listar($_SESSION['CodMundo']) as $r): ?>
  
 <tr>
- <!--<td><?php echo $r->__GET('Codigo_Mundo'); ?></td>-->
- 
- <td><?php echo $r->__GET('Codigo'); ?></td>
- 
 <td><?php echo $r->__GET('Nombre'); ?></td>
 <td><?php echo $r->__GET('Descripcion'); ?></td>
  

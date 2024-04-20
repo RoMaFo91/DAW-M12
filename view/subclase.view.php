@@ -12,7 +12,7 @@ if ($_REQUEST['model'] == 'subclase') {
 			$alm->__SET('Codigo_Clase',          $_REQUEST['Codigo_Clase']);
 			$alm->__SET('Codigo_Clase_Mundo',          $_SESSION['CodMundo']);
  
-            $model->Actualizar($alm, $_REQUEST['Codigo_viejo'],$_REQUEST['Codigo_viejo_mundo']);
+            $model->Actualizar($alm, $_REQUEST['Codigo'],$_SESSION['CodMundo']);
             header('Location: index.php?model=subclase&type=form');
             break;
  
@@ -55,19 +55,7 @@ if ($_REQUEST['model'] == 'subclase') {
                      
  
 
-	 <?php
-	 if ($alm->Estado=='actualizar')
-	 {
-	 ?>
-
-<input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
-<input type="hidden" name="Codigo_viejo_mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" style="width:100%;" />
 	
- 
-<?php
- 
-}
- ?>
  Codigo Clase
 		<div  class="SubClaseCodigo_Clase">
 		<select name="Codigo_Clase">
@@ -103,8 +91,7 @@ if ($_REQUEST['model'] == 'subclase') {
 				});
 			</script>
 		</div>
-	Codigo
-	<input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+	<input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
 Nombre
 	<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
 
@@ -121,7 +108,6 @@ Nombre
 <tr>
 <!--	<th >Codigo Mundo</th>-->
 	<th >Codigo Clase</th>
-	<th >Codigo</th>
 	<th >Nombre</th> 
 	<th >Editar</th>
 	<th >Eliminar</th>
@@ -133,7 +119,6 @@ Nombre
  
 <tr>
 <td><?php echo $r->__GET('obj_Codigo_Clase')->name(); ?></td>
-<td><?php echo $r->__GET('Codigo'); ?></td>
 <td><?php echo $r->__GET('Nombre'); ?></td>
 <td>
                                 <a href="?model=subclase&type=form&action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/actualizar.png" alt="Actualizar" style="width:15%"></a>

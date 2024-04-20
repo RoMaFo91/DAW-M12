@@ -170,7 +170,7 @@ class NivelModel {
              ->execute(
             array(
 				$data->__GET('Codigo_Mundo'), 
-				createGUID(),
+				$data->__GET('Codigo'), 
 				$data->__GET('Exp_ini'),
 				$data->__GET('Exp_fin'),
                 )

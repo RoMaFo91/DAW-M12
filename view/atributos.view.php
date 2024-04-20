@@ -10,7 +10,7 @@ if (isset($_SESSION['login_correct'])) {
                         $alm->__SET('Nombre',          $_REQUEST['Nombre']);
                         $alm->__SET('Descripcion',          $_REQUEST['Descripcion']);
 
-                        $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
+                        $model->Actualizar($alm, $_REQUEST['Codigo']);
                         header('Location: index.php?model=atributos&type=form');
                         break;
                     case 'registrar':
@@ -44,18 +44,8 @@ if (isset($_SESSION['login_correct'])) {
                 </br>
 
                 <form action="../index.php?model=atributos&type=form&action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
-                    <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
                     <input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
-                            <?php
-                            if ($alm->Estado == 'actualizar') {
-                            ?>
-                                
-                                <input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
-                    <?php
-                            }
-                    ?>
-                        Codigo
-                       <input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" <?php if ($alm->Estado == 'actualizar') {
+                       <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" <?php if ($alm->Estado == 'actualizar') {
                                                                                                                                     echo 'readonly';
                                                                                                                                 } ?> />
                         Nombre
@@ -76,8 +66,6 @@ if (isset($_SESSION['login_correct'])) {
                     <thead>
 
                         <tr>
-                            <!-- <th >Codigo Mundo</th> -->
-                            <th >Codigo</th>
                             <th >Nombre</th>
                             <th>Descripcion</th>
                             <th>Imagen</th>
@@ -90,10 +78,6 @@ if (isset($_SESSION['login_correct'])) {
                     <?php foreach ($model->Listar($_SESSION['CodMundo']) as $r) : ?>
 
                         <tr>
-                            <!-- <td><?php echo $r->__GET('Codigo_Mundo'); ?></td> -->
-
-                            <td><?php echo $r->__GET('Codigo'); ?></td>
-
                             <td><?php echo $r->__GET('Nombre'); ?></td>
 
                             <td><?php echo $r->__GET('Descripcion'); ?></td>
