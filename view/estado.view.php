@@ -11,17 +11,25 @@ if ($_REQUEST['model'] == 'estado') {
 			$alm->__SET('Descripcion',          $_REQUEST['Descripcion']);
 
             $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
-			
-			
-			foreach($model_est_atri->Listar($_REQUEST['Codigo'],$_SESSION['CodMundo']) as $r): 
+			$code=$_REQUEST['AtrTxtValCode'];
+			$valor=$_REQUEST['AtrTxtVal'];
+			$i=0;
+			foreach ($valor as $value_row)
+			{
 				$est_atri=new Estado_Atributo();
 				$est_atri->__SET('Codigo_Estado',$_REQUEST['Codigo']);
 				$est_atri->__SET('Codigo_Estado_Mundo',$_SESSION['CodMundo']);
 				$est_atri->__SET('Codigo_Atributo_Mundo',$_SESSION['CodMundo']);
-				$est_atri->__SET('Codigo_Atributo',$r->Codigo);
-				$est_atri->__SET('Valor',$_REQUEST['AtrTxtVal'.$r->Codigo]);
+				$est_atri->__SET('Codigo_Atributo',$code[$i]);
+				$est_atri->__SET('Valor',$value_row);
 				
 				$model_est_atri->Actualizar($est_atri);
+				$i=+1;
+			}
+				
+			
+			foreach($model_est_atri->Listar($_REQUEST['Codigo'],$_SESSION['CodMundo']) as $r): 
+				
 			endforeach; 
 			
             header('Location: index.php?model=estado&type=form');
@@ -34,17 +42,23 @@ if ($_REQUEST['model'] == 'estado') {
 			$alm->__SET('Descripcion',          $_REQUEST['Descripcion']);
             $model->Registrar($alm);
 			
-			
-			foreach($model_est_atri->Listar($_REQUEST['Codigo'],$_SESSION['CodMundo']) as $r): 
+
+			$code=$_REQUEST['AtrTxtValCode'];
+			$valor=$_REQUEST['AtrTxtVal'];
+			$i=0;
+			foreach ($valor as $value_row)
+			{
 				$est_atri=new Estado_Atributo();
 				$est_atri->__SET('Codigo_Estado',$_REQUEST['Codigo']);
 				$est_atri->__SET('Codigo_Estado_Mundo',$_SESSION['CodMundo']);
 				$est_atri->__SET('Codigo_Atributo_Mundo',$_SESSION['CodMundo']);
-				$est_atri->__SET('Codigo_Atributo',$r->Codigo);
-				$est_atri->__SET('Valor',$_REQUEST['AtrTxtVal'.$r->Codigo]);
+				$est_atri->__SET('Codigo_Atributo',$code[$i]);
+				$est_atri->__SET('Valor',$value_row);
 				
 				$model_est_atri->Registrar($est_atri);
-			endforeach; 
+				$i=+1;
+			}
+			
 			
             header('Location: index.php?model=estado&type=form');
             break;
@@ -93,14 +107,17 @@ Descripción<input type="text" name="Descripcion" value="<?php echo $alm->__GET(
 				<table border="1">
 					<tr>
 						<td>Atributos</td>
-						<td></td>
+						<td>Valor</td>
 					</tr>
 					<?php
 				foreach($model_est_atri->Listar($_SESSION['CodMundo'],$alm->__GET('Codigo')) as $r): 
 				?>	<td>
 					<tr>
 						<td><?php echo $r->Nombre; ?></td>
-						<td><input type="text" name="AtrTxtVal<?php echo $r->Codigo; ?>" value="<?php echo $r->Valor; ?>" style="width:100%;" /></td>
+						<td>
+						<input type="hidden" name="AtrTxtValCode[]" value="<?php echo $r->Codigo; ?>" style="width:100%;" />
+						<input type="text" name="AtrTxtVal[]" value="<?php echo $r->Valor; ?>" style="width:100%;" />
+					</td>
 					</tr>
 					<?php
 				endforeach; 

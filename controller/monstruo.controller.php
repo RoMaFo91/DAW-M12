@@ -1,6 +1,7 @@
 <?php
 //Llamada al modelo
 require($_SERVER['DOCUMENT_ROOT']."/model/monstruo.model.php");
+require($_SERVER['DOCUMENT_ROOT']."/model/clase.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/subclase.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/tipomonstruo.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/nivel.model.php");

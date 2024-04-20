@@ -1,4 +1,32 @@
 <?php
+function createGUID() { 
+    
+    // Create a token
+    $token      = $_SERVER['HTTP_HOST'];
+    $token     .= $_SERVER['REQUEST_URI'];
+    $token     .= uniqid(rand(), true);
+    
+    // GUID is 128-bit hex
+    $hash        = strtoupper(md5($token));
+    
+    // Create formatted GUID
+    $guid        = '';
+    
+    // GUID format is XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX for readability    
+    $guid .= substr($hash,  0,  8) . 
+         '-' .
+         substr($hash,  8,  4) .
+         '-' .
+         substr($hash, 12,  4) .
+         '-' .
+         substr($hash, 16,  4) .
+         '-' .
+         substr($hash, 20, 12);
+            
+    return $guid;
+
+}
+
 function ComprobarSession($Cod,$Pass)
     {
 		$salt='$2017=(rmf)(dps)$(06-10)/(01-04-2024)$';
@@ -16,7 +44,7 @@ function ComprobarSession($Cod,$Pass)
 			}
 			$result = array();
  
-            $stm = $pdo->prepare("SELECT * FROM Master WHERE Codigo = ?");
+            $stm = $pdo->prepare("SELECT * FROM Userg WHERE Codigo = ?");
             $stm->execute(array($Cod));
             $r = $stm->fetch(PDO::FETCH_OBJ);				
 				$Codigo=$r->Codigo;

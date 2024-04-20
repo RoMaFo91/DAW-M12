@@ -94,13 +94,26 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 				}
 				
 				 ?> </h1> 
-				<div class="container">
+				
 				<?php
 
 				if (isset($_REQUEST['model'])) {
+					if ($_REQUEST['model']=="monstruo")
+					{
+						echo '<div class="container_big">';
+					}
+					else
+					{
+						echo '<div class="container">';
+					}
+
 					$model = $_REQUEST['model'];
 					$type = "form";
 					require($_SERVER['DOCUMENT_ROOT'] . "/controller/" . $model . ".controller.php");
+				}
+				else
+				{
+					echo '<div class="container">';
 				}
 
 

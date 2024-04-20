@@ -8,16 +8,18 @@ if (isset($_SESSION['login_correct'])) {
                     case 'actualizar':
                         $alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
                         $alm->__SET('Codigo',              $_REQUEST['Codigo']);
+                        $alm->__SET('Nombre',              $_REQUEST['Nombre']);
                         $alm->__SET('ValMin',          $_REQUEST['ValMin']);
                         $alm->__SET('ValMax',          $_REQUEST['ValMax']);
 
-                        $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
+                        $model->Actualizar($alm, $_REQUEST['Codigo']);
                         header('Location: index.php?model=dados&type=form');
                         break;
 
                     case 'registrar':
                         $alm->__SET('Codigo_Mundo',          $_SESSION['CodMundo']);
                         $alm->__SET('Codigo',          $_REQUEST['Codigo']);
+                        $alm->__SET('Nombre',              $_REQUEST['Nombre']);
                         $alm->__SET('ValMin',          $_REQUEST['ValMin']);
                         $alm->__SET('ValMax',          $_REQUEST['ValMax']);
 
@@ -50,57 +52,16 @@ if (isset($_SESSION['login_correct'])) {
                     <input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
 
 
-
-
-
-
-
-                    <?php
-                    if ($alm->Estado == 'actualizar') {
-                    ?>
-
-                        <input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
-
-
-
-                    <?php
-
-                    }
-                    ?>
-
-
-                    <!--
- <tr>
-	<th >Codigo Mundo</th>
-	<td>
-		<select type="text" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" style="width:100%;" />
-			<?php
-            foreach ($model_mundo->Listar() as $r) :
-            ?>	<option 
-				<?php
-                if ($alm->__GET('Codigo_Mundo') == $r->Codigo) {
-                    echo ' selected';
-                }
-                ?>				
-				value="<?php echo $r->Codigo; ?>"><?php echo $r->Nombre; ?></option> <?php
-                                                                                    endforeach;
-                                                                                        ?>
-			
-		</select>
-
-	</td>
- 
-</tr>
- -->
-
-
-                    Codigo
-
-
-                    <input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" <?php if ($alm->Estado == 'actualizar') {
+                    <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" <?php if ($alm->Estado == 'actualizar') {
                                                                                                                             echo 'readonly';
                                                                                                                         } ?> />
+Nombre
 
+
+<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" <?php if ($alm->Estado == 'actualizar') {
+                                                                                                                                echo 'readonly';
+                                                                                                                            } ?> />
+       
 
 
 
@@ -138,7 +99,7 @@ if (isset($_SESSION['login_correct'])) {
 
                     <thead>
                         <tr>
-                            <th>Codigo</th>
+                        <th>Nombre</th>
                             <th>ValMin</th>
                             <th>ValMax</th>
                             <th>Editar</th>
@@ -150,10 +111,7 @@ if (isset($_SESSION['login_correct'])) {
                     <?php foreach ($model->Listar($_SESSION['CodMundo']) as $r) : ?>
 
                         <tr>
-                            <!--<td><?php echo $r->__GET('Codigo_Mundo'); ?></td>  -->
-
-                            <td><?php echo $r->__GET('Codigo'); ?></td>
-
+                        <td><?php echo $r->__GET('Nombre'); ?></td>
                             <td><?php echo $r->__GET('ValMin'); ?></td>
                             <td><?php echo $r->__GET('ValMax'); ?></td>
 

@@ -162,9 +162,6 @@ class NivelModel {
     {
         try
         {
-		echo $data->__GET('Codigo_Tipo_Mons');
-		echo		$data->__GET('Codigo_Tipo_Mons_Mundo');
-		echo "- --";
 			
         $sql = "INSERT INTO Nivel (Codigo_Mundo,Codigo,Exp_ini,Exp_fin) 
                 VALUES (?,?,?,?)";
@@ -173,7 +170,7 @@ class NivelModel {
              ->execute(
             array(
 				$data->__GET('Codigo_Mundo'), 
-				$data->__GET('Codigo'),
+				createGUID(),
 				$data->__GET('Exp_ini'),
 				$data->__GET('Exp_fin'),
                 )

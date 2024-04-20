@@ -288,9 +288,9 @@ if (isset($_SESSION['login_correct'])) {
 										</div>
 									</div>
 									<br><br><br>
-									<td colspan="2">
+				
 										<button type="submit" class="pure-button pure-button-primary">Guardar</button>
-									</td>
+										<br><br>
 				</form>
 
 

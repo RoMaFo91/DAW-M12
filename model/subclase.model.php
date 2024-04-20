@@ -190,7 +190,7 @@ class SubClaseModel {
              ->execute(
             array(
 				$data->__GET('Codigo_Mundo'), 
-				$data->__GET('Codigo'), 
+				createGUID(), 
 				$data->__GET('Nombre'), 
 				$data->__GET('Codigo_Clase'), 
 				$data->__GET('Codigo_Clase_Mundo'), 

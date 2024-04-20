@@ -5,6 +5,7 @@ class Dados {
  
     private $Codigo_Mundo;
     private $Codigo;
+    private $Nombre;
     private $ValMin;
     private $ValMax;
     private $Estado;
@@ -48,6 +49,7 @@ class DadosModel {
                 $alm = new Dados();
  
                 $alm->__SET('Codigo', $r->Codigo);
+                $alm->__SET('Nombre', $r->Nombre);
 				$alm->__SET('ValMin', $r->ValMin);
 				$alm->__SET('ValMax', $r->ValMax);
 				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
@@ -84,6 +86,7 @@ class DadosModel {
                 $alm = new Dados();
  
                 $alm->__SET('Codigo', $r->Codigo);
+                $alm->__SET('Nombre', $r->Nombre);
 				$alm->__SET('ValMin', $r->ValMin);
 				$alm->__SET('ValMax', $r->ValMax);
 				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
@@ -113,6 +116,7 @@ class DadosModel {
             $alm = new Dados();
  
             $alm->__SET('Codigo', $r->Codigo);
+            $alm->__SET('Nombre', $r->Nombre);
 			$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
 			$alm->__SET('ValMin', $r->ValMin);
 			$alm->__SET('ValMax', $r->ValMax);
@@ -145,6 +149,7 @@ class DadosModel {
         {
             $sql = "UPDATE Dados SET 
 						Codigo			= ?,
+                        Nombre  = ?,
 						Codigo_Mundo = ?,
 						ValMin = ?,
 						ValMax = ?
@@ -154,6 +159,7 @@ class DadosModel {
                  ->execute(
                 array(
 					$data->__GET('Codigo'), 
+                    $data->__GET('Nombre'), 
 					$data->__GET('Codigo_Mundo'), 
 					$data->__GET('ValMin'),
 					$data->__GET('ValMax'), 
@@ -171,14 +177,15 @@ class DadosModel {
     {
         try
         {
-        $sql = "INSERT INTO Dados (Codigo_Mundo,Codigo,ValMin,ValMax) 
-                VALUES (?,?, ?,?)";
+        $sql = "INSERT INTO Dados (Codigo_Mundo,Codigo,Nombre,ValMin,ValMax) 
+                VALUES (?,?,?, ?,?)";
  
         $this->pdo->prepare($sql)
              ->execute(
             array(
 				$data->__GET('Codigo_Mundo'), 
-				$data->__GET('Codigo'), 
+				createGUID(), 
+                $data->__GET('Nombre'), 
 				$data->__GET('ValMin'),
 				$data->__GET('ValMax'),
                 )

@@ -9,7 +9,7 @@ if (isset($_SESSION['login_correct'])) {
                         $alm->__SET('Codigo',              $_REQUEST['Codigo']);
                         $alm->__SET('Nombre',          $_REQUEST['Nombre']);
                         $alm->__SET('Tipo',          $_REQUEST['Tipo']);
-                        $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
+                        $model->Actualizar($alm, $_REQUEST['Codigo']);
                         header('Location: index.php?model=raza&type=form');
                         break;
 
@@ -48,22 +48,7 @@ if (isset($_SESSION['login_correct'])) {
                     <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
                     <input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
 
-
-
-                    <?php
-                    if ($alm->Estado == 'actualizar') {
-                    ?>
-   
-                            <input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
-
-
-
-                        <?php
-
-                    }
-                        ?>
-                        Codigo
-                        <input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+                        <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
                         Nombre
                         <input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
                         Tipo
@@ -95,8 +80,6 @@ if (isset($_SESSION['login_correct'])) {
                     <thead>
 
                         <tr>
-                            <!-- <th >Codigo Mundo</th>-->
-                            <th >Codigo</th>
                             <th >Nombre</th>
                             <th >Tipo</th>
                             <th >Editar</th>
@@ -108,9 +91,6 @@ if (isset($_SESSION['login_correct'])) {
                     <?php foreach ($model->Listar($_SESSION['CodMundo']) as $r) : ?>
 
                         <tr>
-                            <!-- <td><?php echo $r->__GET('Codigo_Mundo'); ?></td>-->
-                            <td><?php echo $r->__GET('Codigo'); ?></td>
-
                             <td><?php echo $r->__GET('Nombre'); ?></td>
 
                             <td><?php echo $r->__GET('Tipo'); ?></td>

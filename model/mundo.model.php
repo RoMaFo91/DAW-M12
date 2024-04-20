@@ -135,7 +135,7 @@ class MundoModel {
         $this->pdo->prepare($sql)
              ->execute(
             array(
-				$data->__GET('Codigo'), 
+				createGUID(), 
                 $data->__GET('Nombre'), 
                 $data->__GET('Descripcion'), 
                 )

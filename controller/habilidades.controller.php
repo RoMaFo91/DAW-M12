@@ -3,6 +3,7 @@
 require($_SERVER['DOCUMENT_ROOT']."/model/habilidades.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/nivel.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/subclase.model.php");
+require($_SERVER['DOCUMENT_ROOT']."/model/clase.model.php");
 $alm = new Habilidades(); 
 $model_mundo = new MundoModel();
 $model = new HabilidadesModel(); 
