@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Página Web Moderna</title>
+	<title>Gestión de mundos</title>
 	<link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -26,6 +26,8 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 	$_SESSION['CodMundo']='';
 	
 	if (ComprobarSession($_REQUEST['user'], $_REQUEST['pass'])) {
+		require($_SERVER['DOCUMENT_ROOT'] . "/controller/userg.controller.base.php");
+		$_SESSION['level']=$model->Obtener($_SESSION['user'])->__GET('Security_Level');
 		$_SESSION['login_correct'] = True;
 		// header('Location: index.php');
 		// header('Location: controller/mundo.controller.php');
@@ -98,7 +100,7 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 				<?php
 
 				if (isset($_REQUEST['model'])) {
-					if ($_REQUEST['model']=="monstruo")
+					if ($_REQUEST['model']=="monstruo" || $_REQUEST['model']=="personaje")
 					{
 						echo '<div class="container_big">';
 					}

@@ -20,9 +20,10 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["co
 			if ($_REQUEST["codigo_mundo"]=='')
 			{
 				 $sql = "
-                SELECT Codigo, Nombre
+                SELECT SubClase.Codigo,CONCAT(Clase.Nombre, ' ', SubClase.Nombre) as Nombre
 					FROM SubClase
-					WHERE Codigo_Mundo = ( 
+					JOIN Clase on SubClase.Codigo_Clase=Clase.Codigo
+					WHERE SubClase.Codigo_Mundo = ( 
 					SELECT Codigo
 					FROM Mundo
 					LIMIT 1 ) 
@@ -31,12 +32,12 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["co
 			else
 			{
             $sql = "
-                SELECT Codigo,Nombre
+                SELECT SubClase.Codigo,CONCAT(Clase.Nombre, ' ', SubClase.Nombre) as Nombre
 				FROM SubClase
-				WHERE Codigo_Mundo =  :id
+				JOIN Clase on SubClase.Codigo_Clase=Clase.Codigo
+				WHERE SubClase.Codigo_Mundo =  :id
             ";
 			}
-
 			$stm = $pdo->prepare($sql);
 			$stm->execute(array(':id' => $_REQUEST["codigo_mundo"]));
 			

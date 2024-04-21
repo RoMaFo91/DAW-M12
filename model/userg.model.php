@@ -2,19 +2,19 @@
 //require('./../conf_bd.php');
 //require_once('./../classes.php');
 
-class SubClase {
+class Userg {
  
     private $Codigo_Mundo;
     private $Codigo;
     private $Nombre;
-    private $obj_Codigo_Clase;
-    private $Codigo_Clase;
-    private $Codigo_Clase_Mundo;
-    private $Estado;
+    private $Passwrod;
+    private $email;
+    private $confirmacion;
+    private $Security_Level;
     
     public function name()
     {
-        return $this->obj_Codigo_Clase->Nombre .' '. $this->Nombre;
+        return $this->Nombre;
     }
 
 
@@ -22,7 +22,7 @@ class SubClase {
        public function __SET($k, $v){ return $this->$k = $v; }
    }
 
-class SubClaseModel { 
+class UsergModel { 
 		private $pdo; 
 		
 	public function __CONSTRUCT() { 
@@ -37,6 +37,39 @@ class SubClaseModel {
             die($e->getMessage());
         }
     }
+ //ListarTipoMonsMundo
+	 public function ListarUsergMundo($codigo)
+    {
+        try
+        {
+           $result = array();
+
+				$stm = $this->pdo->prepare("SELECT * FROM Userg WHERE Codigo_Mundo = ?");
+				 $stm->execute(array($codigo));
+ 
+            foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
+            {
+                $alm = new Userg();
+ 
+                $alm->__SET('Codigo', $r->Codigo);
+                $alm->__SET('Nombre', $r->Nombre);
+                $alm->__SET('Passwrod', $r->Passwrod);
+                $alm->__SET('email', $r->email);
+                $alm->__SET('confirmacion', $r->confirmacion);
+                $alm->__SET('Security_Level', $r->Security_Level);
+                
+				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
+ 
+                $result[] = $alm;
+            }
+ 
+            return $result;
+        }
+        catch(Exception $e)
+        {
+            die($e->getMessage());
+        }
+    }
  
     public function Listar($CodMundo)
     {
@@ -44,53 +77,20 @@ class SubClaseModel {
         {
             $result = array();
  
-            $stm = $this->pdo->prepare("SELECT * FROM SubClase WHERE Codigo_Mundo=?");
+            $stm = $this->pdo->prepare("SELECT * FROM Userg WHERE Codigo_Mundo=?");
             $stm->execute(array($CodMundo));
  
             foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
             {
-                $alm = new SubClase();
+                $alm = new Userg();
  
                 $alm->__SET('Codigo', $r->Codigo);
-				$alm->__SET('Nombre', $r->Nombre);
+                $alm->__SET('Nombre', $r->Nombre);
+                $alm->__SET('Passwrod', $r->Passwrod);
+                $alm->__SET('email', $r->email);
+                $alm->__SET('confirmacion', $r->confirmacion);
+                $alm->__SET('Security_Level', $r->Security_Level);
 				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
-                $alm->__SET('obj_Codigo_Clase', (new ClaseModel())->Obtener($r->Codigo_Clase,$r->Codigo_Clase_Mundo));
-				$alm->__SET('Codigo_Clase', $r->Codigo_Clase);
-				$alm->__SET('Codigo_Clase_Mundo', $r->Codigo_Clase_Mundo);
- 
-                $result[] = $alm;
-            }
- 
-            return $result;
-        }
-        catch(Exception $e)
-        {
-            die($e->getMessage());
-        }
-    }
-	
-	public function ListarSubClaseMundo($codigo)
-    {
-        try
-        {
-            $result = array();
-
-		
-				$stm = $this->pdo->prepare("SELECT * FROM SubClase WHERE Codigo_Mundo = ?");
-				 $stm->execute(array($codigo));
-			
- 
- 
-            foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
-            {
-                $alm = new SubClase();
- 
-                $alm->__SET('Codigo', $r->Codigo);
-				$alm->__SET('Nombre', $r->Nombre);
-				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
-                $alm->__SET('obj_Codigo_Clase', (new ClaseModel())->Obtener($r->Codigo_Clase,$r->Codigo_Clase_Mundo));
-				$alm->__SET('Codigo_Clase', $r->Codigo_Clase);
-				$alm->__SET('Codigo_Clase_Mundo', $r->Codigo_Clase_Mundo);
  
                 $result[] = $alm;
             }
@@ -103,25 +103,26 @@ class SubClaseModel {
         }
     }
  
-    public function Obtener($Codigo,$Codigo_Mundo)
+    public function Obtener($Codigo)
     {
         try
         {
             $stm = $this->pdo
-                      ->prepare("SELECT * FROM SubClase WHERE Codigo = ? and Codigo_Mundo = ?");
+                      ->prepare("SELECT * FROM Userg WHERE Codigo = ?");
                        
  
-            $stm->execute(array($Codigo,$Codigo_Mundo));
+            $stm->execute(array($Codigo));
             $r = $stm->fetch(PDO::FETCH_OBJ);
  
-            $alm = new SubClase();
+            $alm = new Userg();
  
             $alm->__SET('Codigo', $r->Codigo);
-			$alm->__SET('Nombre', $r->Nombre);
-            $alm->__SET('obj_Codigo_Clase', (new ClaseModel())->Obtener($r->Codigo_Clase,$r->Codigo_Clase_Mundo));
-            $alm->__SET('Codigo_Clase', $r->Codigo_Clase);
-            $alm->__SET('Codigo_Clase_Mundo', $r->Codigo_Clase_Mundo);
-			$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
+            $alm->__SET('Nombre', $r->Nombre);
+            $alm->__SET('Passwrod', $r->Passwrod);
+            $alm->__SET('email', $r->email);
+            $alm->__SET('confirmacion', $r->confirmacion);
+            $alm->__SET('Security_Level', $r->Security_Level);
+            $alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
  
  
             return $alm;
@@ -136,7 +137,7 @@ class SubClaseModel {
         try
         {
             $stm = $this->pdo
-                      ->prepare("DELETE FROM SubClase WHERE Codigo = ? and Codigo_Mundo = ?");                   
+                      ->prepare("DELETE FROM Userg WHERE Codigo = ? and Codigo_Mundo = ?");                   
  
             $stm->execute(array($Codigo,$Codigo_Mundo));
         } catch (Exception $e) 
@@ -145,33 +146,23 @@ class SubClaseModel {
         }
     }
  
-    public function Actualizar(SubClase $data,$codigo_viejo,$codigo_viejo_mundo)
+    public function Actualizar(Userg $data,$codigo_viejo)
     {
         try
         {
-            $sql = "UPDATE SubClase SET 
+            $sql = "UPDATE Userg SET 
 						Codigo			= ?,
-						Nombre = ?,
-						Codigo_Mundo = ?,
-						Codigo_Clase = ?,
-						Codigo_Clase_Mundo=?
-                    WHERE Codigo = ? and Codigo_Mundo=?";
-			echo "1";
-			echo $data->__GET('Codigo_Clase');
-			echo "2";
-			echo $data->__GET('Codigo_Clase_Mundo');
-			echo "3";
-			
+                        Nombre           = ?, 
+						Codigo_Mundo = ?
+                    WHERE Codigo = ?";
+ 
             $this->pdo->prepare($sql)
                  ->execute(
                 array(
 					$data->__GET('Codigo'), 
-					$data->__GET('Nombre'), 
+                    $data->__GET('Nombre'), 
 					$data->__GET('Codigo_Mundo'), 
-					$data->__GET('Codigo_Clase'), 
-					$data->__GET('Codigo_Clase_Mundo'), 
-                    $codigo_viejo,
-					$codigo_viejo_mundo,
+                    $codigo_viejo
                     )
                 );
         } catch (Exception $e) 
@@ -180,21 +171,19 @@ class SubClaseModel {
         }
     }
  
-    public function Registrar(SubClase $data)
+    public function Registrar(Userg $data)
     {
         try
         {
-        $sql = "INSERT INTO SubClase (Codigo_Mundo,Codigo,Nombre,Codigo_Clase,Codigo_Clase_Mundo) 
-                VALUES (?,?, ?,?,?)";
+        $sql = "INSERT INTO Userg (Codigo_Mundo,Codigo,Nombre) 
+                VALUES (?,?, ?)";
  
         $this->pdo->prepare($sql)
              ->execute(
             array(
 				$data->__GET('Codigo_Mundo'), 
 				createGUID(), 
-				$data->__GET('Nombre'), 
-				$data->__GET('Codigo_Clase'), 
-				$data->__GET('Codigo_Clase_Mundo'), 
+                $data->__GET('Nombre'), 
                 )
             );
         } catch (Exception $e) 

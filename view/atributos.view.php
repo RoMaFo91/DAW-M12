@@ -20,7 +20,7 @@ if (isset($_SESSION['login_correct'])) {
                         $alm->__SET('Descripcion',          $_REQUEST['Descripcion']);
 
                         $model->Registrar($alm);
-                        //header('Location: index.php?model=atributos&type=form');
+                        header('Location: index.php?model=atributos&type=form');
                         break;
 
                     case 'eliminar':

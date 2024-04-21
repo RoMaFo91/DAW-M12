@@ -12,7 +12,7 @@ if (isset($_SESSION['login_correct'])) {
 						$alm->__SET('Codigo_SubClase',          $_REQUEST['Codigo_SubClase']);
 						$alm->__SET('Codigo_Nivel',          $_REQUEST['Codigo_Nivel']);
 
-						$model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
+						$model->Actualizar($alm, $_REQUEST['Codigo']);
 						header('Location: index.php?model=habilidades&type=form');
 						break;
 
@@ -53,18 +53,7 @@ if (isset($_SESSION['login_correct'])) {
 					<input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
 					<input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
 
-
-
-					<?php
-					if ($alm->Estado == 'actualizar') {
-					?>
-						<input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
-
-					<?php
-
-					}
-					?>
-					Codigo<input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+					<input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
 					Nombre<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
 					Codigo Nivel
 					<div class="DivNivel">
@@ -107,11 +96,11 @@ if (isset($_SESSION['login_correct'])) {
 							if ($alm->__GET('Codigo_SubClase') == $r->Codigo) {
 								echo ' selected';
 							}
-							?> value="<?php echo $r->Codigo; ?>"><?php echo $r->Nombre; ?></option> <?php
+							?> value="<?php echo $r->Codigo; ?>"><?php echo $r->obj_Codigo_Clase->Nombre .' '. $r->Nombre; ?></option> <?php
 																						endforeach;
 																							?>
 						</select>
-						<script type="text/javascript">
+						<!-- <script type="text/javascript">
 							$(document).ready(function() {
 								$("#DivMundo").prop('disabled', true);
 								$("#DivSubClase").prop('disabled', true);
@@ -126,12 +115,12 @@ if (isset($_SESSION['login_correct'])) {
 								$("#DivMundo").prop('disabled', false);
 								$("#DivSubClase").prop('disabled', false);
 							});
-						</script>
+						</script> -->
 						<div>
 
 
 							<br/><br/><button type="submit" class="pure-button pure-button-primary">Guardar</button>
-
+							<br/>
 				</form>
 
 
@@ -142,17 +131,10 @@ if (isset($_SESSION['login_correct'])) {
 
 						<tr>
 							<!--<th >Codigo Mundo</th>-->
-							<th >Codigo</th>
-
 							<th >Nombre</th>
-
 							<th >Codigo Nivel</th>
-
 							<th >Codigo SubClase</th>
-
 							<th >Editar</th>
-
-
 							<th >Eliminar</th>
 						</tr>
 
@@ -161,16 +143,9 @@ if (isset($_SESSION['login_correct'])) {
 					<?php foreach ($model->Listar($_SESSION['CodMundo']) as $r) : ?>
 
 						<tr>
-							<!--<td><?php echo $r->__GET('Codigo_Mundo'); ?></td>-->
-
-							<td><?php echo $r->__GET('Codigo'); ?></td>
-
 							<td><?php echo $r->__GET('Nombre'); ?></td>
-
 							<td><?php echo $r->__GET('obj_Codigo_Nivel')->name(); ?></td>
-
 							<td><?php echo $r->__GET('obj_Codigo_SubClase')->name(); ?></td>
-
 							<td>
 								<a href="?model=habilidades&type=form&action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/actualizar.png" alt="Actualizar" style="width:15%"></a>
 							</td>

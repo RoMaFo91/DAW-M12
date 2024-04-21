@@ -190,7 +190,7 @@ if (isset($_SESSION['login_correct'])) {
 							if ($alm->__GET('Codigo_SubClase') == $r->Codigo) {
 								echo ' selected';
 							}
-							?> value="<?php echo $r->Codigo; ?>"><?php echo $r->Nombre; ?></option> <?php
+							?> value="<?php echo $r->Codigo; ?>"><?php echo $r->obj_Codigo_Clase->Nombre .' '. $r->Nombre; ?></option> <?php
 																						endforeach;
 																							?>
 						</select>

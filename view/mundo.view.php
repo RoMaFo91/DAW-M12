@@ -4,34 +4,39 @@ if (isset($_SESSION['login_correct'])) {
 
         if (isset($_REQUEST['action'])) {
             if ($_REQUEST['model'] == 'mundo') {
-                switch ($_REQUEST['action']) {
-                    case 'actualizar':
-                        $alm->__SET('Codigo',              $_REQUEST['Codigo']);
-                        $alm->__SET('Nombre',          $_REQUEST['Nombre']);
-                        $alm->__SET('Descripcion',        $_REQUEST['Descripcion']);
-
-                        $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
-                        header('Location: index.php?model=mundo&type=form');
-                        break;
-
-                    case 'registrar':
-                        $alm->__SET('Codigo',          $_REQUEST['Codigo']);
-                        $alm->__SET('Nombre',          $_REQUEST['Nombre']);
-                        $alm->__SET('Descripcion',        $_REQUEST['Descripcion']);
-
-                        $model->Registrar($alm);
-                        header('Location: index.php?model=mundo&type=form');
-                        break;
-
-                    case 'eliminar':
-                        $model->Eliminar($_REQUEST['Codigo']);
-                        header('Location: index.php?model=mundo&type=form');
-                        break;
-                    case 'editar':
-                        $alm = $model->Obtener($_REQUEST['Codigo']);
-                        $alm->__SET('Estado', 'actualizar');
-                        break;
+                if ($type != 'list') {
+                    switch ($_REQUEST['action']) {
+                        case 'actualizar':
+                            $alm->__SET('Codigo',              $_REQUEST['Codigo']);
+                            $alm->__SET('Nombre',          $_REQUEST['Nombre']);
+                            $alm->__SET('Descripcion',        $_REQUEST['Descripcion']);
+    
+                            $model->Actualizar($alm, $_REQUEST['Codigo_viejo']);
+                            header('Location: index.php?model=mundo&type=form');
+                            break;
+    
+                        case 'registrar':
+                            $alm->__SET('Codigo',          $_REQUEST['Codigo']);
+                            $alm->__SET('Nombre',          $_REQUEST['Nombre']);
+                            $alm->__SET('Descripcion',        $_REQUEST['Descripcion']);
+                            
+                            echo '--1';
+                            $model->Registrar($alm);
+                            echo '--2';
+                            header('Location: index.php?model=mundo&type=form');
+                            break;
+    
+                        case 'eliminar':
+                            $model->Eliminar($_REQUEST['Codigo']);
+                            header('Location: index.php?model=mundo&type=form');
+                            break;
+                        case 'editar':
+                            $alm = $model->Obtener($_REQUEST['Codigo']);
+                            $alm->__SET('Estado', 'actualizar');
+                            break;
+                    }
                 }
+                
             }
         }
 ?>
@@ -74,7 +79,6 @@ if (isset($_SESSION['login_correct'])) {
                         <thead>
 
                             <tr>
-                                <th >Codigo</th>
                                 <th >Nombre</th>
                                 <th >Descripcion</th>
                                 <th >Editar</th>
@@ -85,7 +89,6 @@ if (isset($_SESSION['login_correct'])) {
                         <?php foreach ($model->Listar() as $r) : ?>
 
                             <tr>
-                                <td><?php echo $r->__GET('Codigo'); ?></td>
                                 <td><?php echo $r->__GET('Nombre'); ?></td>
                                 <td><?php echo $r->__GET('Descripcion'); ?></td>
                                 <td>
@@ -116,13 +119,13 @@ if (isset($_SESSION['login_correct'])) {
                             if ($_SESSION['CodMundo'] == $r->__GET('Codigo')) {
                     ?>
                                 <b>
-                                    <li class="nav-item"><a class="nav-link-sel" href="../index.php?Cod=<?php echo $r->__GET('Codigo'); ?>&Nom=<?php echo $r->__GET('Nombre'); ?>"><?php echo $r->__GET('Codigo'); ?> - <?php echo $r->__GET('Nombre'); ?></a></li>
+                                    <li class="nav-item"><a class="nav-link-sel" href="../index.php?Cod=<?php echo $r->__GET('Codigo'); ?>&Nom=<?php echo $r->__GET('Nombre'); ?>"><?php echo $r->__GET('Nombre'); ?></a></li>
                                 </b>
                             <?php
                             
                         } else {
                             ?>
-                            <li class="nav-item"><a class="nav-link" href="../index.php?Cod=<?php echo $r->__GET('Codigo'); ?>&Nom=<?php echo $r->__GET('Nombre'); ?>"><?php echo $r->__GET('Codigo'); ?> - <?php echo $r->__GET('Nombre'); ?></a></li>
+                            <li class="nav-item"><a class="nav-link" href="../index.php?Cod=<?php echo $r->__GET('Codigo'); ?>&Nom=<?php echo $r->__GET('Nombre'); ?>"><?php echo $r->__GET('Nombre'); ?></a></li>
                 <?php
                         }
 

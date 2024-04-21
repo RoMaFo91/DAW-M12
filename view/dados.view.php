@@ -1,6 +1,5 @@
 <?php
 if (isset($_SESSION['login_correct'])) {
-
     if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
         if (isset($_REQUEST['action'])) {
             if ($_REQUEST['model'] == 'dados') {
