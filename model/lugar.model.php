@@ -1,29 +1,31 @@
 <?php
+//Clase que representa la tabla de lugar
 
-
-//Clase que es una representanción de la tabla de la base de datos
-class Atributos {
+class Lugar {
  
     private $Codigo_Mundo;
     private $Codigo;
     private $Nombre;
-    private $Descripcion;
+    private $obj_Codigo_Pais;
+    private $Codigo_Pais;
+    private $Codigo_Pais_Mundo;
     private $Estado;
-
+    
     public function name()
     {
-        return $this->Nombre;
+        return $this->obj_Codigo_Pais->Nombre .' '. $this->Nombre;
     }
-    
+
+
     public function __GET($k){ return $this->$k; }
        public function __SET($k, $v){ return $this->$k = $v; }
    }
 
-//Clase que contendra todos los metodos para la gestión de la tabla
-class AtributosModel { 
+   //Clase que tendra todos los metodos de gestión de la tabla de lugar
+class LugarModel { 
 		private $pdo; 
 		
-    //Constructor de la clase
+        //Constructor de la clase
 	public function __CONSTRUCT() { 
 	$conf = new Conf_BD();
 	try { 
@@ -37,24 +39,26 @@ class AtributosModel {
         }
     }
  
-    // Metodo que devuelve un listado de todos los atributos de un mundo concreto
-    public function Listar($CodigoMundo)
+    //Metodo que devuelve todos los lugares de un mundo
+    public function Listar($CodMundo)
     {
         try
         {
             $result = array();
  
-            $stm = $this->pdo->prepare("SELECT * FROM Atributos WHERE Codigo_Mundo=?");
-            $stm->execute(array($CodigoMundo));
+            $stm = $this->pdo->prepare("SELECT * FROM Lugar WHERE Codigo_Mundo=?");
+            $stm->execute(array($CodMundo));
  
             foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
             {
-                $alm = new Atributos();
+                $alm = new Lugar();
  
                 $alm->__SET('Codigo', $r->Codigo);
 				$alm->__SET('Nombre', $r->Nombre);
-				$alm->__SET('Descripcion', $r->Descripcion);
 				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
+                $alm->__SET('obj_Codigo_Pais', (new PaisModel())->Obtener($r->Codigo_Pais,$r->Codigo_Pais_Mundo));
+				$alm->__SET('Codigo_Pais', $r->Codigo_Pais);
+				$alm->__SET('Codigo_Pais_Mundo', $r->Codigo_Pais_Mundo);
  
                 $result[] = $alm;
             }
@@ -67,31 +71,29 @@ class AtributosModel {
         }
     }
 	
-    // Metodo que devuelve un listado de todos los atributos de un mundo concreto
-	 public function ListarAtributosMundo($Codigo_Mundo)
+    //Metodo para obtener una lista de lugares de un mundo concreto
+	public function ListarLugarMundo($codigo)
     {
         try
         {
             $result = array();
-		if (is_null($Codigo_Mundo))
-		{
-			$stm = $this->pdo->prepare(" SELECT * FROM Atributos WHERE Codigo_Mundo = ( SELECT Codigo 	FROM Mundo	LIMIT 1 ) ");
-			$stm->execute();
-		}
-		else
-		{
-			$stm = $this->pdo->prepare("SELECT * FROM Atributos WHERE Codigo_Mundo=?");
-			 $stm->execute(array($Codigo_Mundo));
-		}
-           
+
+		
+				$stm = $this->pdo->prepare("SELECT * FROM Lugar WHERE Codigo_Mundo = ?");
+				 $stm->execute(array($codigo));
+			
+ 
+ 
             foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
             {
-                $alm = new Atributos();
+                $alm = new Lugar();
  
                 $alm->__SET('Codigo', $r->Codigo);
 				$alm->__SET('Nombre', $r->Nombre);
-				$alm->__SET('Descripcion', $r->Descripcion);
 				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
+                $alm->__SET('obj_Codigo_Pais', (new PaisModel())->Obtener($r->Codigo_Pais,$r->Codigo_Pais_Mundo));
+				$alm->__SET('Codigo_Pais', $r->Codigo_Pais);
+				$alm->__SET('Codigo_Pais_Mundo', $r->Codigo_Pais_Mundo);
  
                 $result[] = $alm;
             }
@@ -104,24 +106,26 @@ class AtributosModel {
         }
     }
  
-    // Metodo que devuelve un atributo filtrado por código de un mundo concreto
+    //Metodo para obtener un lugar concreto de un mundo concreto
     public function Obtener($Codigo,$Codigo_Mundo)
     {
         try
         {
             $stm = $this->pdo
-                      ->prepare("SELECT * FROM Atributos WHERE Codigo = ? and Codigo_Mundo = ?");
+                      ->prepare("SELECT * FROM Lugar WHERE Codigo = ? and Codigo_Mundo = ?");
                        
  
             $stm->execute(array($Codigo,$Codigo_Mundo));
             $r = $stm->fetch(PDO::FETCH_OBJ);
  
-            $alm = new Atributos();
+            $alm = new Lugar();
  
             $alm->__SET('Codigo', $r->Codigo);
-			$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
 			$alm->__SET('Nombre', $r->Nombre);
-			$alm->__SET('Descripcion', $r->Descripcion);
+            $alm->__SET('obj_Codigo_Pais', (new PaisModel())->Obtener($r->Codigo_Pais,$r->Codigo_Pais_Mundo));
+            $alm->__SET('Codigo_Pais', $r->Codigo_Pais);
+            $alm->__SET('Codigo_Pais_Mundo', $r->Codigo_Pais_Mundo);
+			$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
  
  
             return $alm;
@@ -131,13 +135,13 @@ class AtributosModel {
         }
     }
  
-    //Metodo para eliminar un atributo de un mundo concreto
+    //Metodo para eliminación de un lugar concreto
     public function Eliminar($Codigo,$Codigo_Mundo)
     {
         try
         {
             $stm = $this->pdo
-                      ->prepare("DELETE FROM Atributos WHERE Codigo = ? and Codigo_Mundo = ?");                   
+                      ->prepare("DELETE FROM Lugar WHERE Codigo = ? and Codigo_Mundo = ?");                   
  
             $stm->execute(array($Codigo,$Codigo_Mundo));
         } catch (Exception $e) 
@@ -146,28 +150,34 @@ class AtributosModel {
         }
     }
  
-    //Metodo para actualizar un atributo concreto de un mundo concreto
-    // Los parametros es un representación del objeto a actualizar
-    public function Actualizar(Atributos $data,$codigo_viejo)
+    //Metodo para la actualización de un lugar concreto
+    public function Actualizar(Lugar $data,$codigo_viejo,$codigo_viejo_mundo)
     {
         try
         {
-            $sql = "UPDATE Atributos SET 
+            $sql = "UPDATE Lugar SET 
 						Codigo			= ?,
-						Codigo_Mundo = ?,
 						Nombre = ?,
-						Descripcion = ?
-                    WHERE Codigo = ? AND Codigo_Mundo = ?";
- 
+						Codigo_Mundo = ?,
+						Codigo_Pais = ?,
+						Codigo_Pais_Mundo=?
+                    WHERE Codigo = ? and Codigo_Mundo=?";
+			echo "1";
+			echo $data->__GET('Codigo_Pais');
+			echo "2";
+			echo $data->__GET('Codigo_Pais_Mundo');
+			echo "3";
+			
             $this->pdo->prepare($sql)
                  ->execute(
                 array(
 					$data->__GET('Codigo'), 
-					$data->__GET('Codigo_Mundo'), 
 					$data->__GET('Nombre'), 
-					$data->__GET('Descripcion'), 
+					$data->__GET('Codigo_Mundo'), 
+					$data->__GET('Codigo_Pais'), 
+					$data->__GET('Codigo_Pais_Mundo'), 
                     $codigo_viejo,
-                    $data->__GET('Codigo_Mundo')
+					$codigo_viejo_mundo,
                     )
                 );
         } catch (Exception $e) 
@@ -176,21 +186,22 @@ class AtributosModel {
         }
     }
  
-    //Metodo para crear un atributo en un mundo concreto
-    public function Registrar(Atributos $data)
+    //Metodo para crear un lugar concreto
+    public function Registrar(Lugar $data)
     {
         try
         {
-        $sql = "INSERT INTO Atributos (Codigo_Mundo,Codigo,Nombre,Descripcion) 
-                VALUES (?,?, ?,?)";
+        $sql = "INSERT INTO Lugar (Codigo_Mundo,Codigo,Nombre,Codigo_Pais,Codigo_Pais_Mundo) 
+                VALUES (?,?, ?,?,?)";
  
         $this->pdo->prepare($sql)
              ->execute(
             array(
 				$data->__GET('Codigo_Mundo'), 
 				createGUID(), 
-				$data->__GET('Nombre'),
-				$data->__GET('Descripcion'),
+				$data->__GET('Nombre'), 
+				$data->__GET('Codigo_Pais'), 
+				$data->__GET('Codigo_Pais_Mundo'), 
                 )
             );
         } catch (Exception $e) 
@@ -198,8 +209,5 @@ class AtributosModel {
             die($e->getMessage());
         }
     }
-	
-	
-	
 }
 ?>

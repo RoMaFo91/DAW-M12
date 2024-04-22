@@ -11,6 +11,7 @@ class Userg {
     private $email;
     private $confirmacion;
     private $Security_Level;
+    private $Estado;
     
     public function name()
     {
@@ -71,14 +72,14 @@ class UsergModel {
         }
     }
  
-    public function Listar($CodMundo)
+    public function Listar()
     {
         try
         {
             $result = array();
  
-            $stm = $this->pdo->prepare("SELECT * FROM Userg WHERE Codigo_Mundo=?");
-            $stm->execute(array($CodMundo));
+            $stm = $this->pdo->prepare("SELECT * FROM Userg");
+            $stm->execute(array());
  
             foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
             {
@@ -103,6 +104,34 @@ class UsergModel {
         }
     }
  
+    public function Lista_User($Codigo)
+    {
+        try
+        {
+            $stm = $this->pdo
+                      ->prepare("SELECT * FROM Userg WHERE Codigo = ?");
+                       
+ 
+            $stm->execute(array($Codigo));
+            $r = $stm->fetch(PDO::FETCH_OBJ);
+ 
+            $alm = new Userg();
+ 
+            $alm->__SET('Codigo', $r->Codigo);
+            $alm->__SET('Nombre', $r->Nombre);
+            $alm->__SET('Passwrod', $r->Passwrod);
+            $alm->__SET('email', $r->email);
+            $alm->__SET('confirmacion', $r->confirmacion);
+            $alm->__SET('Security_Level', $r->Security_Level);
+            $alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
+            $result[] = $alm;
+ 
+            return $result;
+        } catch (Exception $e) 
+        {
+            die($e->getMessage());
+        }
+    }
     public function Obtener($Codigo)
     {
         try
@@ -150,9 +179,38 @@ class UsergModel {
     {
         try
         {
+            $cadena=$data->__GET('Passwrod') ;
+            if ($cadena!="")
+            {
+                $texto_codificado=crypt($cadena,'$2017=(rmf)(dps)$(06-10)/(01-04-2024)$');
+
+                $sql = "UPDATE Userg SET 
+                            Codigo			= ?,
+                            Nombre           = ?, 
+                            Passwrod=?,
+                            email=?,
+                            Codigo_Mundo = ?
+                        WHERE Codigo = ?";
+     
+                $this->pdo->prepare($sql)
+                     ->execute(
+                    array(
+                        $data->__GET('Codigo'), 
+                        $data->__GET('Nombre'), 
+                        $texto_codificado, 
+                        $data->__GET('email'), 
+                        $data->__GET('Codigo_Mundo'), 
+                        $codigo_viejo,
+                        )
+                    );
+            }
+            else
+            {
+
             $sql = "UPDATE Userg SET 
 						Codigo			= ?,
                         Nombre           = ?, 
+                        email=?,
 						Codigo_Mundo = ?
                     WHERE Codigo = ?";
  
@@ -161,10 +219,13 @@ class UsergModel {
                 array(
 					$data->__GET('Codigo'), 
                     $data->__GET('Nombre'), 
+                    $data->__GET('email'), 
 					$data->__GET('Codigo_Mundo'), 
-                    $codigo_viejo
+                    $codigo_viejo,
                     )
                 );
+            }
+            
         } catch (Exception $e) 
         {
             die($e->getMessage());
@@ -173,17 +234,21 @@ class UsergModel {
  
     public function Registrar(Userg $data)
     {
+        $cadena=$data->__GET('Passwrod') ;
+        $texto_codificado=crypt($cadena,'$2017=(rmf)(dps)$(06-10)/(01-04-2024)$');
         try
         {
-        $sql = "INSERT INTO Userg (Codigo_Mundo,Codigo,Nombre) 
-                VALUES (?,?, ?)";
+        $sql = "INSERT INTO Userg (Codigo_Mundo,Codigo,Nombre,Passwrod,email) 
+                VALUES (?,?, ?,?,?)";
  
         $this->pdo->prepare($sql)
              ->execute(
             array(
 				$data->__GET('Codigo_Mundo'), 
-				createGUID(), 
+				$data->__GET('Codigo'), 
                 $data->__GET('Nombre'), 
+                $texto_codificado,
+                $data->__GET('email'), 
                 )
             );
         } catch (Exception $e) 

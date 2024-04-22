@@ -147,22 +147,6 @@ if(isset($_REQUEST['action']))
 				?>
 				
 			</select>
-			<script type="text/javascript">
-					$(document).ready(function() {
-					$("#DivTabla").prop('disabled', true);
-					$("#DivCampo").prop('disabled', true);
-					 $('.DivTabla select').change(function() {
-					 $('.DivCampo select').empty();
-					 $.getJSON('/Get/getCampo.php?Tabla='+$('.DivTabla select').val(),function(data){
-						 $.each(data, function(i,item){
-					 $('.DivCampo select').append('<option value="'+item.Field+'">'+item.Field+'</option>');
-						 });
-					 });
-						});
-					$("#DivTabla").prop('disabled', false);
-					$("#DivCampo").prop('disabled', false);
-					});
-			</script>
 		</div>
 	</td>
  

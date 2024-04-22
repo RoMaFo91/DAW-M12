@@ -8,7 +8,6 @@ class Personaje {
     private $Nombre;
     private $Sexo;
     private $Codigo_Userg;
-    private $Codigo_Userg_Mundo;
     private $obj_Codigo_Raza;
     private $Codigo_Raza;
     private $Codigo_Raza_Mundo;
@@ -54,6 +53,42 @@ class PersonajeModel {
  
             $stm = $this->pdo->prepare("SELECT * FROM Personaje WHERE Codigo_Mundo=?");
             $stm->execute(array($CodMundo));
+ 
+            foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
+            {
+                $alm = new Personaje();
+ 
+                $alm->__SET('Codigo', $r->Codigo);
+				$alm->__SET('Nombre', $r->Nombre);
+				$alm->__SET('Sexo', $r->Sexo);
+				$alm->__SET('Codigo_Userg', $r->Codigo_Userg);
+				$alm->__SET('Codigo_Nivel', $r->Codigo_Nivel);
+                $alm->__SET('obj_Codigo_Nivel',(new NivelModel())->Obtener($r->Codigo_Nivel,$r->Codigo_Mundo));
+				$alm->__SET('Codigo_SubClase', $r->Codigo_SubClase);
+                $alm->__SET('obj_Codigo_SubClase',(new SubclaseModel())->Obtener($r->Codigo_SubClase,$r->Codigo_Mundo));
+				$alm->__SET('Codigo_Raza', $r->Codigo_Raza);
+                $alm->__SET('obj_Codigo_Raza',(new RazaModel())->Obtener($r->Codigo_Raza,$r->Codigo_Mundo));
+				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
+ 
+                $result[] = $alm;
+            }
+ 
+            return $result;
+        }
+        catch(Exception $e)
+        {
+            die($e->getMessage());
+        }
+    }
+
+    public function Listar_User($CodMundo,$user)
+    {
+        try
+        {
+            $result = array();
+ 
+            $stm = $this->pdo->prepare("SELECT * FROM Personaje WHERE Codigo_Mundo=? AND Codigo_Userg=?");
+            $stm->execute(array($CodMundo,$user));
  
             foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
             {
@@ -134,7 +169,6 @@ class PersonajeModel {
 						Nombre = ?,
 						Sexo = ?,
                         Codigo_Userg = ?,
-						Codigo_Userg_Mundo = ?,
 						Codigo_Nivel = ?,
 						Codigo_Nivel_Mundo = ?,
 						Codigo_SubClase = ?,
@@ -149,7 +183,6 @@ class PersonajeModel {
 					$data->__GET('Nombre'), 
 					$data->__GET('Sexo'), 
                     $data->__GET('Codigo_Userg'), 
-                    $data->__GET('Codigo_Userg_Mundo'), 
 					$data->__GET('Codigo_Nivel'), 
 					$data->__GET('Codigo_Nivel_Mundo'),
 					$data->__GET('Codigo_SubClase'), 
@@ -171,8 +204,8 @@ class PersonajeModel {
         try
         {
 			
-        $sql = "INSERT INTO Personaje (Codigo_Mundo,Codigo,Nombre,Sexo,Codigo_Userg,Codigo_Userg_Mundo,Codigo_Nivel,Codigo_Nivel_Mundo,Codigo_SubClase,Codigo_SubClase_Mundo,Codigo_Raza,Codigo_Raza_Mundo) 
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO Personaje (Codigo_Mundo,Codigo,Nombre,Sexo,Codigo_Userg,Codigo_Nivel,Codigo_Nivel_Mundo,Codigo_SubClase,Codigo_SubClase_Mundo,Codigo_Raza,Codigo_Raza_Mundo) 
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)";
  
         $this->pdo->prepare($sql)
              ->execute(
@@ -182,7 +215,6 @@ class PersonajeModel {
 				$data->__GET('Nombre'),
 				$data->__GET('Sexo'), 
                 $data->__GET('Codigo_Userg'),
-                $data->__GET('Codigo_Userg_Mundo'),
 				$data->__GET('Codigo_Nivel'),
 				$data->__GET('Codigo_Nivel_Mundo'), 
 				$data->__GET('Codigo_SubClase'),

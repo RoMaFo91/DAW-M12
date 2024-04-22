@@ -1,9 +1,10 @@
 <?php
-session_start();
+// session_start();
 require_once('./../classes.php');
 
-if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["codigo_mundo"]))
-{
+
+// http://localhost/webserice/getTipoMonstruo.php?codigo_mundo=971BBEBA-BE42-C92C-08CF-2A4F535F7022
+// Publicación de los datos a traves de webservice que pueden ser consumidos por cualquier cliente REST
 	try { 
 			$conf = new Conf_BD();
 			$pdo = new PDO('mysql:host='.$conf->GetServer().';dbname='.$conf->GetBD(), $conf->GetUser(), $conf->GetPass());
@@ -20,8 +21,8 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["co
 			if ($_REQUEST["codigo_mundo"]=='')
 			{
 				 $sql = "
-                SELECT Codigo
-					FROM Nivel
+                SELECT Codigo, Descripcion
+					FROM Tipo_Monstruo
 					WHERE Codigo_Mundo = ( 
 					SELECT Codigo
 					FROM Mundo
@@ -31,8 +32,8 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["co
 			else
 			{
             $sql = "
-                SELECT Codigo
-				FROM Nivel
+                SELECT Codigo,Descripcion
+				FROM Tipo_Monstruo
 				WHERE Codigo_Mundo =  :id
             ";
 			}
@@ -48,6 +49,6 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["co
             die($e->getMessage());
         }
 		
-}	
+
 	
 ?>

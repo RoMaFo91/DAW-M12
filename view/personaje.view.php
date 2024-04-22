@@ -20,8 +20,7 @@ if (isset($_SESSION['login_correct'])) {
 							$alm->__SET('Codigo_Raza',          $_REQUEST['Codigo_Raza']);
 							$alm->__SET('Codigo_Raza_Mundo',          $_SESSION['CodMundo']);
 
-							$alm->__SET('Codigo_Userg',          $_SESSION['user']);
-							$alm->__SET('Codigo_Userg_Mundo',          $_SESSION['CodMundo']);
+							$alm->__SET('Codigo_Userg',    $_REQUEST['Codigo_Userg']);
 							$model->Actualizar($alm);
 
 							header('Location: index.php?model=personaje&type=form');
@@ -44,8 +43,7 @@ if (isset($_SESSION['login_correct'])) {
 							$alm->__SET('Codigo_Raza',          $_REQUEST['Codigo_Raza']);
 							$alm->__SET('Codigo_Raza_Mundo',          $_SESSION['CodMundo']);
 
-							$alm->__SET('Codigo_Userg',          $_SESSION['user']);
-							$alm->__SET('Codigo_Userg_Mundo',          $_SESSION['CodMundo']);
+							$alm->__SET('Codigo_Userg',    $_REQUEST['Codigo_Userg']);
 
 							$model->Registrar($alm);
 
@@ -55,7 +53,7 @@ if (isset($_SESSION['login_correct'])) {
 
 						case 'eliminar':
 							$model->Eliminar($_REQUEST['Codigo'], $_SESSION['CodMundo']);
-							header('Location: personaje.controller.php');
+							header('Location: index.php?model=personaje&type=form');
 							break;
 						case 'editar':
 							$alm = $model->Obtener($_REQUEST['Codigo'], $_SESSION['CodMundo']);
@@ -73,22 +71,30 @@ if (isset($_SESSION['login_correct'])) {
 				</br>
 
 				<form action="../index.php?model=personaje&type=form&action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
-					<input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
 					<input type="hidden" name="Codigo_Mundo" value="<?php echo $_SESSION['CodMundo']; ?>" />
 
-
-
-					<?php
-					if ($alm->Estado == 'actualizar') {
-					?>
-
-						<input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
-
-					<?php
-
-					}
-					?>
-
+					Codigo Usuario
+					<div class="DivUsuario">
+						<select type="text" name="Codigo_Userg" value="<?php echo $alm->__GET('Codigo_Userg'); ?>" style="width:100%;" />
+						<?php
+						if ($_SESSION['level']<50)
+						{
+							$lista=$model_userg->Lista_User($_SESSION['user']);
+						}
+						else
+						{
+							$lista=$model_userg->Listar();
+						}
+						foreach ($lista as $r) :
+						?> <option <?php
+							if ($alm->__GET('Codigo_Userg') == $r->Codigo) {
+								echo ' selected';
+							}
+							?> value="<?php echo $r->Codigo; ?>"><?php echo $r->Codigo; ?></option> <?php
+																						endforeach;
+																							?>
+						</select>
+					</div>
 					<input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
 					Nombre<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
 					Sexo
@@ -113,22 +119,6 @@ if (isset($_SESSION['login_correct'])) {
 																						endforeach;
 																							?>
 						</select>
-						<script type="text/javascript">
-							$(document).ready(function() {
-								$("#DivMundo").prop('disabled', true);
-								$("#DivNivel").prop('disabled', true);
-								$('.DivMundo select').change(function() {
-									$('.DivNivel select').empty();
-									$.getJSON('/Get/getNivel.php?codigo_mundo=' + $('.DivMundo select').val(), function(data) {
-										$.each(data, function(i, item) {
-											$('.DivNivel select').append('<option value="' + item.Codigo + '">' + item.Codigo + '</option>');
-										});
-									});
-								});
-								$("#DivMundo").prop('disabled', false);
-								$("#DivNivel").prop('disabled', false);
-							});
-						</script>
 					</div>
 					Codigo SubClase
 					<div class="DivSubClase">
@@ -160,32 +150,8 @@ if (isset($_SESSION['login_correct'])) {
 								</select>
 								<div>
 
-									<br>
-									<br>
-									<br>
-									<div style="width:500px; padding:3px;">
-										<div style="width:245px;  float:left;">
-											<table border="1">
-												<tr>
-													<td>Caracteristicas</td>
-													<td></td>
-												</tr>
 
-											</table>
-										</div>
-
-										<div style="width:245px;  float:right;">
-											<table border="1">
-												<tr>
-													<td>Atributos</td>
-													<td></td>
-												</tr>
-												
-												
-											</table>
-										</div>
-									</div>
-									<br><br><br>
+									<br>
 				
 										<button type="submit" class="pure-button pure-button-primary">Guardar</button>
 										<br><br>
@@ -199,6 +165,7 @@ if (isset($_SESSION['login_correct'])) {
 
 						<tr>
 							<!--<th >Codigo Mundo</th>-->
+							<th>Usuario</th>
 							<th>Nombre</th>
 
 							<th>Sexo</th>
@@ -218,9 +185,19 @@ if (isset($_SESSION['login_correct'])) {
 
 					</thead>
 
-					<?php foreach ($model->Listar($_SESSION['CodMundo']) as $r) : ?>
+					<?php 
+					if ($_SESSION['level']<50) 
+					{
+						$list=$model->Listar_User($_SESSION['CodMundo'],$_SESSION['user']);
+					}
+					else
+					{
+						$list=$model->Listar($_SESSION['CodMundo']);
+					}
+					foreach ($list as $r) : ?>
 
 						<tr>
+						<td><?php echo $r->__GET('Codigo_Userg'); ?></td>
 							<td><?php echo $r->__GET('Nombre'); ?></td>
 
 							<td><?php echo $r->__GET('Sexo'); ?></td>

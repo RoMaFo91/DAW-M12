@@ -1,9 +1,10 @@
 <?php
-session_start();
+// session_start();
 require_once('./../classes.php');
 
-if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["codigo_mundo"]))
-{
+// http://localhost/webserice/getClase.php?codigo_mundo=971BBEBA-BE42-C92C-08CF-2A4F535F7022
+// Publicación de los datos a traves de webservice que pueden ser consumidos por cualquier cliente REST
+
 	try { 
 			$conf = new Conf_BD();
 			$pdo = new PDO('mysql:host='.$conf->GetServer().';dbname='.$conf->GetBD(), $conf->GetUser(), $conf->GetPass());
@@ -48,6 +49,6 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["co
             die($e->getMessage());
         }
 		
-}	
+// }	
 	
 ?>

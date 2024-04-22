@@ -14,9 +14,11 @@ if(session_status() == PHP_SESSION_ACTIVE)
 require_once('classes.php');
 //require(getcwd().'/conf_bd.php');
 //require(getcwd().'/validar.php'); 
-
+if (isset($_SESSION['login_correct'])) {
+//Comprobamos que el usuario es valido
 if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 {
+	//Comprobamos si las variables de código de mundo y nombre de mundo estan llenas
 	if (isset($_GET["Nom"]) && isset($_GET["Cod"]))
 	{
 		$_SESSION['CodMundo']=$_GET["Cod"];
@@ -24,12 +26,20 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 	}
 	?>		
 	<?php 
+	//Revisamos el nivel de autorización que tiene el usuario que a realizad login y filtramos los
+	//puntos de menu segun el nivel
 	if ($_SESSION['level']>=100) 
 	{
 		?>
 		<li><a href="index.php?model=userg&type=form">Gestión Usuarios</a></li>
 		<?php 
 	} 
+	else
+	{
+		?>
+		<li><a href="index.php?model=userg&type=form&action=editar&Codigo=<?php echo $_SESSION['user']; ?>&Codigo_Mundo=<?php echo $_SESSION['CodMundo']; ?>">Gestión Usuarios</a></li>
+		<?php 
+	}
 	if ($_SESSION['level']>=50) 
 	{
 	?>
@@ -44,7 +54,9 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 			<li><a href="index.php?model=monstruo&type=form">Gestión Monstruo</a></li>
 			<li><a href="index.php?model=estado&type=form">Gestión Estado</a></li>
 			<li><a href="index.php?model=habilidades&type=form">Gestión Habilidades</a></li>
-			<li><a href="index.php?model=traduccion&type=form">Gestión Traduccion (mantenimiento)</a></li>			  
+			<li><a href="index.php?model=pais&type=form">Gestión Pais</a></li>
+			<li><a href="index.php?model=lugar&type=form">Gestión Lugar</a></li>
+			<!-- <li><a href="index.php?model=traduccion&type=form">Gestión Traduccion (mantenimiento)</a></li>			   -->
 		<?php
 	}
 	if ($_SESSION['level']>=1) 
@@ -56,7 +68,9 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 }
 else
 {
-	header('Location: index.php');
+	//En el caso de intentar entrar en la web sin estar login te envia a index.php
+	//header('Location: index.php');
+}
 }
 }
 ?>

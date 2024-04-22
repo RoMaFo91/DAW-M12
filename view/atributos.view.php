@@ -1,9 +1,14 @@
 <?php
+//Comprobamos si el usuario esta login
 if (isset($_SESSION['login_correct'])) {
+    //Comprovamos si el usuario y el password son correcto
     if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
+        //Comprovamos si hay una acción de formulario
         if (isset($_REQUEST['action'])) {
+            //Comprovamos si el model que esta realizando la acción es el correcto
             if ($_REQUEST['model'] == 'atributos') {
                 switch ($_REQUEST['action']) {
+                    //Acción de actualizar un registro
                     case 'actualizar':
                         $alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
                         $alm->__SET('Codigo',              $_REQUEST['Codigo']);
@@ -13,6 +18,7 @@ if (isset($_SESSION['login_correct'])) {
                         $model->Actualizar($alm, $_REQUEST['Codigo']);
                         header('Location: index.php?model=atributos&type=form');
                         break;
+                        //Acción de creación de registro
                     case 'registrar':
                         $alm->__SET('Codigo_Mundo',          $_SESSION['CodMundo']);
                         $alm->__SET('Codigo',          $_REQUEST['Codigo']);
@@ -22,11 +28,12 @@ if (isset($_SESSION['login_correct'])) {
                         $model->Registrar($alm);
                         header('Location: index.php?model=atributos&type=form');
                         break;
-
+//Acción de eliminación de un registro
                     case 'eliminar':
                         $model->Eliminar($_REQUEST['Codigo'], $_SESSION['CodMundo']);
                         header('Location: index.php?model=atributos&type=form');
                         break;
+                        //Acción de edición de un registro
                     case 'editar':
                         $alm = $model->Obtener($_REQUEST['Codigo'], $_SESSION['CodMundo']);
                         $alm->__SET('Estado', 'actualizar');
@@ -42,12 +49,10 @@ if (isset($_SESSION['login_correct'])) {
             <div class="pure-u-1-12">
                 <h3>Atributos </h3>
                 </br>
-
+<!--  Formulario para creación y actualización de registros -->
                 <form action="../index.php?model=atributos&type=form&action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
                     <input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
-                       <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" <?php if ($alm->Estado == 'actualizar') {
-                                                                                                                                    echo 'readonly';
-                                                                                                                                } ?> />
+                       <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
                         Nombre
                         <input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
                         Descripcion
@@ -60,7 +65,7 @@ if (isset($_SESSION['login_correct'])) {
                 </form>
 
 
-
+<!-- Tabla de todos los elementos del modelo -->
                 <table class="pure-table pure-table-horizontal">
 
                     <thead>

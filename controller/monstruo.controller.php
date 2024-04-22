@@ -10,6 +10,7 @@ require($_SERVER['DOCUMENT_ROOT']."/model/atributos.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/monstruoatributos.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/monstruocaracteristicas.model.php");
 
+// Creamos instancia de los modelos que se necesitan para la vista
 $alm = new Monstruo(); 
 $model_mundo = new MundoModel();
 $model_subclase = new SubClaseModel();

@@ -1,10 +1,11 @@
 <?php
 //Llamada al modelo
-// require($_SERVER['DOCUMENT_ROOT']."/classes.php");
+
 require($_SERVER['DOCUMENT_ROOT']."/model/estado.model.php");
-// require($_SERVER['DOCUMENT_ROOT']."/model/mundo.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/atributos.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/estadoatributos.model.php");
+
+// Creamos instancia de los modelos que se necesitan para la vista
 $alm = new Estado(); 
 $model_mundo = new MundoModel();
 $model = new EstadoModel(); 

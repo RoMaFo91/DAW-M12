@@ -57,7 +57,7 @@ if (isset($_SESSION['login_correct'])) {
 					Nombre<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
 					Codigo Nivel
 					<div class="DivNivel">
-						<select type="text" name="Codigo_Nivel" value="<?php echo $alm->__GET('Codigo_Nivel'); ?>" style="width:100%;" />
+						<select type="text" name="Codigo_Nivel" value="<?php echo $alm->__GET('Codigo_Nivel'); ?>" style="width:100%;" >
 						<?php
 						foreach ($model_nivel->ListarNivelMundo($_SESSION['CodMundo']) as $r) :
 						?> <option <?php
@@ -68,22 +68,6 @@ if (isset($_SESSION['login_correct'])) {
 																						endforeach;
 																							?>
 						</select>
-						<script type="text/javascript">
-							$(document).ready(function() {
-								$("#DivMundo").prop('disabled', true);
-								$("#DivNivel").prop('disabled', true);
-								$('.DivMundo select').change(function() {
-									$('.DivNivel select').empty();
-									$.getJSON('/Get/getNivel.php?codigo_mundo=' + $('.DivMundo select').val(), function(data) {
-										$.each(data, function(i, item) {
-											$('.DivNivel select').append('<option value="' + item.Codigo + '">' + item.Codigo + '</option>');
-										});
-									});
-								});
-								$("#DivMundo").prop('disabled', false);
-								$("#DivNivel").prop('disabled', false);
-							});
-						</script>
 					</div>
 
 					Codigo SubClase
@@ -100,22 +84,7 @@ if (isset($_SESSION['login_correct'])) {
 																						endforeach;
 																							?>
 						</select>
-						<!-- <script type="text/javascript">
-							$(document).ready(function() {
-								$("#DivMundo").prop('disabled', true);
-								$("#DivSubClase").prop('disabled', true);
-								$('.DivMundo select').change(function() {
-									$('.DivSubClase select').empty();
-									$.getJSON('/Get/getSubClase.php?codigo_mundo=' + $('.DivMundo select').val(), function(data) {
-										$.each(data, function(i, item) {
-											$('.DivSubClase select').append('<option value="' + item.Codigo + '">' + item.Nombre + '</option>');
-										});
-									});
-								});
-								$("#DivMundo").prop('disabled', false);
-								$("#DivSubClase").prop('disabled', false);
-							});
-						</script> -->
+						
 						<div>
 
 

@@ -1,4 +1,5 @@
 <?php
+// Metodo que crea un registro GUID para poder utilizar en los códigos de las tablas
 function createGUID() { 
     
     // Create a token
@@ -27,6 +28,7 @@ function createGUID() {
 
 }
 
+//Metodo que valida si el usuario existe y el password es correcto
 function ComprobarSession($Cod,$Pass)
     {
 		$salt='$2017=(rmf)(dps)$(06-10)/(01-04-2024)$';
@@ -45,11 +47,15 @@ function ComprobarSession($Cod,$Pass)
 			$result = array();
  
             $stm = $pdo->prepare("SELECT * FROM Userg WHERE Codigo = ?");
+
             $stm->execute(array($Cod));
-            $r = $stm->fetch(PDO::FETCH_OBJ);				
+			foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
+			{
 				$Codigo=$r->Codigo;
 				$Password=$r->Passwrod;
 				$Cod_mundo=$r->Codigo_Mundo;
+			}		
+				
 		
 		//session_start();
 			if ($Cod == $Codigo && (crypt($Pass,$salt)==$Password))

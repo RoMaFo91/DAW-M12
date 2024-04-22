@@ -1,9 +1,8 @@
 <?php
-session_start();
+// session_start();
 require_once('./../classes.php');
 
-if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["codigo_mundo"]))
-{
+// Publicación de los datos a traves de webservice que pueden ser consumidos por cualquier cliente REST
 	try { 
 			$conf = new Conf_BD();
 			$pdo = new PDO('mysql:host='.$conf->GetServer().';dbname='.$conf->GetBD(), $conf->GetUser(), $conf->GetPass());
@@ -20,9 +19,10 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["co
 			if ($_REQUEST["codigo_mundo"]=='')
 			{
 				 $sql = "
-                SELECT Codigo, Descripcion
-					FROM Tipo_Monstruo
-					WHERE Codigo_Mundo = ( 
+                SELECT SubClase.Codigo,CONCAT(Clase.Nombre, ' ', SubClase.Nombre) as Nombre
+					FROM SubClase
+					JOIN Clase on SubClase.Codigo_Clase=Clase.Codigo
+					WHERE SubClase.Codigo_Mundo = ( 
 					SELECT Codigo
 					FROM Mundo
 					LIMIT 1 ) 
@@ -31,12 +31,12 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["co
 			else
 			{
             $sql = "
-                SELECT Codigo,Descripcion
-				FROM Tipo_Monstruo
-				WHERE Codigo_Mundo =  :id
+                SELECT SubClase.Codigo,CONCAT(Clase.Nombre, ' ', SubClase.Nombre) as Nombre
+				FROM SubClase
+				JOIN Clase on SubClase.Codigo_Clase=Clase.Codigo
+				WHERE SubClase.Codigo_Mundo =  :id
             ";
 			}
-
 			$stm = $pdo->prepare($sql);
 			$stm->execute(array(':id' => $_REQUEST["codigo_mundo"]));
 			
@@ -48,6 +48,6 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["co
             die($e->getMessage());
         }
 		
-}	
+// }	
 	
 ?>

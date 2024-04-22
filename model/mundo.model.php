@@ -61,6 +61,34 @@ class MundoModel {
             die($e->getMessage());
         }
     }
+
+    public function Listar_User($user)
+    {
+        try
+        {
+            $result = array();
+ 
+            $stm = $this->pdo->prepare("SELECT Mundo.Codigo,Mundo.Nombre,Mundo.Descripcion FROM Mundo JOIN Userg_Mundo on Mundo.Codigo=Userg_Mundo.Codigo_Mundo WHERE Codigo_Userg=?");
+            $stm->execute(array($user));
+ 
+            foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
+            {
+                $alm = new Mundo();
+ 
+                $alm->__SET('Codigo', $r->Codigo);
+                $alm->__SET('Nombre', $r->Nombre);
+                $alm->__SET('Descripcion', $r->Descripcion);
+ 
+                $result[] = $alm;
+            }
+ 
+            return $result;
+        }
+        catch(Exception $e)
+        {
+            die($e->getMessage());
+        }
+    }
  
     public function Obtener($Codigo)
     {

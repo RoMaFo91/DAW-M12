@@ -113,9 +113,18 @@ if (isset($_SESSION['login_correct'])) {
                     }
                 ?>
                 
-                    <li class="nav-item"><a class="nav-link" href="../index.php?model=mundo&type=form">Crear Mundo</a></li>
+                    
                     <?php
-                    foreach ($model->Listar() as $r) :
+                    if ($_SESSION['level']<100) 
+                    {
+                        $lista=$model->Listar_User($_SESSION['user']);
+                    }
+                    else
+                    {
+                        ?><li class="nav-item"><a class="nav-link" href="../index.php?model=mundo&type=form">Crear Mundo</a></li><?php
+                        $lista=$model->Listar();
+                    }	
+                    foreach ( $lista as $r) :
                             if ($_SESSION['CodMundo'] == $r->__GET('Codigo')) {
                     ?>
                                 <b>

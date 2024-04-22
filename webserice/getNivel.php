@@ -1,9 +1,9 @@
 <?php
-session_start();
+// session_start();
 require_once('./../classes.php');
 
-if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["Tabla"]))
-{
+// http://localhost/webserice/getNivel.php?codigo_mundo=971BBEBA-BE42-C92C-08CF-2A4F535F7022
+// Publicación de los datos a traves de webservice que pueden ser consumidos por cualquier cliente REST
 	try { 
 			$conf = new Conf_BD();
 			$pdo = new PDO('mysql:host='.$conf->GetServer().';dbname='.$conf->GetBD(), $conf->GetUser(), $conf->GetPass());
@@ -17,17 +17,28 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["Ta
         {
 			$sql ="";
             $result = array();
-			if ($_REQUEST["Tabla"]=='')
+			if ($_REQUEST["codigo_mundo"]=='')
 			{
-				 $sql ="SHOW COLUMNS FROM ".$_REQUEST["Tabla"];
+				 $sql = "
+                SELECT Codigo
+					FROM Nivel
+					WHERE Codigo_Mundo = ( 
+					SELECT Codigo
+					FROM Mundo
+					LIMIT 1 ) 
+            ";
 			}
 			else
 			{
-            $sql ="SHOW COLUMNS FROM ".$_REQUEST["Tabla"];
+            $sql = "
+                SELECT Codigo
+				FROM Nivel
+				WHERE Codigo_Mundo =  :id
+            ";
 			}
 
 			$stm = $pdo->prepare($sql);
-			$stm->execute(array(':id' => $_REQUEST["Tabla"]));
+			$stm->execute(array(':id' => $_REQUEST["codigo_mundo"]));
 			
 			 header('Content-Type: application/json');
             print_r( json_encode ( $stm->fetchAll(PDO::FETCH_ASSOC) ) );
@@ -37,6 +48,6 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']) && isset($_REQUEST["Ta
             die($e->getMessage());
         }
 		
-}	
+// }	
 	
 ?>

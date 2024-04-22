@@ -11,7 +11,7 @@ class TipoMonstruo {
     
     public function name()
     {
-        return $this->Nombre;
+        return $this->Descripcion;
     }
 
 

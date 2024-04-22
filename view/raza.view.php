@@ -92,9 +92,14 @@ if (isset($_SESSION['login_correct'])) {
 
                         <tr>
                             <td><?php echo $r->__GET('Nombre'); ?></td>
-
-                            <td><?php echo $r->__GET('Tipo'); ?></td>
+                            <td><?php 
+                                if ($r->__GET('Tipo') == 'B'){echo 'Bueno';}
+                                if ($r->__GET('Tipo') == 'N'){echo 'Neutral';}
+                                if ($r->__GET('Tipo') == 'M'){echo 'Malo';}
+                            ?></td>
+                            
                             <td>
+                                
                                 <a href="?model=raza&type=form&action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/actualizar.png" alt="Actualizar" style="width:15%"></a>
                             </td>
                             <td>

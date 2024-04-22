@@ -8,10 +8,13 @@ class Monstruo {
     private $Nombre;
     private $Sexo;
     private $ESPNJ;
+    private $obj_Codigo_Nivel;
     private $Codigo_Nivel;
     private $Codigo_Nivel_Mundo;
+    private $obj_Codigo_SubClase;
     private $Codigo_SubClase;
     private $Codigo_SubClase_Mundo;
+    private $obj_Codigo_Tipo_Mons;
      private $Codigo_Tipo_Mons;
     private $Codigo_Tipo_Mons_Mundo;
     private $Estado;
@@ -60,8 +63,11 @@ class MonstruoModel {
 				$alm->__SET('Sexo', $r->Sexo);
 				$alm->__SET('ESPNJ', $r->ESPNJ);
 				$alm->__SET('Codigo_Nivel', $r->Codigo_Nivel);
+                $alm->__SET('obj_Codigo_Nivel',(new NivelModel())->Obtener( $r->Codigo_Nivel,$r->Codigo_Mundo));
 				$alm->__SET('Codigo_SubClase', $r->Codigo_SubClase);
+                $alm->__SET('obj_Codigo_SubClase',(new SubClaseModel())->Obtener(  $r->Codigo_SubClase,$r->Codigo_Mundo));
 				$alm->__SET('Codigo_Tipo_Mons', $r->Codigo_Tipo_Mons);
+                $alm->__SET('obj_Codigo_Tipo_Mons',(new TipoMonstruoModel())->Obtener(   $r->Codigo_Tipo_Mons,$r->Codigo_Mundo));
 				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
  
                 $result[] = $alm;
@@ -127,7 +133,6 @@ class MonstruoModel {
         try
         {
             $sql = "UPDATE Monstruo SET 
-						Codigo			= ?,
 						Nombre = ?,
 						Sexo = ?,
 						Codigo_Nivel = ?,
@@ -142,7 +147,6 @@ class MonstruoModel {
             $this->pdo->prepare($sql)
                  ->execute(
                 array(
-					$data->__GET('Codigo'), 
 					$data->__GET('Nombre'), 
 					$data->__GET('Sexo'), 
 					$data->__GET('Codigo_Nivel'), 

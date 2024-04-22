@@ -2,11 +2,12 @@
 session_start();
 require_once('classes.php');
 $model = new MundoModel(); 
-//require(getcwd().'/conf_bd.php');
-//require(getcwd().'/validar.php'); 
 
+
+//Comprobamos que el usuario esta login en el caso que no se enviara a index.php
 if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 {
+	// Esta pagina carga una lista de los mundos disponibles para poder realizar acciones
 	?>
 		<html>
 		<body>
@@ -16,7 +17,16 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 		</br></br>
 		<ul>
 			<h1><li><a href="./controller/mundo.controller.php">Crear_Mundo</a></li></h1>
-		    <?php foreach($model->Listar() as $r): ?>
+		    <?php 
+			if ($_SESSION['level']<100) 
+			{
+				$lista=$model->Listar_User($_SESSION['user']);
+			}
+			else
+			{
+				$lista=$model->Listar();
+			}		
+			foreach($lista as $r): ?>
 				<h1><li><a href="lista.php?Cod=<?php echo $r->__GET('Codigo'); ?>&Nom=<?php echo $r->__GET('Nombre'); ?>"><?php echo $r->__GET('Codigo'); ?> - <?php echo $r->__GET('Nombre'); ?></a></li></h1>
             <?php endforeach; ?>	
 		</ul>

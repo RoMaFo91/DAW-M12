@@ -1,7 +1,7 @@
 <?php
-//require('./../conf_bd.php');
-//require_once('./../classes.php');
 
+
+//Clase que es una representanción de la tabla de la base de datos
 class Caracteristicas {
  
     private $Codigo_Mundo;
@@ -19,9 +19,11 @@ class Caracteristicas {
        public function __SET($k, $v){ return $this->$k = $v; }
    }
    
+   //Clase que contendra todos los metodos para la gestión de la tabla
 class CaracteristicasModel { 
 		private $pdo; 
 		
+    //Constructor de la clase
 	public function __CONSTRUCT() { 
 	$conf = new Conf_BD();
 	try { 
@@ -35,6 +37,7 @@ class CaracteristicasModel {
         }
     }
  
+    // Metodo que devuelve un listado de todas las caracteristicas de un mundo concreto
     public function Listar($CodMundo)
     {
         try
@@ -63,7 +66,8 @@ class CaracteristicasModel {
             die($e->getMessage());
         }
     }
-	
+
+        // Metodo que devuelve un listado de todos las caracteristicas de un mundo concreto
 	 public function ListarCaracteristicasMundo($Codigo_Mundo)
     {
         try
@@ -100,6 +104,7 @@ class CaracteristicasModel {
         }
     }
  
+        // Metodo que devuelve una caracteristica filtrado por código de un mundo concreto
     public function Obtener($Codigo,$Codigo_Mundo)
     {
         try
@@ -126,6 +131,7 @@ class CaracteristicasModel {
         }
     }
  
+    // Metodo que elimina una caracteristica de un mundo concreto
     public function Eliminar($Codigo,$Codigo_Mundo)
     {
         try
@@ -140,6 +146,7 @@ class CaracteristicasModel {
         }
     }
  
+    //Metodo que actualiza los datos de una caracteristica concreta facilitada por parametro
     public function Actualizar(Caracteristicas $data,$codigo_viejo)
     {
         try

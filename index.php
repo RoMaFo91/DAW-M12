@@ -6,9 +6,30 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Gestión de mundos</title>
 	<link rel="stylesheet" href="css/styles.css">
+	<script type="text/javascript">
+		// Funciona para validar en javascript que el correo sea correcto
+		function validateEmail(){
+     
+				// Get our input reference.
+				var emailField = document.getElementById('email');
+               
+				// Define our regular expression.
+				var validEmail =  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+				// Using test we can check if the text match the pattern
+				if( validEmail.test(emailField.value) ){
+					return true;
+				}else{
+					alert('El correo no es válido');
+					return false;
+				}
+			} 
+	</script>
 </head>
 
 <?php
+//Pagina base de toda la aplicación contendra varias secciones que ira llenando segun la URL
+// que este construida, la parte mas variable es la de contenido que va cargando segun la URL
+
 if (session_status() == PHP_SESSION_NONE) {
 	session_start();
   }
@@ -16,25 +37,28 @@ if (session_status() == PHP_SESSION_NONE) {
 require_once('classes.php');
 
 if (isset($_GET["Desc"])) {
+	//Este punto llegara cuando pulse el link desconectar
 	$_SESSION['user'] = NULL;
 	$_SESSION['pass'] = NULL;
 	$_SESSION['login_correct']=NULL;
+	session_destroy();
 }
 if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
+	//Este punto llegara cuando ha intentado realizar login
 	$_SESSION['user'] = $_REQUEST['user'];
 	$_SESSION['pass'] = $_REQUEST['pass'];
 	$_SESSION['CodMundo']='';
 	
+	//Se comprueba que el usuario es valido tanto el password como el código
 	if (ComprobarSession($_REQUEST['user'], $_REQUEST['pass'])) {
+		//En el caso de haber hecho login con un usuario correcto cargara el resto de pagina
+
 		require($_SERVER['DOCUMENT_ROOT'] . "/controller/userg.controller.base.php");
 		$_SESSION['level']=$model->Obtener($_SESSION['user'])->__GET('Security_Level');
 		$_SESSION['login_correct'] = True;
 		// header('Location: index.php');
 		// header('Location: controller/mundo.controller.php');
-	} else {
-		$_SESSION['login_correct'] = False;
-		// header('Location: index.php');
-	}
+	} 
 }
 ?>
 
@@ -52,10 +76,11 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 
 					<?php
 					if (isset($_SESSION['login_correct'])) {
-						// include('/controller/mundo.controller.php?type=list');
+						// Cargamos el controlador de mundo en tipo lista para poder ver
+						// todos los mundos disponibles
 						$type = "list";
 						require($_SERVER['DOCUMENT_ROOT'] . "/controller/mundo.controller.php");
-						// include($_SERVER['DOCUMENT_ROOT'].'/controller/mundo.controller.php?type=list');
+						
 					}
 					?>
 				</ul>
@@ -64,6 +89,7 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 			if (isset($_SESSION['login_correct'])) {
 				?>
 			<div class="login">
+				<!-- Elimina las variables de sessión -->
 				<a href="index.php?Desc=desc" class="login-link">Cerrar sesión</a>
 			</div>
 			<?php
@@ -82,16 +108,13 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 						require($_SERVER['DOCUMENT_ROOT'] . "/lista.php");
 					}
 					?>
-					<!-- <li><a href="#">Inicio</a></li>
-						<li><a href="#">Acerca de</a></li>
-						<li><a href="#">Contacto</a></li> -->
 				</ul>
 			</div>
 			<div class="contenido">
 				<!-- Contenido principal -->
 				<?php
 				if (isset($_SESSION['NomMundo']))
-				{ ?><h1>Bienvenido al mundo : <?php
+				{ ?><h1>Bienvenido <?php echo $_SESSION['user']; ?> al mundo : <?php
 					echo $_SESSION['NomMundo'];
 				}
 				
@@ -121,7 +144,7 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 
 				if (!isset($_SESSION['login_correct'])) {
 				?>
-
+				<!-- Formulario de login -->
 					<form action="index.php" method="post">
 
 								User<input type="text" name="user" style="width:100%;" />

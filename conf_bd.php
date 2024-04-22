@@ -1,4 +1,8 @@
 <?php 
+//Clase que representa una conexión a una base de datos MySQL
+//En esta clase es donde esta guardado todo lo relacionado con la conexión
+//Base de datos, usuario, password, servidor
+//tambien tiene los metodos Get para obtener los valores que son utilizados en toda la aplicación
 class Conf_BD {
  private $UserBD;
  private $PassBD;
