@@ -10,4 +10,5 @@ $model = new AtributosModel();
 //Llamada a la vista del modelo
 require($_SERVER['DOCUMENT_ROOT']."/view/atributos.view.php");
 
+
 ?>

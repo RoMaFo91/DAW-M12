@@ -29,7 +29,8 @@
 <?php
 //Pagina base de toda la aplicación contendra varias secciones que ira llenando segun la URL
 // que este construida, la parte mas variable es la de contenido que va cargando segun la URL
-
+error_reporting(0);
+$call_index=True;
 if (session_status() == PHP_SESSION_NONE) {
 	session_start();
   }
