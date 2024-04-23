@@ -1,7 +1,5 @@
 <?php
-//require('./../conf_bd.php');
-//require_once('./../classes.php');
-
+//Clase que es una representación de la tabla de subclase y sus campos
 class SubClase {
  
     private $Codigo_Mundo;
@@ -22,9 +20,11 @@ class SubClase {
        public function __SET($k, $v){ return $this->$k = $v; }
    }
 
+      // Clase que contendra todos los metodos para la gestión de la tabla
 class SubClaseModel { 
 		private $pdo; 
 		
+        //Constructor de la clase
 	public function __CONSTRUCT() { 
 	$conf = new Conf_BD();
 	try { 
@@ -38,6 +38,7 @@ class SubClaseModel {
         }
     }
  
+    //Metodo que devuelve un listado de todos los subclase de un mundo concreto
     public function Listar($CodMundo)
     {
         try
@@ -69,6 +70,7 @@ class SubClaseModel {
         }
     }
 	
+    //Metodo que devuelve un listado de todos los subclase de un mundo concreto
 	public function ListarSubClaseMundo($codigo)
     {
         try
@@ -103,6 +105,7 @@ class SubClaseModel {
         }
     }
  
+    //Metodo que obtiene una subclase concreto de un mundo concreto
     public function Obtener($Codigo,$Codigo_Mundo)
     {
         try
@@ -131,6 +134,7 @@ class SubClaseModel {
         }
     }
  
+    //Metodo para eliminar una subclase concreto de un mundo concreto
     public function Eliminar($Codigo,$Codigo_Mundo)
     {
         try
@@ -145,6 +149,7 @@ class SubClaseModel {
         }
     }
  
+    //Metodo para actualizar un registro de la tabla
     public function Actualizar(SubClase $data,$codigo_viejo,$codigo_viejo_mundo)
     {
         try
@@ -180,6 +185,7 @@ class SubClaseModel {
         }
     }
  
+    //Metodo para crear un registro de la tabla
     public function Registrar(SubClase $data)
     {
         try

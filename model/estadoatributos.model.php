@@ -1,6 +1,6 @@
 <?php
-//require('./../conf_bd.php');
-//require_once('./../classes.php');
+//Clase para la gestión de la tabla estado/atributo, 
+//esta tabla es la conexión entre estado y atributo a nivel relacional
 class Estado_Atributo {
  
     private $Codigo_Estado;
@@ -20,9 +20,11 @@ class Estado_Atributo {
    }
     
 
+   //Clase que contiene todos los metodos para la gestión de la tabla
 class Estado_AtributoModel { 
 		private $pdo; 
 		
+        //Constructor de la clase
 	public function __CONSTRUCT() { 
 	$conf = new Conf_BD();
 	try { 
@@ -36,6 +38,7 @@ class Estado_AtributoModel {
         }
     }
  
+    //Metodo que devuelve un listado de todos los atributos de un estado concreto y un mundo concreto
     public function Listar($Codigo_Mundo,$Codigo_Estado)
     {
         try
@@ -70,32 +73,8 @@ class Estado_AtributoModel {
         }
     }
 	
- /*
-    public function Obtener($Codigo,$Codigo_Mundo)
-    {
-        try
-        {
-            $stm = $this->pdo
-                      ->prepare("SELECT * FROM Estado_Atributo WHERE Codigo = ? and Codigo_Mundo = ?");
-                       
- 
-            $stm->execute(array($Codigo,$Codigo_Mundo));
-            $r = $stm->fetch(PDO::FETCH_OBJ);
- 
-            $alm = new Estado_Atributo();
- 
-            $alm->__SET('Codigo', $r->Codigo);
-			$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
-			$alm->__SET('Nombre', $r->Nombre);
- 
- 
-            return $alm;
-        } catch (Exception $e) 
-        {
-            die($e->getMessage());
-        }
-    }
- */
+
+//Metodo para comprovar si existe un estado/atributo concreto
 	public function ComprovarExiste(Estado_Atributo $data)
 	{
 	 try
@@ -124,6 +103,7 @@ class Estado_AtributoModel {
         }
 	}
  
+    //Metodo para eliminar un registro concreto
     public function Eliminar($Codigo,$Codigo_Mundo)
     {
         try
@@ -138,6 +118,7 @@ class Estado_AtributoModel {
         }
     }
  
+    //Metodo para actualizar un registro concreto de la tabla de estado atributo
     public function Actualizar(Estado_Atributo $data)
     {
         try
@@ -169,6 +150,7 @@ class Estado_AtributoModel {
         }
     }
  
+    //Metodo para crear un registro en la tabla de estado atributo
     public function Registrar(Estado_Atributo $data)
     {
         try

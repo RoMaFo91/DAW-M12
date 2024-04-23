@@ -1,6 +1,5 @@
 <?php
-//require('./../conf_bd.php');
-//require_once('./../classes.php');
+//Clase que representa la tabla de estado y sus campos
 class Estado {
  
     private $Codigo_Mundo;
@@ -18,9 +17,11 @@ class Estado {
        public function __SET($k, $v){ return $this->$k = $v; }
    }
 
+   //Clase que tiene todos los metodos de gestión de la tabla estado
 class EstadoModel { 
 		private $pdo; 
 		
+        //Constructor de la clase
 	public function __CONSTRUCT() { 
 	$conf = new Conf_BD();
 	try { 
@@ -34,6 +35,7 @@ class EstadoModel {
         }
     }
  
+    //Metodo que devuelve todos los estados de un mundo concreto
     public function Listar($CodMundo)
     {
         try
@@ -63,6 +65,7 @@ class EstadoModel {
         }
     }
 	
+    //Metodo que devuelve todos los estados de un mundo concreto
 	 public function ListarEstadoMundo($Codigo_Mundo)
     {
         try
@@ -98,6 +101,7 @@ class EstadoModel {
         }
     }
  
+    //Metodo que devuelve un registro concreto de la tabla estado
     public function Obtener($Codigo,$Codigo_Mundo)
     {
         try
@@ -123,6 +127,7 @@ class EstadoModel {
         }
     }
  
+    //Metodo para eliminar un registro concreto pasado por parametro
     public function Eliminar($Codigo,$Codigo_Mundo)
     {
         try
@@ -137,6 +142,8 @@ class EstadoModel {
         }
     }
  
+    //Metodo para la actualización de un registro concreto de la tabla estado
+
     public function Actualizar(Estado $data,$codigo_viejo)
     {
         try
@@ -165,6 +172,7 @@ class EstadoModel {
         }
     }
  
+    //Metodo de creación de registro en la tabla estado
     public function Registrar(Estado $data)
     {
         try

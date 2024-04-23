@@ -1,6 +1,5 @@
 <?php
-//require('./../conf_bd.php');
-//require_once('./../classes.php');
+//Clase que es una representación de la tabla de raza y sus campos
 
 class Raza {
  
@@ -19,9 +18,10 @@ class Raza {
        public function __SET($k, $v){ return $this->$k = $v; }
    }
 
+      // Clase que contendra todos los metodos para la gestión de la tabla
 class RazaModel { 
 		private $pdo; 
-		
+		//Constructor de la clase
 	public function __CONSTRUCT() { 
 	$conf = new Conf_BD();
 	try { 
@@ -35,6 +35,7 @@ class RazaModel {
         }
     }
  
+    //Metodo que devuelve un listado de todos las razas de un mundo concreto
     public function Listar($CodMundo)
     {
         try
@@ -64,6 +65,7 @@ class RazaModel {
         }
     }
 	
+    //Metodo que devuelve un listado de todos las razas de un mundo concreto
 	 public function ListarRazaMundo($Codigo_Mundo)
     {
         try
@@ -92,7 +94,8 @@ class RazaModel {
             die($e->getMessage());
         }
     }
- 
+
+ //Metodo que obtiene una raza concreto de un mundo concreto
     public function Obtener($Codigo,$Codigo_Mundo)
     {
         try
@@ -119,6 +122,7 @@ class RazaModel {
         }
     }
  
+        //Metodo para eliminar una raza concreto de un mundo concreto
     public function Eliminar($Codigo,$Codigo_Mundo)
     {
         try
@@ -133,6 +137,7 @@ class RazaModel {
         }
     }
  
+        //Metodo para actualizar un registro de la tabla
     public function Actualizar(Raza $data,$codigo_viejo)
     {
         try
@@ -161,6 +166,7 @@ class RazaModel {
         }
     }
  
+        //Metodo para crear un registro de la tabla
     public function Registrar(Raza $data)
     {
         try

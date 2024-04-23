@@ -1,6 +1,5 @@
 <?php
-//require('./../conf_bd.php');
-//require_once('./../classes.php');
+//Clase que es una representanción de la tabla de la base de datos
 class Clase {
  
     private $Codigo_Mundo;
@@ -17,9 +16,10 @@ class Clase {
        public function __SET($k, $v){ return $this->$k = $v; }
    }
 
+      //Clase que contendra todos los metodos para la gestión de la tabla
 class ClaseModel { 
 		private $pdo; 
-		
+		//Constructor de la clase
 	public function __CONSTRUCT() { 
 	$conf = new Conf_BD();
 	try { 
@@ -33,6 +33,7 @@ class ClaseModel {
         }
     }
  
+    // Metodo que devuelve un listado de todas las clases de un mundo concreto
     public function Listar($CodMundo)
     {
         try
@@ -61,6 +62,7 @@ class ClaseModel {
         }
     }
 	
+    // Metodo que devuelve un listado de todas las clases de un mundo concreto
 	 public function ListarClaseMundo($Codigo_Mundo)
     {
         try
@@ -90,6 +92,8 @@ class ClaseModel {
         }
     }
  
+    // Metodo que devuelve una clase concreta donde pasamos por parametro el código de la clase
+    // y el código de mundo
     public function Obtener($Codigo,$Codigo_Mundo)
     {
         try
@@ -115,6 +119,8 @@ class ClaseModel {
         }
     }
  
+    // Metodo que elimina una clase concreta donde pasamos por parametro el código de la clase
+    // y el código de mundo
     public function Eliminar($Codigo,$Codigo_Mundo)
     {
         try
@@ -129,6 +135,7 @@ class ClaseModel {
         }
     }
  
+    // Metodo para actualizar una clase donde pasamos el $data es el contenido de los datos a actualizar
     public function Actualizar(Clase $data,$codigo_viejo)
     {
         try
@@ -154,6 +161,7 @@ class ClaseModel {
         }
     }
  
+    //Metodo para la creación de un elemento de tipo clase
     public function Registrar(Clase $data)
     {
         try

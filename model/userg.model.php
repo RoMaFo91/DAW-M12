@@ -1,9 +1,10 @@
 <?php
-//require('./../conf_bd.php');
-//require_once('./../classes.php');
+//Clase que es una representación de la tabla de userg y sus campos
+//Es la tabla que almacenara todos los usuarios del sistema
 
-class Userg {
- 
+class Userg
+{
+
     private $Codigo_Mundo;
     private $Codigo;
     private $Nombre;
@@ -12,111 +13,110 @@ class Userg {
     private $confirmacion;
     private $Security_Level;
     private $Estado;
-    
+
     public function name()
     {
         return $this->Nombre;
     }
 
 
-    public function __GET($k){ return $this->$k; }
-       public function __SET($k, $v){ return $this->$k = $v; }
-   }
+    public function __GET($k)
+    {
+        return $this->$k;
+    }
+    public function __SET($k, $v)
+    {
+        return $this->$k = $v;
+    }
+}
 
-class UsergModel { 
-		private $pdo; 
-		
-	public function __CONSTRUCT() { 
-	$conf = new Conf_BD();
-	try { 
-	$this->pdo = new PDO('mysql:host='.$conf->GetServer().';dbname='.$conf->GetBD(), $conf->GetUser(), $conf->GetPass());
-	//$this->pdo = new PDO('mysql:host=localhost;dbname=id3949160_rfg_v1', 'id3949160_rfg_v1','roger');
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);              
-        }
-        catch(Exception $e)
-        {
+// Clase que contendra todos los metodos para la gestión de la tabla
+class UsergModel
+{
+    private $pdo;
+    //Constructor de la clase
+    public function __CONSTRUCT()
+    {
+        $conf = new Conf_BD();
+        try {
+            $this->pdo = new PDO('mysql:host=' . $conf->GetServer() . ';dbname=' . $conf->GetBD(), $conf->GetUser(), $conf->GetPass());
+            //$this->pdo = new PDO('mysql:host=localhost;dbname=id3949160_rfg_v1', 'id3949160_rfg_v1','roger');
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
- //ListarTipoMonsMundo
-	 public function ListarUsergMundo($codigo)
+    //Metodo que devuelve un listado de todos los usuarios de un mundo concreto
+    public function ListarUsergMundo($codigo)
     {
-        try
-        {
-           $result = array();
+        try {
+            $result = array();
 
-				$stm = $this->pdo->prepare("SELECT * FROM Userg WHERE Codigo_Mundo = ?");
-				 $stm->execute(array($codigo));
- 
-            foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
-            {
+            $stm = $this->pdo->prepare("SELECT * FROM Userg WHERE Codigo_Mundo = ?");
+            $stm->execute(array($codigo));
+
+            foreach ($stm->fetchAll(PDO::FETCH_OBJ) as $r) {
                 $alm = new Userg();
- 
+
                 $alm->__SET('Codigo', $r->Codigo);
                 $alm->__SET('Nombre', $r->Nombre);
                 $alm->__SET('Passwrod', $r->Passwrod);
                 $alm->__SET('email', $r->email);
                 $alm->__SET('confirmacion', $r->confirmacion);
                 $alm->__SET('Security_Level', $r->Security_Level);
-                
-				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
- 
+
+                $alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
+
                 $result[] = $alm;
             }
- 
+
             return $result;
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
- 
+    //Metodo que devuelve un listado de todos los usuarios 
     public function Listar()
     {
-        try
-        {
+        try {
             $result = array();
- 
+
             $stm = $this->pdo->prepare("SELECT * FROM Userg");
             $stm->execute(array());
- 
-            foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
-            {
+
+            foreach ($stm->fetchAll(PDO::FETCH_OBJ) as $r) {
                 $alm = new Userg();
- 
+
                 $alm->__SET('Codigo', $r->Codigo);
                 $alm->__SET('Nombre', $r->Nombre);
                 $alm->__SET('Passwrod', $r->Passwrod);
                 $alm->__SET('email', $r->email);
                 $alm->__SET('confirmacion', $r->confirmacion);
                 $alm->__SET('Security_Level', $r->Security_Level);
-				$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
- 
+                $alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
+
                 $result[] = $alm;
             }
- 
+
             return $result;
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
- 
+
+    //Metodo que devuelve un listado de un usuario concreto
     public function Lista_User($Codigo)
     {
-        try
-        {
+        try {
             $stm = $this->pdo
-                      ->prepare("SELECT * FROM Userg WHERE Codigo = ?");
-                       
- 
+                ->prepare("SELECT * FROM Userg WHERE Codigo = ?");
+
+
             $stm->execute(array($Codigo));
             $r = $stm->fetch(PDO::FETCH_OBJ);
- 
+
             $alm = new Userg();
- 
+
             $alm->__SET('Codigo', $r->Codigo);
             $alm->__SET('Nombre', $r->Nombre);
             $alm->__SET('Passwrod', $r->Passwrod);
@@ -125,26 +125,26 @@ class UsergModel {
             $alm->__SET('Security_Level', $r->Security_Level);
             $alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
             $result[] = $alm;
- 
+
             return $result;
-        } catch (Exception $e) 
-        {
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
+
+    //Metodo que obtiene un usuario concreto
     public function Obtener($Codigo)
     {
-        try
-        {
+        try {
             $stm = $this->pdo
-                      ->prepare("SELECT * FROM Userg WHERE Codigo = ?");
-                       
- 
+                ->prepare("SELECT * FROM Userg WHERE Codigo = ?");
+
+
             $stm->execute(array($Codigo));
             $r = $stm->fetch(PDO::FETCH_OBJ);
- 
+
             $alm = new Userg();
- 
+
             $alm->__SET('Codigo', $r->Codigo);
             $alm->__SET('Nombre', $r->Nombre);
             $alm->__SET('Passwrod', $r->Passwrod);
@@ -152,37 +152,35 @@ class UsergModel {
             $alm->__SET('confirmacion', $r->confirmacion);
             $alm->__SET('Security_Level', $r->Security_Level);
             $alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
- 
- 
+
+
             return $alm;
-        } catch (Exception $e) 
-        {
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
- 
-    public function Eliminar($Codigo,$Codigo_Mundo)
+
+        //Metodo para eliminar un usuario concreto
+    public function Eliminar($Codigo, $Codigo_Mundo)
     {
-        try
-        {
+        try {
             $stm = $this->pdo
-                      ->prepare("DELETE FROM Userg WHERE Codigo = ? and Codigo_Mundo = ?");                   
- 
-            $stm->execute(array($Codigo,$Codigo_Mundo));
-        } catch (Exception $e) 
-        {
+                ->prepare("DELETE FROM Userg WHERE Codigo = ? and Codigo_Mundo = ?");
+
+            $stm->execute(array($Codigo, $Codigo_Mundo));
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
- 
-    public function Actualizar(Userg $data,$codigo_viejo)
+
+        //Metodo para actualizar un registro de la tabla
+
+    public function Actualizar(Userg $data, $codigo_viejo)
     {
-        try
-        {
-            $cadena=$data->__GET('Passwrod') ;
-            if ($cadena!="")
-            {
-                $texto_codificado=crypt($cadena,'$2017=(rmf)(dps)$(06-10)/(01-04-2024)$');
+        try {
+            $cadena = $data->__GET('Passwrod');
+            if ($cadena != "") {
+                $texto_codificado = crypt($cadena, '$2017=(rmf)(dps)$(06-10)/(01-04-2024)$');
 
                 $sql = "UPDATE Userg SET 
                             Codigo			= ?,
@@ -191,70 +189,64 @@ class UsergModel {
                             email=?,
                             Codigo_Mundo = ?
                         WHERE Codigo = ?";
-     
+
                 $this->pdo->prepare($sql)
-                     ->execute(
-                    array(
-                        $data->__GET('Codigo'), 
-                        $data->__GET('Nombre'), 
-                        $texto_codificado, 
-                        $data->__GET('email'), 
-                        $data->__GET('Codigo_Mundo'), 
-                        $codigo_viejo,
+                    ->execute(
+                        array(
+                            $data->__GET('Codigo'),
+                            $data->__GET('Nombre'),
+                            $texto_codificado,
+                            $data->__GET('email'),
+                            $data->__GET('Codigo_Mundo'),
+                            $codigo_viejo,
                         )
                     );
-            }
-            else
-            {
+            } else {
 
-            $sql = "UPDATE Userg SET 
+                $sql = "UPDATE Userg SET 
 						Codigo			= ?,
                         Nombre           = ?, 
                         email=?,
 						Codigo_Mundo = ?
                     WHERE Codigo = ?";
- 
-            $this->pdo->prepare($sql)
-                 ->execute(
-                array(
-					$data->__GET('Codigo'), 
-                    $data->__GET('Nombre'), 
-                    $data->__GET('email'), 
-					$data->__GET('Codigo_Mundo'), 
-                    $codigo_viejo,
-                    )
-                );
+
+                $this->pdo->prepare($sql)
+                    ->execute(
+                        array(
+                            $data->__GET('Codigo'),
+                            $data->__GET('Nombre'),
+                            $data->__GET('email'),
+                            $data->__GET('Codigo_Mundo'),
+                            $codigo_viejo,
+                        )
+                    );
             }
-            
-        } catch (Exception $e) 
-        {
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
- 
+
+        //Metodo para crear un registro de la tabla
     public function Registrar(Userg $data)
     {
-        $cadena=$data->__GET('Passwrod') ;
-        $texto_codificado=crypt($cadena,'$2017=(rmf)(dps)$(06-10)/(01-04-2024)$');
-        try
-        {
-        $sql = "INSERT INTO Userg (Codigo_Mundo,Codigo,Nombre,Passwrod,email) 
+        $cadena = $data->__GET('Passwrod');
+        $texto_codificado = crypt($cadena, '$2017=(rmf)(dps)$(06-10)/(01-04-2024)$');
+        try {
+            $sql = "INSERT INTO Userg (Codigo_Mundo,Codigo,Nombre,Passwrod,email) 
                 VALUES (?,?, ?,?,?)";
- 
-        $this->pdo->prepare($sql)
-             ->execute(
-            array(
-				$data->__GET('Codigo_Mundo'), 
-				$data->__GET('Codigo'), 
-                $data->__GET('Nombre'), 
-                $texto_codificado,
-                $data->__GET('email'), 
-                )
-            );
-        } catch (Exception $e) 
-        {
+
+            $this->pdo->prepare($sql)
+                ->execute(
+                    array(
+                        $data->__GET('Codigo_Mundo'),
+                        $data->__GET('Codigo'),
+                        $data->__GET('Nombre'),
+                        $texto_codificado,
+                        $data->__GET('email'),
+                    )
+                );
+        } catch (Exception $e) {
             die($e->getMessage());
         }
     }
 }
-?>

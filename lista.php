@@ -28,18 +28,21 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 	<?php 
 	//Revisamos el nivel de autorización que tiene el usuario que a realizad login y filtramos los
 	//puntos de menu segun el nivel
+	//Lista de modelos disponibles para usuario con nivel superior de seguridad 100
 	if ($_SESSION['level']>=100) 
 	{
 		?>
 		<li><a href="index.php?model=userg&type=form">Gestión Usuarios</a></li>
 		<?php 
 	} 
+	//Este punto es para que el usuario no administrador pueda ver y cambiar su usuario
 	else
 	{
 		?>
 		<li><a href="index.php?model=userg&type=form&action=editar&Codigo=<?php echo $_SESSION['user']; ?>&Codigo_Mundo=<?php echo $_SESSION['CodMundo']; ?>">Gestión Usuarios</a></li>
 		<?php 
 	}
+	//Lista de modelos disponibles para usuario con nivel superior de seguridad 50
 	if ($_SESSION['level']>=50) 
 	{
 	?>
@@ -56,9 +59,10 @@ if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
 			<li><a href="index.php?model=habilidades&type=form">Gestión Habilidades</a></li>
 			<li><a href="index.php?model=pais&type=form">Gestión Pais</a></li>
 			<li><a href="index.php?model=lugar&type=form">Gestión Lugar</a></li>
-			<!-- <li><a href="index.php?model=traduccion&type=form">Gestión Traduccion (mantenimiento)</a></li>			   -->
+			
 		<?php
 	}
+	//Lista de modelos disponibles para usuario con nivel superior de seguridad 1
 	if ($_SESSION['level']>=1) 
 	{
 		?>

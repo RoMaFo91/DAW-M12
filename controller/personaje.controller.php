@@ -1,5 +1,5 @@
 <?php
-//Llamada al modelo
+//Llamada al modelo vinculados
 require($_SERVER['DOCUMENT_ROOT']."/model/personaje.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/clase.model.php");
 require($_SERVER['DOCUMENT_ROOT']."/model/subclase.model.php");

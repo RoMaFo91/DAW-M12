@@ -12,6 +12,7 @@ body {
   color: #212529; /* Color de texto principal */
 }
 
+/* Estilo para el contenedor de la cabecera de la pagina index*/
 .container_head {
   max-width: 1200px;
   margin: 0 auto;
@@ -22,6 +23,7 @@ body {
 }
 
 
+/* estilo para el contenedor del pie de pagina index*/
 
 .container_footer {
   max-width: 1200px;
@@ -41,25 +43,30 @@ body {
   width: 100%;
 }
 
+/* Estilo para el div donde se incorporara el logo*/
 .logo {
   float: left;
   width: 20%;
 }
 
+/* Estilo para el div donde estara enlace de desconectar */
 .login {
   float: right;
   width: 20%;
 }
 
+/* Estilo del logo imagen*/
 .logo-img {
   width: 100%;
 }
 
+/* Estilo del enalace de desconectar*/
 .login-link {
   text-decoration: none;
   color: #fff;
 }
 
+/* Estilo del enalace de desconectar al pasar por encima*/
 .login-link:hover {
   color: #bdc3c7; /* Gris claro */
 }
@@ -71,22 +78,26 @@ body {
   width: 100%;
 }
 
+/* Estilo del ul que contendra la lista de mundos */
 .nav-list {
   list-style: none;
   text-align: center;
 }
 
+/* Estilo del li que tendra los enlace a los mundos*/
 .nav-item {
   display: inline-block;
   margin-left: 5%;
 }
 
+/* Estilo del enlace de los mundos */
 .nav-link {
   text-decoration: none;
   color: #fff;
   transition: color 0.3s;
 }
 
+/* Estilo del enlace de los mundos que estara seleccionado*/
 .nav-link-sel {
   text-decoration: none;
   background-color: #a3c4f5;
@@ -95,6 +106,7 @@ body {
 	border-radius: 10px;
 }
 
+/* Estilo del enlace de los mundos al pasar por encima el cursor */
 .nav-link:hover {
   color: #bdc3c7; /* Gris claro */
 }
@@ -116,6 +128,9 @@ body {
     display: flex;
 }
 
+/* Estilos relacionados con el menu lateral de la pagina index
+El menu lateral es el de los diferentes modelos que se pueden editar
+*/
 .menu-lateral {
     background-color: #333;
     color: #fff;
@@ -144,19 +159,21 @@ body {
 	border-radius: 8px; /* Agregar bordes redondeados */
 }
 
+
 .menu-lateral a {
     color: #fff;
     text-decoration: none;
 }
 
-
+/* Estilo del contenedor principal dentro del body que contendra las view de los modelos */
 .contenido {
     flex-grow: 1;
     padding: 20px;
 	text-align: center; /* Centrar el texto */
 }
 
-
+/* Estilo del contenedor de los formularios (edición/creación) 
+pequeños todos menos monstruos y personajes  */
 .container {
   max-width: 600px;
   margin: 50px auto;
@@ -166,6 +183,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilo del contenedor de los formularios (edición/creación) grandes monstruos y personajes  */
 .container_big {
   max-width: 1000px;
   margin: 50px auto;
@@ -175,6 +193,9 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Añadimos estilo al elemento input de tipo text y email directamente sin clase 
+para que todos los input de esta tipo tengan el mismo estilo
+tengan el mismo estilo visual */
 input[type="text"],
 input[type="email"],
 textarea {
@@ -184,6 +205,8 @@ textarea {
   border-radius: 5px;
 }
 
+/* Añadimos estilo al elemento button directamente sin clase para que todos los botones
+tengan el mismo estilo visual */
 button {
   display: block;
   width: 100%;
@@ -195,6 +218,7 @@ button {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 
 button:hover {
   background-color: #0056b3;

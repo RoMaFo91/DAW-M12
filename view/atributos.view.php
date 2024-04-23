@@ -8,7 +8,7 @@ if (isset($_SESSION['login_correct'])) {
             //Comprovamos si el model que esta realizando la acción es el correcto
             if ($_REQUEST['model'] == 'atributos') {
                 switch ($_REQUEST['action']) {
-                    //Acción de actualizar un registro
+                        //Acción de actualizar un registro
                     case 'actualizar':
                         $alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
                         $alm->__SET('Codigo',              $_REQUEST['Codigo']);
@@ -28,7 +28,7 @@ if (isset($_SESSION['login_correct'])) {
                         $model->Registrar($alm);
                         header('Location: index.php?model=atributos&type=form');
                         break;
-//Acción de eliminación de un registro
+                        //Acción de eliminación de un registro
                     case 'eliminar':
                         $model->Eliminar($_REQUEST['Codigo'], $_SESSION['CodMundo']);
                         header('Location: index.php?model=atributos&type=form');
@@ -49,29 +49,29 @@ if (isset($_SESSION['login_correct'])) {
             <div class="pure-u-1-12">
                 <h3>Atributos </h3>
                 </br>
-<!--  Formulario para creación y actualización de registros -->
+                <!--  Formulario para creación y actualización de registros -->
                 <form action="../index.php?model=atributos&type=form&action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
                     <input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
-                       <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
-                        Nombre
-                        <input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
-                        Descripcion
-                        <textarea rows="10" id="Descripcion" name="Descripcion" style="width:100%;" /><?php echo $alm->__GET('Descripcion'); ?></textarea>
+                    <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+                    Nombre
+                    <input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
+                    Descripcion
+                    <textarea rows="10" id="Descripcion" name="Descripcion" style="width:100%;" /><?php echo $alm->__GET('Descripcion'); ?></textarea>
 
-                        <button type="submit" class="pure-button pure-button-primary">Guardar</button>
+                    <button type="submit" class="pure-button pure-button-primary">Guardar</button>
 
 
 
                 </form>
 
 
-<!-- Tabla de todos los elementos del modelo -->
+                <!-- Tabla de todos los elementos del modelo -->
                 <table class="pure-table pure-table-horizontal">
 
                     <thead>
 
                         <tr>
-                            <th >Nombre</th>
+                            <th>Nombre</th>
                             <th>Descripcion</th>
                             <th>Imagen</th>
                             <th>Registro</th>
@@ -89,12 +89,12 @@ if (isset($_SESSION['login_correct'])) {
 
 
                             <td>
-                            <a href="?model=atributos&type=form&action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/actualizar.png" alt="Actualizar" style="width:15%"></a>
+                                <a href="?model=atributos&type=form&action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/actualizar.png" alt="Actualizar" style="width:15%"></a>
                             </td>
 
 
                             <td>
-                            <a href="?model=atributos&type=form&action=eliminar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/eliminar.png" alt="Eliminar" style="width:15%"></a>
+                                <a href="?model=atributos&type=form&action=eliminar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/eliminar.png" alt="Eliminar" style="width:15%"></a>
                             </td>
 
                         </tr>

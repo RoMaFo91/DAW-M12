@@ -1,6 +1,6 @@
 <?php
-//require('./../conf_bd.php');
-//require_once('./../classes.php');
+//Clase que representa la tabla de monstruos/caracteristica y sus campos
+//esta tabla es la relación entra las dos tablas de N a M
 class Monstruo_Caracteristicas {
  
     private $Codigo_Monstruo;
@@ -14,9 +14,11 @@ class Monstruo_Caracteristicas {
        public function __SET($k, $v){ return $this->$k = $v; }
    }
 
+   //Clase que contendra todos los metodos para la gestión de la tabla
 class Monstruo_CaracteristicasModel { 
 		private $pdo; 
 		
+    //Constructor de la clase
 	public function __CONSTRUCT() { 
 	$conf = new Conf_BD();
 	try { 
@@ -30,6 +32,7 @@ class Monstruo_CaracteristicasModel {
         }
     }
  
+    //Metodo que devuelve todos las caracteristicas de un monstruo concreto y de un mundo concreto
     public function Listar($Codigo_Mundo,$Codigo_Monstruo)
     {
         try
@@ -63,33 +66,8 @@ class Monstruo_CaracteristicasModel {
             die($e->getMessage());
         }
     }
-	
- /*
-    public function Obtener($Codigo,$Codigo_Mundo)
-    {
-        try
-        {
-            $stm = $this->pdo
-                      ->prepare("SELECT * FROM Monstruo_Caracteristicas WHERE Codigo = ? and Codigo_Mundo = ?");
-                       
- 
-            $stm->execute(array($Codigo,$Codigo_Mundo));
-            $r = $stm->fetch(PDO::FETCH_OBJ);
- 
-            $alm = new Monstruo_Caracteristicas();
- 
-            $alm->__SET('Codigo', $r->Codigo);
-			$alm->__SET('Codigo_Mundo', $r->Codigo_Mundo);
-			$alm->__SET('Nombre', $r->Nombre);
- 
- 
-            return $alm;
-        } catch (Exception $e) 
-        {
-            die($e->getMessage());
-        }
-    }
- */
+
+	//Metodo que comprueva la existencia de un monstruo y una caracteristica concreta
 	public function ComprovarExiste(Monstruo_Caracteristicas $data)
 	{
 	 try
@@ -118,6 +96,7 @@ class Monstruo_CaracteristicasModel {
         }
 	}
  
+    //Metodo para la eliminación de un registro de la tabla
     public function Eliminar($Codigo,$Codigo_Mundo)
     {
         try
@@ -132,6 +111,7 @@ class Monstruo_CaracteristicasModel {
         }
     }
  
+    //Metodo para a la actualización de un registro concreto de la tabla
     public function Actualizar(Monstruo_Caracteristicas $data)
     {
         try
@@ -163,6 +143,7 @@ class Monstruo_CaracteristicasModel {
         }
     }
  
+    //Metodo para la creación de un registro en la tabla
     public function Registrar(Monstruo_Caracteristicas $data)
     {
         try

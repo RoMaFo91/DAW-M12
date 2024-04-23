@@ -1,6 +1,5 @@
 <?php
-//require('./../conf_bd.php');
-//require_once('./../classes.php');
+//Clase que representa la tabla y sus campos
 class Dados {
  
     private $Codigo_Mundo;
@@ -19,9 +18,11 @@ class Dados {
        public function __SET($k, $v){ return $this->$k = $v; }
    }
 
+   // Clase que contendra todos los metodos de gestión de la tabla
 class DadosModel { 
 		private $pdo; 
 		
+        //Constructor de la clase
 	public function __CONSTRUCT() { 
 	$conf = new Conf_BD();
 	try { 
@@ -35,6 +36,7 @@ class DadosModel {
         }
     }
  
+    //Metodo que devuelve todos los dados de un mundo concreto
     public function Listar($CodMundo)
     {
         try
@@ -65,6 +67,7 @@ class DadosModel {
         }
     }
 	
+        //Metodo que devuelve todos los dados de un mundo concreto
 	 public function ListarDadosMundo($Codigo_Mundo)
     {
         try
@@ -102,6 +105,8 @@ class DadosModel {
         }
     }
  
+    //Metodo que devuelve una clase dado concreta donde los parametros son el código de dado y
+    //el código de mundo
     public function Obtener($Codigo,$Codigo_Mundo)
     {
         try
@@ -129,6 +134,8 @@ class DadosModel {
         }
     }
  
+    //Metodo para eliminar un registro concreto, donde los parametros son el código de dado
+    // y el código de mundo
     public function Eliminar($Codigo,$Codigo_Mundo)
     {
         try
@@ -143,6 +150,7 @@ class DadosModel {
         }
     }
  
+    //Metodo para actualizar un registro de la tabla dado
     public function Actualizar(Dados $data,$codigo_viejo)
     {
         try
@@ -173,6 +181,7 @@ class DadosModel {
         }
     }
  
+    //Metodo para crear un registro en la tabla dado
     public function Registrar(Dados $data)
     {
         try

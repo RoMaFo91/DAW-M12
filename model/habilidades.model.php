@@ -1,6 +1,5 @@
 <?php
-//require('./../conf_bd.php');
-//require_once('./../classes.php');
+//Clase que representa la tabla de habilidades y sus campos
 class Habilidades {
  
     private $Codigo_Mundo;
@@ -22,9 +21,11 @@ class Habilidades {
    }
     
 
+   //Clase que contendra todos los metodos necesario para gestionar la tabla de habilidades
 class HabilidadesModel { 
 		private $pdo; 
 		
+    //Constructor de la clase
 	public function __CONSTRUCT() { 
 	$conf = new Conf_BD();
 	try { 
@@ -38,6 +39,7 @@ class HabilidadesModel {
         }
     }
  
+//Metodo que devuelve un listado de todas las habilidades de un mundo concreto
     public function Listar($CodMundo)
     {
         try
@@ -77,6 +79,7 @@ class HabilidadesModel {
         }
     }
 	
+    //Metodo que devuelve un listado de todas las habilidades de un mundo concreto
 	 public function ListarHabilidadesMundo($Codigo_Mundo)
     {
         try
@@ -121,6 +124,7 @@ class HabilidadesModel {
         }
     }
  
+    //Metodo que obtiene una habilidad concreta de un mundo concreto
     public function Obtener($Codigo,$Codigo_Mundo)
     {
         try
@@ -153,6 +157,7 @@ class HabilidadesModel {
         }
     }
  
+    //Metodo que elimina un registro de la tabla de habilidades
     public function Eliminar($Codigo,$Codigo_Mundo)
     {
         try
@@ -167,6 +172,7 @@ class HabilidadesModel {
         }
     }
  
+    //Metodo que actualiza un registro de la tabla de habilidades
     public function Actualizar(Habilidades $data,$codigo_viejo)
     {
 		
@@ -201,6 +207,7 @@ class HabilidadesModel {
         }
     }
  
+    //Metodo que crear un registro en la tabla de habilidades
     public function Registrar(Habilidades $data)
     {
         try

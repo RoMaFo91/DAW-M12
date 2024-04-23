@@ -1,6 +1,5 @@
 <?php
-//require('./../conf_bd.php');
-//require_once('./../classes.php');
+//Clase que es una representación de la tabla de personaje y sus campos
 class Personaje {
  
     private $Codigo_Mundo;
@@ -28,9 +27,10 @@ class Personaje {
        public function __SET($k, $v){ return $this->$k = $v; }
    }
  
-   
+      // Clase que contendra todos los metodos para la gestión de la tabla
 class PersonajeModel { 
 		private $pdo; 
+        //Constructor de la clase
 		
 	public function __CONSTRUCT() { 
 	$conf = new Conf_BD();
@@ -45,6 +45,7 @@ class PersonajeModel {
         }
     }
  
+    //Metodo que devuelve un listado de todos los personajes de un mundo concreto
     public function Listar($CodMundo)
     {
         try
@@ -81,6 +82,7 @@ class PersonajeModel {
         }
     }
 
+    //Metodo que devuelve un listado de todos los personajes de un mundo concreto y un usuario concreto
     public function Listar_User($CodMundo,$user)
     {
         try
@@ -117,6 +119,7 @@ class PersonajeModel {
         }
     }
  
+    //Metodo que obtiene un personaje concreto de un mundo concreto
     public function Obtener($Codigo,$Codigo_Mundo)
     {
         try
@@ -147,6 +150,7 @@ class PersonajeModel {
         }
     }
  
+    //Metodo para eliminar un personaje concreto de un mundo concreto
     public function Eliminar($Codigo,$Codigo_Mundo)
     {
         try
@@ -161,6 +165,7 @@ class PersonajeModel {
         }
     }
  
+    //Metodo para actualizar un registro de la tabla
     public function Actualizar(Personaje $data)
     {
         try
@@ -199,6 +204,7 @@ class PersonajeModel {
         }
     }
  
+    //Metodo para crear un registro de la tabla
     public function Registrar(Personaje $data)
     {
         try

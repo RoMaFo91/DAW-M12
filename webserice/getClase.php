@@ -1,5 +1,4 @@
 <?php
-// session_start();
 require_once('./../classes.php');
 
 // http://localhost/webserice/getClase.php?codigo_mundo=971BBEBA-BE42-C92C-08CF-2A4F535F7022

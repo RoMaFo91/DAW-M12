@@ -1,5 +1,4 @@
 <?php
-// session_start();
 require_once('./../classes.php');
 
 // Publicación de los datos a traves de webservice que pueden ser consumidos por cualquier cliente REST
