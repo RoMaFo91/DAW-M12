@@ -1,133 +1,110 @@
-<?php 
-if (isset($_SESSION['login_correct'])) {
-if (ComprobarSession($_SESSION['user'],$_SESSION['pass']))
-{
-if(isset($_REQUEST['action'])) 
-if ($_REQUEST['model'] == 'nivel') {
-{ switch($_REQUEST['action']) { 
-		case 'actualizar': 
-			$alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
-			$alm->__SET('Codigo',              $_REQUEST['Codigo']);
-            $alm->__SET('Exp_ini',          $_REQUEST['Exp_ini']);
-			$alm->__SET('Exp_fin',          $_REQUEST['Exp_fin']);
-			 
-            $model->Actualizar($alm, $_REQUEST['Codigo_viejo'],$_REQUEST['Codigo_viejo_mundo']);
-            header('Location: index.php?model=nivel&type=form');
-            break;
- 
-        case 'registrar':
-			$alm->__SET('Codigo_Mundo',          $_SESSION['CodMundo']);
-			$alm->__SET('Codigo',          $_REQUEST['Codigo']);
-            $alm->__SET('Exp_ini',          $_REQUEST['Exp_ini']);
-			$alm->__SET('Exp_fin',          $_REQUEST['Exp_fin']);
-			
-            $model->Registrar($alm);
-            header('Location: index.php?model=nivel&type=form');
-            break;
- 
-        case 'eliminar':
-            $model->Eliminar($_REQUEST['Codigo'],$_SESSION['CodMundo']);
-            header('Location: index.php?model=nivel&type=form');
-            break;
-        case 'editar':
-            $alm = $model->Obtener($_REQUEST['Codigo'],$_SESSION['CodMundo']);
-			$alm->__SET('Estado','actualizar');
-            break;
-    }
-}
-}
-?>
- 
- 
-<div class="pure-g">
- 
-<div class="pure-u-1-12">
-    <h3>Nivel       </h3>     
-	 </br>
- </br>
- 
-<form action="../index.php?model=nivel&type=form&action=<?php echo $alm->Estado =='actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
-                    <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
-					<input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
-                     
- 
-	 <?php
-	 if ($alm->Estado=='actualizar')
-	 {
-	 ?>
-	<input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
-	 
-
 <?php
- 
-}
- ?>
- 
+//Comprobamos si el usuario esta login
+if (isset($_SESSION['login_correct'])) {
+    //Comprovamos si el usuario y el password son correcto
+    if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
+        //Comprovamos si hay una acción de formulario
+        if (isset($_REQUEST['action']))
+            //Comprovamos si el model que esta realizando la acción es el correcto
+            if ($_REQUEST['model'] == 'nivel') { {
+                    switch ($_REQUEST['action']) {
+                            //Acción de actualizar un registro
+                        case 'actualizar':
+                            $alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
+                            $alm->__SET('Codigo',              $_REQUEST['Codigo']);
+                            $alm->__SET('Exp_ini',          $_REQUEST['Exp_ini']);
+                            $alm->__SET('Exp_fin',          $_REQUEST['Exp_fin']);
 
-Codigo<input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
-Experciencia Inicial<input type="text" name="Exp_ini" value="<?php echo $alm->__GET('Exp_ini'); ?>" style="width:100%;" />
-Experciencia final<input type="text" name="Exp_fin" value="<?php echo $alm->__GET('Exp_fin'); ?>" style="width:100%;" />
- 
-                                <br/><br/><button type="submit" class="pure-button pure-button-primary">Guardar</button>
-                          
- 
+                            $model->Actualizar($alm, $_REQUEST['Codigo_viejo'], $_REQUEST['Codigo_viejo_mundo']);
+                            header('Location: index.php?model=nivel&type=form');
+                            break;
+                            //Acción de creación de registro
+                        case 'registrar':
+                            $alm->__SET('Codigo_Mundo',          $_SESSION['CodMundo']);
+                            $alm->__SET('Codigo',          $_REQUEST['Codigo']);
+                            $alm->__SET('Exp_ini',          $_REQUEST['Exp_ini']);
+                            $alm->__SET('Exp_fin',          $_REQUEST['Exp_fin']);
+
+                            $model->Registrar($alm);
+                            header('Location: index.php?model=nivel&type=form');
+                            break;
+                            //Acción de eliminación de un registro
+                        case 'eliminar':
+                            $model->Eliminar($_REQUEST['Codigo'], $_SESSION['CodMundo']);
+                            header('Location: index.php?model=nivel&type=form');
+                            break;
+                            //Acción de edición de un registro
+                        case 'editar':
+                            $alm = $model->Obtener($_REQUEST['Codigo'], $_SESSION['CodMundo']);
+                            $alm->__SET('Estado', 'actualizar');
+                            break;
+                    }
+                }
+            }
+?>
+
+
+        <div class="pure-g">
+
+            <div class="pure-u-1-12">
+                <h3>Nivel </h3>
+                </br>
+                </br>
+                <!--  Formulario para creación y actualización de registros -->
+                <form action="../index.php?model=nivel&type=form&action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
+                    <input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
+                    <input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
+                    <?php
+                    if ($alm->Estado == 'actualizar') {
+                    ?>
+                        <input type="hidden" name="Codigo_viejo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+                    <?php
+
+                    }
+                    ?>
+                    Codigo<input type="text" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
+                    Experciencia Inicial<input type="text" name="Exp_ini" value="<?php echo $alm->__GET('Exp_ini'); ?>" style="width:100%;" />
+                    Experciencia final<input type="text" name="Exp_fin" value="<?php echo $alm->__GET('Exp_fin'); ?>" style="width:100%;" />
+
+                    <br /><br /><button type="submit" class="pure-button pure-button-primary">Guardar</button>
                 </form>
- 
- 
- 
-<table class="pure-table pure-table-horizontal">
- 
-<thead>
- 
-<tr>
- <!--<th >Codigo Mundo</th>-->
- <th >Codigo</th>
- 
-<th >Exp ini</th> 
-<th >Exp fin</th> 
- 
-<th >Editar</th>
- 
- 
-<th >Eliminar</th>
- 
- 
+
+
+                <!-- Tabla de todos los elementos del modelo -->
+                <table class="pure-table pure-table-horizontal">
+
+                    <thead>
+
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Exp ini</th>
+                            <th>Exp fin</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
- 
                     </thead>
- 
-                    <?php foreach($model->Listar($_SESSION['CodMundo']) as $r): ?>
- 
-<tr>
- <!--<td><?php echo $r->__GET('Codigo_Mundo'); ?></td>-->
- 
- <td><?php echo $r->__GET('Codigo'); ?></td>
- 
-<td><?php echo $r->__GET('Exp_ini'); ?></td>
-<td><?php echo $r->__GET('Exp_fin'); ?></td>
- 
- 
-<td>
+                    <?php foreach ($model->Listar($_SESSION['CodMundo']) as $r) : ?>
+
+                        <tr>
+                            <!--<td><?php echo $r->__GET('Codigo_Mundo'); ?></td>-->
+
+                            <td><?php echo $r->__GET('Codigo'); ?></td>
+
+                            <td><?php echo $r->__GET('Exp_ini'); ?></td>
+                            <td><?php echo $r->__GET('Exp_fin'); ?></td>
+                            <td>
                                 <a href="?model=nivel&type=form&action=editar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/actualizar.png" alt="Actualizar" style="width:15%"></a>
                             </td>
- 
- 
-<td>
+                            <td>
                                 <a href="?model=nivel&type=form&action=eliminar&Codigo=<?php echo $r->Codigo; ?>&Codigo_Mundo=<?php echo $r->Codigo_Mundo ?>"><img src="/icon/eliminar.png" alt="Eliminar" style="width:15%"></a>
                             </td>
- 
                         </tr>
- 
+
                     <?php endforeach; ?>
                 </table>
- 
-      
-
             </div>
- 
         </div>
-
 <?php
-}
+    }
 }
 ?>

@@ -112,28 +112,28 @@ if (isset($_SESSION['login_correct'])) {
                     //Si el usuario tiene nivel inferior a 100 solo podra ver sus mundos
                     if ($_SESSION['level'] < 100) {
                         $lista = $model->Listar_User($_SESSION['user']);
-                    } 
+                    }
                     //En el caso de tener level 100 o superior podra ver todos los mundos
                     else {
                     ?><li class="nav-item"><a class="nav-link" href="../index.php?model=mundo&type=form">Crear Mundo</a></li><?php
-                                                                                                                                    $lista = $model->Listar();
-                                                                                                                                }
-                                                                                                                                foreach ($lista as $r) :
-                                                                                                                                    if ($_SESSION['CodMundo'] == $r->__GET('Codigo')) {
-                                                                                                                                    ?>
+                                                                                                                                $lista = $model->Listar();
+                                                                                                                            }
+                                                                                                                            foreach ($lista as $r) :
+                                                                                                                                if ($_SESSION['CodMundo'] == $r->__GET('Codigo')) {
+                                                                                                                                ?>
                             <b>
                                 <li class="nav-item"><a class="nav-link-sel" href="../index.php?Cod=<?php echo $r->__GET('Codigo'); ?>&Nom=<?php echo $r->__GET('Nombre'); ?>"><?php echo $r->__GET('Nombre'); ?></a></li>
                             </b>
                         <?php
 
-                                                                                                                                    } else {
+                                                                                                                                } else {
                         ?>
                             <li class="nav-item"><a class="nav-link" href="../index.php?Cod=<?php echo $r->__GET('Codigo'); ?>&Nom=<?php echo $r->__GET('Nombre'); ?>"><?php echo $r->__GET('Nombre'); ?></a></li>
                 <?php
-                                                                                                                                    }
+                                                                                                                                }
 
-                                                                                                                                endforeach;
-                                                                                                                            }
+                                                                                                                            endforeach;
+                                                                                                                        }
 
                 ?>
 

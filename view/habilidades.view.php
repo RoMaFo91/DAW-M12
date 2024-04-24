@@ -1,10 +1,14 @@
 <?php
+//Comprobamos si el usuario esta login
 if (isset($_SESSION['login_correct'])) {
+	//Comprovamos si el usuario y el password son correcto
 	if (ComprobarSession($_SESSION['user'], $_SESSION['pass'])) {
-
+		//Comprovamos si hay una acción de formulario
 		if (isset($_REQUEST['action'])) {
+			//Comprovamos si el model que esta realizando la acción es el correcto
 			if ($_REQUEST['model'] == 'habilidades') {
 				switch ($_REQUEST['action']) {
+						//Acción de actualizar un registro
 					case 'actualizar':
 						$alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
 						$alm->__SET('Codigo',              $_REQUEST['Codigo']);
@@ -15,7 +19,7 @@ if (isset($_SESSION['login_correct'])) {
 						$model->Actualizar($alm, $_REQUEST['Codigo']);
 						header('Location: index.php?model=habilidades&type=form');
 						break;
-
+						//Acción de creación de registro
 					case 'registrar':
 						$alm->__SET('Codigo_Mundo',          $_SESSION['CodMundo']);
 						$alm->__SET('Codigo',          $_REQUEST['Codigo']);
@@ -26,11 +30,12 @@ if (isset($_SESSION['login_correct'])) {
 						$model->Registrar($alm);
 						header('Location: index.php?model=habilidades&type=form');
 						break;
-
+						//Acción de eliminación de un registro
 					case 'eliminar':
 						$model->Eliminar($_REQUEST['Codigo'], $_SESSION['CodMundo']);
 						header('Location: index.php?model=habilidades&type=form');
 						break;
+						//Acción de edición de un registro
 					case 'editar':
 						$alm = $model->Obtener($_REQUEST['Codigo'], $_SESSION['CodMundo']);
 						$alm->__SET('Estado', 'actualizar');
@@ -48,63 +53,54 @@ if (isset($_SESSION['login_correct'])) {
 				<h3>Habilidades </h3>
 				</br>
 				</br>
-
+				<!--  Formulario para creación y actualización de registros -->
 				<form action="../index.php?model=habilidades&type=form&action=<?php echo $alm->Estado == 'actualizar' ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" style="margin-bottom:30px;">
 					<input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" />
 					<input type="hidden" name="Codigo_Mundo" value="<?php echo $alm->__GET('Codigo_Mundo'); ?>" />
 
 					<input type="hidden" name="Codigo" value="<?php echo $alm->__GET('Codigo'); ?>" style="width:100%;" />
 					Nombre<input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" style="width:100%;" />
-					Codigo Nivel
+					Nivel
 					<div class="DivNivel">
-						<select type="text" name="Codigo_Nivel" value="<?php echo $alm->__GET('Codigo_Nivel'); ?>" style="width:100%;" >
-						<?php
-						foreach ($model_nivel->ListarNivelMundo($_SESSION['CodMundo']) as $r) :
-						?> <option <?php
-							if ($alm->__GET('Codigo_Nivel') == $r->Codigo) {
-								echo ' selected';
-							}
-							?> value="<?php echo $r->Codigo; ?>"><?php echo $r->Codigo; ?></option> <?php
-																						endforeach;
-																							?>
+						<select type="text" name="Codigo_Nivel" value="<?php echo $alm->__GET('Codigo_Nivel'); ?>" style="width:100%;">
+							<?php
+							foreach ($model_nivel->ListarNivelMundo($_SESSION['CodMundo']) as $r) :
+							?> <option <?php
+										if ($alm->__GET('Codigo_Nivel') == $r->Codigo) {
+											echo ' selected';
+										}
+										?> value="<?php echo $r->Codigo; ?>"><?php echo $r->Codigo; ?></option> <?php
+																											endforeach; ?>
 						</select>
 					</div>
-
-					Codigo SubClase
-
-					<div class="DivSubClase">
+					SubClase<div class="DivSubClase">
 						<select type="text" name="Codigo_SubClase" value="<?php echo $alm->__GET('Codigo_SubClase'); ?>" style="width:100%;" />
 						<?php
 						foreach ($model_subclase->ListarSubClaseMundo($_SESSION['CodMundo']) as $r) :
 						?> <option <?php
-							if ($alm->__GET('Codigo_SubClase') == $r->Codigo) {
-								echo ' selected';
-							}
-							?> value="<?php echo $r->Codigo; ?>"><?php echo $r->obj_Codigo_Clase->Nombre .' '. $r->Nombre; ?></option> <?php
-																						endforeach;
-																							?>
+									if ($alm->__GET('Codigo_SubClase') == $r->Codigo) {
+										echo ' selected';
+									}
+									?> value="<?php echo $r->Codigo; ?>"><?php echo $r->obj_Codigo_Clase->Nombre . ' ' . $r->Nombre; ?></option> <?php endforeach;
+																																					?>
 						</select>
-						
 						<div>
-
-
-							<br/><br/><button type="submit" class="pure-button pure-button-primary">Guardar</button>
-							<br/>
+							<br /><br /><button type="submit" class="pure-button pure-button-primary">Guardar</button>
+							<br />
 				</form>
 
 
-
+				<!-- Tabla de todos los elementos del modelo -->
 				<table class="pure-table pure-table-horizontal">
 
 					<thead>
 
 						<tr>
-							<!--<th >Codigo Mundo</th>-->
-							<th >Nombre</th>
-							<th >Codigo Nivel</th>
-							<th >Codigo SubClase</th>
-							<th >Editar</th>
-							<th >Eliminar</th>
+							<th>Nombre</th>
+							<th>Nivel</th>
+							<th>SubClase</th>
+							<th>Editar</th>
+							<th>Eliminar</th>
 						</tr>
 
 					</thead>

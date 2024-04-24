@@ -81,7 +81,7 @@ if (isset($_SESSION['login_correct'])) {
 				</form>
 
 
-<!-- Tabla de los registros disponibles para eliminar o editar -->
+				<!-- Tabla de los registros disponibles para eliminar o editar -->
 				<table class="pure-table pure-table-horizontal">
 
 					<thead>

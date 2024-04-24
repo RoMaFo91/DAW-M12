@@ -12,7 +12,7 @@ class Conf_BD {
  public function __CONSTRUCT() { 
 	$this->UserBD ='project' ;
 	$this->PassBD ='1234' ;
-	$this->BD ='project_v1' ;
+	$this->BD ='manual_instalacion' ;
 	$this->Server ='localhost' ;
  }
  public function GetUser()

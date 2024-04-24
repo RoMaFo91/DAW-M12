@@ -8,7 +8,7 @@ if (isset($_SESSION['login_correct'])) {
             //Comprovamos si el model que esta realizando la acción es el correcto
             if ($_REQUEST['model'] == 'atributos') {
                 switch ($_REQUEST['action']) {
-                        //Acción de actualizar un registro
+                    //Acción de actualizar un registro
                     case 'actualizar':
                         $alm->__SET('Codigo_Mundo',              $_SESSION['CodMundo']);
                         $alm->__SET('Codigo',              $_REQUEST['Codigo']);
